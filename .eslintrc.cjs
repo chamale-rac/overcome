@@ -9,7 +9,16 @@ module.exports = {
     'airbnb/rules/react',
     'plugin:prettier/recommended',
   ],
-  overrides: [],
+  overrides: [
+    [
+      {
+        files: ['*.js', '*.jsx'],
+        rules: {
+          'react/function-component-definition': 'off',
+        },
+      },
+    ],
+  ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -28,6 +37,13 @@ module.exports = {
         optionalDependencies: true,
         peerDependencies: true,
         bundledDependencies: true,
+      },
+    ],
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
       },
     ],
   },

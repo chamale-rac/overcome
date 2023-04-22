@@ -12,26 +12,27 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@', replacement: path.resolve(__dirname, 'src') },
+      { find: '@assets', replacement: path.resolve(__dirname, 'src/assets') },
       {
         find: '@components',
         replacement: path.resolve(__dirname, 'src/components'),
       },
+      { find: '@context', replacement: path.resolve(__dirname, 'src/context') },
+      { find: '@data', replacement: path.resolve(__dirname, 'src/data') },
       {
-        find: '@pages',
-        replacement: path.resolve(__dirname, 'src/pages'),
+        find: '@features',
+        replacement: path.resolve(__dirname, 'src/features'),
       },
+      { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
+      { find: '@layout', replacement: path.resolve(__dirname, 'src/layout') },
+      { find: '@lib', replacement: path.resolve(__dirname, 'src/lib') },
+      { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
+      { find: '@routes', replacement: path.resolve(__dirname, 'src/routes') },
       {
-        find: '@routes',
-        replacement: path.resolve(__dirname, 'src/routes'),
+        find: '@services',
+        replacement: path.resolve(__dirname, 'src/services'),
       },
-      {
-        find: '@styles',
-        replacement: path.resolve(__dirname, 'src/styles'),
-      },
-      {
-        find: '@context',
-        replacement: path.resolve(__dirname, 'src/context'),
-      },
+      { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
     ],
   },
 })

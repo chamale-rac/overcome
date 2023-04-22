@@ -1,11 +1,15 @@
+// Description: Main entry point for the application
+// Author: Samuel Chamalé
+// Created at: 22-04-2023
+
+// BEGIN IMPORTS //
+// dependencies
 import React from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useRouteError } from 'react-router-dom'
+// END IMPORTS //
 
-export default function ErrorPage() {
+export const ErrorPage = () => {
   const error = useRouteError()
-  console.error(error)
-
   return (
     <div id="error-page">
       <h1>Oops!</h1>
