@@ -1,6 +1,6 @@
 // Description: Main entry point for the application
 // Author: Samuel Chamalé
-// Date: 22-04-2023
+// Created at: 22-04-2023
 
 // BEGIN IMPORTS //
 // dependencies
