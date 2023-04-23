@@ -8,7 +8,7 @@ import React from 'react'
 import { useRouteError } from 'react-router-dom'
 // END IMPORTS //
 
-export const ErrorPage = () => {
+const ErrorPage = () => {
   const error = useRouteError()
   return (
     <div id="error-page">
@@ -20,3 +20,4 @@ export const ErrorPage = () => {
     </div>
   )
 }
+export default ErrorPage
