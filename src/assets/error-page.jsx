@@ -2,11 +2,8 @@
 // Author: Samuel Chamalé
 // Created at: 22-04-2023
 
-// BEGIN IMPORTS //
-// dependencies
 import React from 'react'
 import { useRouteError } from 'react-router-dom'
-// END IMPORTS //
 
 const ErrorPage = () => {
   const error = useRouteError()

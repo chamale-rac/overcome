@@ -24,7 +24,7 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src/features'),
       },
       { find: '@hooks', replacement: path.resolve(__dirname, 'src/hooks') },
-      { find: '@layout', replacement: path.resolve(__dirname, 'src/layout') },
+      { find: '@layouts', replacement: path.resolve(__dirname, 'src/layouts') },
       { find: '@lib', replacement: path.resolve(__dirname, 'src/lib') },
       { find: '@pages', replacement: path.resolve(__dirname, 'src/pages') },
       { find: '@routes', replacement: path.resolve(__dirname, 'src/routes') },
@@ -33,6 +33,8 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src/services'),
       },
       { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
+      { find: '@config', replacement: path.resolve(__dirname, 'src/config') },
+      { find: '@store', replacement: path.resolve(__dirname, 'src/store') },
     ],
   },
 })
