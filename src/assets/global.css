@@ -45,6 +45,8 @@ html {
   @apply xl:text-[12rem] text-[7rem] xl:leading-[11rem] leading-[7rem] font-black text-black;
 }
 
+/*TODO change to tailwind*/
+
 .button:hover {
   transform: translateY(4px);
   box-shadow: 1px 2px 0px 0px #000;
