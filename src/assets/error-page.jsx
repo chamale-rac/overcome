@@ -2,13 +2,10 @@
 // Author: Samuel Chamalé
 // Created at: 22-04-2023
 
-// BEGIN IMPORTS //
-// dependencies
 import React from 'react'
 import { useRouteError } from 'react-router-dom'
-// END IMPORTS //
 
-export const ErrorPage = () => {
+const ErrorPage = () => {
   const error = useRouteError()
   return (
     <div id="error-page">
@@ -20,3 +17,4 @@ export const ErrorPage = () => {
     </div>
   )
 }
+export default ErrorPage

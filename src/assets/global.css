@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Overpass+Mono:wght@300;400;500;600;700&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+/*
+font-family: 'Bebas Neue', cursive;
+font-family: 'Overpass Mono', monospace;
+font-family: 'Roboto Mono', monospace;
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: 'Roboto Mono', monospace;
+}
+
+/*For headers*/
+.font-bebas-neue {
+  font-family: 'Bebas Neue', cursive;
+}
+
+/*For especial text*/
+.font-overpass-mono {
+  font-family: 'Overpass Mono', monospace;
+}
+
+/*For normal text*/
+.font-roboto-mono {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.app {
+  @apply relative w-full h-screen overflow-hidden;
+}
+
+.home {
+  @apply w-fit xl:h-full flex xl:justify-between justify-start items-start flex-col xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-7 absolute z-10;
+}
+
+.home-content {
+  @apply flex-1 xl:justify-center justify-start flex flex-col gap-2;
+}
+
+.head-text {
+  @apply xl:text-[12rem] text-[7rem] xl:leading-[11rem] leading-[7rem] font-black text-black;
+}
+
+/*TODO change to tailwind*/
+
+.button:hover {
+  transform: translateY(4px);
+  box-shadow: 1px 2px 0px 0px #000;
+}
+
+.button {
+  box-shadow: 5px 5px 0px 0px #000;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.1s ease-in-out;
+  border: 3px solid black;
+}
