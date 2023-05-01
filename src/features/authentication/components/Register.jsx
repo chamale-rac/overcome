@@ -6,7 +6,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 const Register = (props) => {
-  return <div>Register</div>
+  return <div>Clear</div>
 }
 
 Register.propTypes = {}

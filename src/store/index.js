@@ -7,3 +7,7 @@ export const landing = proxy({
 export const session = proxy({
   color: '#EFBD48',
 })
+
+export const theme = proxy({
+  backgroundColor: '#f8f6dd',
+})

@@ -11,6 +11,7 @@ font-family: 'Roboto Mono', monospace;
 @tailwind utilities;
 
 html {
+  background-color: #f8f6dd;
   font-family: 'Roboto Mono', monospace;
 }
 
@@ -34,11 +35,11 @@ html {
 }
 
 .home {
-  @apply w-fit xl:h-full flex xl:justify-between justify-start items-start flex-col xl:py-8 xl:px-36 sm:p-8 p-6 max-xl:gap-7 absolute z-10;
+  @apply w-full xl:h-full flex xl:justify-between justify-start items-start flex-col  max-xl:gap-7 absolute z-10;
 }
 
 .home-content {
-  @apply flex-1 xl:justify-center justify-start flex flex-col gap-2;
+  @apply flex-1 xl:justify-center justify-start flex flex-col gap-2 xl:mx-32 mx-6;
 }
 
 .head-text {
@@ -56,5 +57,5 @@ html {
   box-shadow: 5px 5px 0px 0px #000;
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.1s ease-in-out;
-  border: 3px solid black;
+  border: 2px solid black;
 }

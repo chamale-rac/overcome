@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { Intro, Auth } from '@components/Landing'
 
 const Landing = () => {
