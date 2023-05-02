@@ -1,7 +1,8 @@
-import Button from './Button/Button'
+import NavButton from './NavButton/NavButton'
 import Loading from './Loading/Loading'
-import Eye from './Eye/Eye'
+import ToggleView from './ToggleView/ToggleView'
 import Notification from './Notification/Notification'
 import Input from './Input/Input'
+import Button from './Button/Button'
 
-export { Button, Loading, Eye, Notification, Input }
+export { NavButton, Loading, ToggleView, Notification, Input, Button }

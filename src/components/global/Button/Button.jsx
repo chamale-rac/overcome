@@ -1,32 +1,24 @@
-import React from 'react'
-import { useSnapshot } from 'valtio'
+import styles from './Button.module.css'
 
-const Button = ({ children, type, customStyles, handleClick }) => {
-  const generateStyle = (type) => {
-    if (type === 'normal') {
-      return {
-        backgroundColor: 'white',
-        color: 'black',
-      }
-    } else if (type === 'link') {
-      return {
-        backgroundColor: 'transparent',
-        color: 'grey',
-      }
-    }
-  }
-
-  return (
+const Button = ({
+  children,
+  onClick,
+  type = 'primary',
+  disabled = false,
+  loading = false,
+}) => (
     <button
-      className={`px-2 py-1.5 flex-1  ${
-        type === 'link' ? ' ' : 'button'
-      } font-overpass-mono ${customStyles}`}
-      style={generateStyle(type)}
-      onClick={handleClick}
+      className={`${styles.button} ${type === 'primary' ? styles.primary : styles.secondary}`}
+      type="button"
+      onClick={() => {
+        if (!loading && !disabled) {
+          onClick()
+        }
+      }}
+      disabled={disabled}
     >
-      {children}
+      <span>{loading ? '...' : children}</span>
     </button>
   )
-}
 
 export default Button

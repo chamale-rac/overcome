@@ -5,7 +5,7 @@ import { landing } from '@context'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { Button } from '@components/global'
+import { NavButton } from '@components/global'
 
 import { fadeAnimation, fastFadeAnimation } from '@config/motion'
 
@@ -27,13 +27,13 @@ const Auth = () => {
             className="absolute z-10 top-5 right-5"
             {...fadeAnimation}
           >
-            <Button
+            <NavButton
               type="normal"
               handleClick={() => (landing.intro = true)}
               customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base"
             >
               ⇐ Return
-            </Button>
+            </NavButton>
           </motion.div>
         </>
       )}

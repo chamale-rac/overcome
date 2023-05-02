@@ -1,9 +1,6 @@
 import { useState } from 'react'
-import dotenv from 'dotenv'
 
-dotenv.config()
-
-const apiUrl = process.env.API_URL
+const apiUrl = 'http://127.0.0.1:5000'
 
 const useApi = () => {
   const [data, setData] = useState(null)
