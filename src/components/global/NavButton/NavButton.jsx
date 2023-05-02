@@ -1,11 +1,7 @@
 import React from 'react'
 import { useSnapshot } from 'valtio'
 
-import { session } from '@store'
-
-const Button = ({ children, type, customStyles, handleClick }) => {
-  const snap = useSnapshot(session)
-
+const NavButton = ({ children, type, customStyles, handleClick }) => {
   const generateStyle = (type) => {
     if (type === 'normal') {
       return {
@@ -33,4 +29,4 @@ const Button = ({ children, type, customStyles, handleClick }) => {
   )
 }
 
-export default Button
+export default NavButton

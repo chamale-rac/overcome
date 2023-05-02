@@ -1,0 +1,27 @@
+.notification {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(153, 255, 71, 1);
+  background-color: rgba(153, 255, 71, 0.2);
+  color: rgba(153, 255, 71, 1);
+}
+
+.notification.danger {
+  border: 1px solid rgba(201, 17, 71, 1);
+  background-color: rgba(201, 17, 71, 0.2);
+  color: rgba(201, 17, 71, 1);
+}
+
+.notification.warning {
+  border: 1px solid rgba(255, 179, 19, 1);
+  background-color: rgba(255, 179, 19, 0.2);
+  color: rgba(255, 179, 19, 1);
+}
+
+.notification > span {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 3px;
+}
