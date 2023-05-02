@@ -16,17 +16,8 @@ const Auth = () => {
   return (
     <AnimatePresence>
       {!snap.intro && (
-        <>
-          <motion.div
-            className="flex flex-col items-center justify-center h-screen"
-            {...fastFadeAnimation}
-          >
-            <Register />
-          </motion.div>
-          <motion.div
-            className="absolute z-10 top-5 right-5"
-            {...fadeAnimation}
-          >
+        <motion.div className="flex flex-col">
+          <motion.div className="self-end mr-10 mt-10 mb-10" {...fadeAnimation}>
             <NavButton
               type="normal"
               handleClick={() => (landing.intro = true)}
@@ -35,7 +26,20 @@ const Auth = () => {
               ⇐ Return
             </NavButton>
           </motion.div>
-        </>
+          <motion.div
+            className="flex flex-col items-center justify-center h-full"
+            {...fastFadeAnimation}
+          >
+            <Register />
+            <NavButton
+              type="link"
+              handleClick={() => alert('go login')}
+              customStyles="w-fit px-4 py-2.5 font-bold rounded-full text-base mb-20"
+            >
+              Already have an account?
+            </NavButton>
+          </motion.div>
+        </motion.div>
       )}
     </AnimatePresence>
   )

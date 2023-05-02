@@ -94,11 +94,11 @@ export const fastSlideAnimation = (direction, duration = 0.8) => {
 export const fastFadeAnimation = {
   initial: {
     opacity: 0,
-    transition: { type: 'spring', duration: 0.8, delay: 0.5 },
+    transition: { type: 'spring', duration: 1, delay: 2 },
   },
   animate: {
     opacity: 1,
-    transition: { ...transition, delay: 0 },
+    transition: { ...transition, delay: 0.18 },
   },
   exit: {
     opacity: 0,

@@ -8,12 +8,17 @@ const Input = ({
   onChange,
   type,
   required,
-  placeholder
+  placeholder,
+  error,
 }) => {
   return (
     <div className={styles.inputContainer}>
       <label htmlFor={name}>
-        <span>{label || name}{required ? '*' : ''}</span>
+        <span className="font-overpass-mono">
+          {label || name}
+          {/*TODO consider adding * when required */}
+          {required ? '' : ''}:
+        </span>
         <input
           id={name}
           name={name}
@@ -23,6 +28,16 @@ const Input = ({
           placeholder={placeholder}
         />
       </label>
+      {error && (
+        <div className={styles.inputAlert}>
+          {error.split('\n').map((line) => (
+            <>
+              {line}
+              <br />
+            </>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

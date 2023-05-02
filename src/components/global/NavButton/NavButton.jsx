@@ -11,7 +11,8 @@ const NavButton = ({ children, type, customStyles, handleClick }) => {
     } else if (type === 'link') {
       return {
         backgroundColor: 'transparent',
-        color: 'grey',
+        color: 'black',
+        opacity: '0.7',
       }
     }
   }

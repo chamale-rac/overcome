@@ -66,7 +66,7 @@ const Intro = () => {
                 handleClick={() => (landing.intro = false)}
                 customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base"
               >
-                Get Started
+                Get Started ⇒
               </NavButton>
             </motion.div>
           </motion.div>

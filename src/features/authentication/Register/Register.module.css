@@ -6,3 +6,16 @@
   box-shadow: 5px 5px 0px 0px #000;
   padding: 32px;
 }
+.title {
+  margin-bottom: 1rem;
+}
+aside {
+  position: relative;
+}
+
+aside > span {
+  position: absolute;
+  right: 10px;
+  top: 25px;
+  cursor: pointer;
+}
