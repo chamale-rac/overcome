@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSnapshot } from 'valtio'
-import './Landing.css'
+import * as introStyles from './Intro.module.css'
 
 import arcade from '@assets/svg/arcade_transparent_bg.svg'
 
@@ -12,11 +12,11 @@ import {
   fadeAnimation,
 } from '@config/motion'
 
-import { landing } from '@store'
+import { landing } from '@context'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { Button } from '@components/ui'
+import { Button } from '@components/global'
 
 const Intro = () => {
   const snap = useSnapshot(landing)
@@ -26,7 +26,7 @@ const Intro = () => {
         <motion.section className="home">
           <motion.header
             {...slideAnimation('down')}
-            className="landing-navbar xl:px-32 px-6 pt-3 pb-3.5 mt-4"
+            className={`${introStyles.landing_navbar} xl:px-32 px-6 pt-3 pb-3.5 mt-4`}
           >
             <div className="flex flex-row items-center justify-center gap-2">
               <img

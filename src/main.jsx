@@ -6,7 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import NonAuth from '@routes/NonAuth'
+import NonAuth from '@routes/non-auth'
 import '@assets/global.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -1,15 +1,15 @@
 import React from 'react'
 import { useSnapshot } from 'valtio'
 
-import { landing } from '@store'
+import { landing } from '@context'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { Button } from '@components/ui'
+import { Button } from '@components/global'
 
 import { fadeAnimation, fastFadeAnimation } from '@config/motion'
 
-import { Register } from '@features/authentication/components'
+import { Register } from '@features/authentication'
 
 const Auth = () => {
   const snap = useSnapshot(landing)

@@ -1,0 +1,24 @@
+.inputContainer {
+  font-family: Arial;
+  font-size: 24px;
+}
+
+.inputContainer label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  user-select: none;
+}
+
+.inputContainer label span {
+  font-size: 0.5em;
+  color: #333;
+  text-transform: capitalize;
+}
+
+.inputContainer label input {
+  outline: none;
+  padding: 5px 10px;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+}

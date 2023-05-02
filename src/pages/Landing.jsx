@@ -1,5 +1,5 @@
 import React from 'react'
-import { Intro, Auth } from '@components/Landing'
+import { Intro, Auth } from '@components/pages/landing'
 
 const Landing = () => {
   return (

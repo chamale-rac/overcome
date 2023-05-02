@@ -1,11 +1,7 @@
 import React from 'react'
 import { useSnapshot } from 'valtio'
 
-import { session } from '@store'
-
 const Button = ({ children, type, customStyles, handleClick }) => {
-  const snap = useSnapshot(session)
-
   const generateStyle = (type) => {
     if (type === 'normal') {
       return {
