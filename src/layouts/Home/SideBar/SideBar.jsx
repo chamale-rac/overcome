@@ -12,7 +12,7 @@ const SideBar = ({ links }) => {
       <img
         src="/icon.svg"
         alt="logo"
-        className="w-12 h-12 object-contain mb-4"
+        className="w-14 h-14 object-contain mb-4"
       />
       <div className={styles.links}>
         {links.map((link) => {
