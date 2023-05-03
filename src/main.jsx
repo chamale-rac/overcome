@@ -9,6 +9,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import NonAuth from '@routes/non-auth'
 import '@assets/global.css'
 
+// TODO check for correct root
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={NonAuth} />
