@@ -32,7 +32,7 @@ const Auth = () => {
         >
           <Login
             customStyles={'xl:mt-36'}
-            successAction={() => navigate('/')}
+            successAction={() => navigate('/home')}
           />
           <NavButton
             type="link"

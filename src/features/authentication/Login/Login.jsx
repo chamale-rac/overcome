@@ -95,7 +95,7 @@ const Login = ({ customStyles, successAction, failAction }) => {
           }
           loading={loading}
         >
-          Sign up
+          Sign in
         </Button>
       </div>
     </div>

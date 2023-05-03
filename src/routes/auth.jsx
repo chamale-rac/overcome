@@ -8,6 +8,8 @@ import { ErrorPage } from '@assets'
 
 import { Landing, Login } from '@pages'
 
+import { Home } from '@layouts'
+
 const Auth = createBrowserRouter([
   {
     path: '/',
@@ -18,6 +20,17 @@ const Auth = createBrowserRouter([
     path: '/login',
     element: <Login />,
     errorElement: <ErrorPage />,
+  },
+  {
+    path: '/home',
+    element: <Home />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/a',
+        element: <div>Home</div>,
+      },
+    ],
   },
 ])
 
