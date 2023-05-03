@@ -1,2 +1,4 @@
 import Register from './Register/Register'
-export { Register }
+import Login from './Login/Login'
+
+export { Register, Login }

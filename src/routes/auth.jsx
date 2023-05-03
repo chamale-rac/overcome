@@ -8,7 +8,7 @@ import { ErrorPage } from '@assets'
 
 import { Landing, Login } from '@pages'
 
-const NonAuth = createBrowserRouter([
+const Auth = createBrowserRouter([
   {
     path: '/',
     element: <Landing />,
@@ -21,4 +21,4 @@ const NonAuth = createBrowserRouter([
   },
 ])
 
-export default NonAuth
+export default Auth

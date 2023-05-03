@@ -4,8 +4,7 @@ export default {
   title: 'Inputs/Input',
   component: Input,
   tags: ['autodocs'],
-  argTypes: {
-  },
+  argTypes: {},
 }
 
 export const asText = {
@@ -16,7 +15,7 @@ export const asText = {
     onChange: () => {},
     type: 'text',
     required: true,
-    placeholder: 'Denn1s'
+    placeholder: 'Chama',
   },
 }
 
@@ -28,10 +27,9 @@ export const asPassword = {
     onChange: () => {},
     type: 'password',
     required: true,
-    placeholder: ''
+    placeholder: '',
   },
 }
-
 
 export const asNumber = {
   args: {
@@ -41,6 +39,6 @@ export const asNumber = {
     onChange: () => {},
     type: 'number',
     required: true,
-    placeholder: ''
+    placeholder: '',
   },
 }

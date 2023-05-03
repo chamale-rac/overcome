@@ -5,6 +5,8 @@ import { landing } from '@context'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
+import { useNavigate } from 'react-router-dom'
+
 import { NavButton } from '@components/global'
 
 import { fadeAnimation, fastFadeAnimation } from '@config/motion'
@@ -12,6 +14,7 @@ import { fadeAnimation, fastFadeAnimation } from '@config/motion'
 import { Register } from '@features/authentication'
 
 const Auth = () => {
+  const navigate = useNavigate()
   const snap = useSnapshot(landing)
   return (
     <AnimatePresence>
@@ -23,7 +26,7 @@ const Auth = () => {
               handleClick={() => (landing.intro = true)}
               customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base"
             >
-              ⇐ Return
+              ⇐ Landing
             </NavButton>
           </motion.div>
           <motion.div
@@ -33,7 +36,7 @@ const Auth = () => {
             <Register />
             <NavButton
               type="link"
-              handleClick={() => alert('go login')}
+              handleClick={() => navigate('/login')}
               customStyles="w-fit px-4 py-2.5 font-bold rounded-full text-base mb-20"
             >
               Already have an account?

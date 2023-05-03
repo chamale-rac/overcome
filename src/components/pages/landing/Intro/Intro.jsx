@@ -14,11 +14,14 @@ import {
 
 import { landing } from '@context'
 
+import { useNavigate } from 'react-router-dom'
+
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { NavButton } from '@components/global'
 
 const Intro = () => {
+  const navigate = useNavigate()
   const snap = useSnapshot(landing)
   return (
     <AnimatePresence>
@@ -39,7 +42,7 @@ const Intro = () => {
             <div>
               <NavButton
                 type="link"
-                handleClick={() => (landing.intro = false)}
+                handleClick={() => navigate('/login')}
                 customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base"
               >
                 Login
