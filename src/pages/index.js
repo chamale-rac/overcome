@@ -1,2 +1,3 @@
 import Landing from './Landing'
-export { Landing }
+import Login from './Login'
+export { Landing, Login }

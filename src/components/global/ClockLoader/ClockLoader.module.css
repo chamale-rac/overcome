@@ -1,0 +1,95 @@
+.loader {
+  position: relative;
+}
+.loader::before {
+  width: 1em;
+  height: 1em;
+  font-size: 1.2rem;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  /*
+  @param $emoji-list: This is a list of the emojis you want in the animation
+  @param $loader-name: Define a different name for the loader animation
+  @param $step-duration: Define how long each emoji is displayed
+  @param $prefix: This allows you to add a prefix such as "Loading… " to have that text show next to the changing emoji - you might want to adjust the .loader class's width, height and font-size.
+  */
+  content: '' '🕛';
+  -webkit-animation: emojiLoader 0.96s steps(11) infinite forwards 0s;
+  animation: emojiLoader 0.96s steps(11) infinite forwards 0s;
+}
+@-webkit-keyframes emojiLoader {
+  0% {
+    content: '' '🕛';
+  }
+  8.3333333333% {
+    content: '' '🕐';
+  }
+  16.6666666667% {
+    content: '' '🕑';
+  }
+  25% {
+    content: '' '🕒';
+  }
+  33.3333333333% {
+    content: '' '🕓';
+  }
+  41.6666666667% {
+    content: '' '🕔';
+  }
+  50% {
+    content: '' '🕕';
+  }
+  58.3333333333% {
+    content: '' '🕖';
+  }
+  66.6666666667% {
+    content: '' '🕗';
+  }
+  75% {
+    content: '' '🕘';
+  }
+  83.3333333333% {
+    content: '' '🕙';
+  }
+  91.6666666667% {
+    content: '' '🕚';
+  }
+}
+@keyframes emojiLoader {
+  0% {
+    content: '' '🕛';
+  }
+  8.3333333333% {
+    content: '' '🕐';
+  }
+  16.6666666667% {
+    content: '' '🕑';
+  }
+  25% {
+    content: '' '🕒';
+  }
+  33.3333333333% {
+    content: '' '🕓';
+  }
+  41.6666666667% {
+    content: '' '🕔';
+  }
+  50% {
+    content: '' '🕕';
+  }
+  58.3333333333% {
+    content: '' '🕖';
+  }
+  66.6666666667% {
+    content: '' '🕗';
+  }
+  75% {
+    content: '' '🕘';
+  }
+  83.3333333333% {
+    content: '' '🕙';
+  }
+  91.6666666667% {
+    content: '' '🕚';
+  }
+}

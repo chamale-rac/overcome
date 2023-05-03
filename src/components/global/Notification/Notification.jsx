@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
 import styles from './Notification.module.css'
 
-const Notification = ({
-  children,
-  type,
-  dismissable
-}) => {
+const Notification = ({ children, type, dismissable, customStyles }) => {
   const [show, setShow] = useState(true)
 
   if (!show) {
@@ -13,14 +9,8 @@ const Notification = ({
   }
 
   return (
-    <div className={`${styles.notification} ${styles[type]}`}>
-      {
-        dismissable ? (
-          <span onClick={() => setShow(false)}>
-            &times;
-          </span>
-        ) : null
-      }
+    <div className={`${styles.notification} ${styles[type]} ${customStyles}`}>
+      {dismissable ? <span onClick={() => setShow(false)}>&times;</span> : null}
       {children}
     </div>
   )

@@ -6,7 +6,7 @@ const useForm = (
   initialErrorMessages,
   initialErrorPrompts,
 ) => {
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(true)
   const [values, setValues] = useState(initialValues)
   const [errorMessages, setErrorMessages] = useState(initialErrorMessages)
   const [errorPrompts, setErrorPrompts] = useState(initialErrorPrompts)
@@ -35,16 +35,18 @@ const useForm = (
     const validation = schema.extract(field).validate(value)
     if (validation.error) {
       setErrorMessage(field, errorPrompts[field])
+      setError(true)
     } else {
       console.log(`Validation successful for field ${field}`)
       setErrorMessage(field, false)
+      setError(false)
     }
   }
 
   const validate = () => {
     const validation = schema.validate(values)
     if (validation.error) {
-      setError(validation.error.toString())
+      setError(true)
       return false
     }
     setError(false)
@@ -56,9 +58,9 @@ const useForm = (
     setValue,
     setValues,
     onChange,
-    validate,
     error,
     errorMessages,
+    validate,
   }
 }
 
