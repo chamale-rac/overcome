@@ -10,6 +10,7 @@ import { Landing, Login } from '@pages'
 
 import { Home } from '@layouts'
 
+import UserEvents from '@features/render/RenderEvents'
 // Move home to auth root
 
 const Auth = createBrowserRouter([
@@ -38,7 +39,7 @@ const Auth = createBrowserRouter([
       },
       {
         path: '/home/events',
-        element: <div>Events</div>,
+        element: <UserEvents />,
       },
     ],
   },

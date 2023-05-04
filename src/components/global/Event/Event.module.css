@@ -1,0 +1,22 @@
+.container {
+  background-color: #4CC9F0;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  box-shadow: 5px 5px 0px 0px #000;
+}
+
+.container h1 {
+  font-family: 'Figtree', sans-serif;
+  font-size: x-large;
+  text-align: center;
+  margin: 0 auto 20px auto;
+  height: fit-content;
+}
+
+.flex {
+  display: flex;
+}
