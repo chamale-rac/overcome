@@ -1,5 +1,4 @@
 import * as styles from './UserEvents.module.css'
-// import Event from '../../Components/Event'
 import Event from '@components/global/Event'
 
 function UserEvents() {
@@ -34,6 +33,9 @@ function UserEvents() {
         <Event 
           name="Spiderman PS4"
         />
+        {/* <Event 
+          name="Spiderman PS5"
+        /> */}
       </div>
     </div>
   )
