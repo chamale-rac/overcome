@@ -4,15 +4,19 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import NonAuth from '@routes/non-auth'
+import App from '@routes/App'
 import '@assets/global.css'
 
-// TODO check for correct root
+// TODO check for correct root (not anymore, I think)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={NonAuth} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
 )

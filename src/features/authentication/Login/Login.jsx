@@ -13,6 +13,10 @@ import { useApi, useForm } from '@hooks'
 
 import { loginSchema } from '@schemas'
 
+import { authStore } from '@context'
+
+import axios from '@api/axios'
+
 const Login = ({ customStyles, successAction, failAction }) => {
   const [loading, setLoading] = useState(false)
   const [handleError, setHandleError] = useState()
@@ -26,9 +30,41 @@ const Login = ({ customStyles, successAction, failAction }) => {
   )
 
   const postLogin = async (username, password) => {
-    /*HANDLE REQUEST */
-    alert('handle request')
-    successAction()
+    setLoading(true)
+    const response = await handleRequest(
+      'post',
+      '/auth/login',
+      {
+        username,
+        password,
+      },
+      {},
+      true,
+    )
+    if (response) {
+      if (response.status === 200) {
+        const { id, username, auth_token } = response.data
+
+        authStore.auth.setAuth({
+          isAuthenticated: true,
+          authToken: auth_token,
+          user: { id, username },
+        })
+
+        setLoading(false)
+        setHandleError(null)
+        successAction()
+      } else if (response.status === 404) {
+        setLoading(false)
+        setHandleError('User not found')
+      } else if (response.status === 401) {
+        setLoading(false)
+        setHandleError('Invalid credentials')
+      } else {
+        setLoading(false)
+        setHandleError('Something went wrong')
+      }
+    }
   }
 
   const handleLogin = () => {

@@ -27,8 +27,29 @@ const Register = ({ customStyles }) => {
 
   const postRegister = async (username, password) => {
     /*HANDLE REQUEST */
-    alert('handle request')
+
     setLoading(!loading)
+
+    const response = await handleRequest('post', '/register', {
+      username,
+      password,
+    })
+
+    if (response) {
+      console.log(response.status)
+      if (response.status === 201) {
+        console.log('response', response)
+        setLoading(false)
+        setHandleError(null)
+        alert('User created successfully')
+      } else {
+        setLoading(false)
+        setHandleError(response.data.message)
+      }
+    } else {
+      setLoading(false)
+      setHandleError('Something went wrong')
+    }
   }
 
   const handleRegister = () => {
