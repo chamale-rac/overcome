@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.14",
-    "axios": "^1.4.0",
+    "axios": "0.24.0",
     "eslint": "^7.32.0 || ^8.2.0",
     "framer-motion": "^10.12.4",
     "init": "^0.1.2",
