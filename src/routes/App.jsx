@@ -10,6 +10,8 @@ import RequireAuth from '@components/requireAuth'
 
 import { Routes, Route } from 'react-router-dom'
 
+import HomePage from '@features/render/HomePage'
+
 /*
 TODO: Add roles to users and use them to restrict access to certain routes
 const ROLES = {
@@ -30,6 +32,7 @@ function App() {
       {/* protected */}
       <Route element={<RequireAuth />}>
         <Route path="/home" element={<Home />}>
+          <Route path="/home" element={<HomePage />} />
           <Route path="/home/profile" element={<div>Profile</div>} />
           <Route path="/home/events" element={<UserEvents />} />
         </Route>

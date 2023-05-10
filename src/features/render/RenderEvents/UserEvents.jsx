@@ -60,7 +60,7 @@ const events = [
   },
 ]
 
-function UserEvents() {
+function UserEvents({ event }) {
   const refresh = useRefreshToken()
   const [userEvents, setUserEvents] = useState([])
 
