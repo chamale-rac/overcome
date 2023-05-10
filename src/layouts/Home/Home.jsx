@@ -22,6 +22,11 @@ const Home = () => {
       path: '/home/profile',
       icon: '🤖',
     },
+    {
+      name: 'Sign out',
+      path: '/',
+      icon: '📤',
+    },
   ]
 
   const config = {
