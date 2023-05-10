@@ -71,7 +71,7 @@ function UserEvents({ event }) {
   return (
     <div className={styles.root}>
       <h1>My Events</h1>
-      <button onClick={() => refresh()}>Refresh</button>
+      {/* <button onClick={() => refresh()}>Refresh</button> */}
       <div className={styles.container}>
         {
           userEvents.map( event => (

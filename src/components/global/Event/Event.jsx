@@ -8,7 +8,7 @@ function Event({ name, people, hour, date, link }) {
         <p>Hour: {hour}</p>
         <p>Date: {date}</p>
           <div>People: {people}</div>
-        <a href={link} >{link}</a>
+        <a>{link}</a>
       </div>
   )
 }
