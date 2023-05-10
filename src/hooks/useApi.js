@@ -1,6 +1,6 @@
+import axios from 'axios'
 import { useState } from 'react'
-
-const apiUrl = 'http://127.0.0.1:3000'
+import { SERVER_BASE_URL } from '@utils/constants'
 
 const useApi = () => {
   const [data, setData] = useState(null)
@@ -20,11 +20,11 @@ const useApi = () => {
         ...headers,
         'Content-Type': 'application/json',
       },
-      credentials: withCredentials ? 'include' : 'omit',
+      withCredentials,
     }
 
     if (method !== 'GET') {
-      options.body = JSON.stringify(body)
+      options.data = body
     }
 
     setLoading(true)
@@ -33,15 +33,14 @@ const useApi = () => {
 
     try {
       console.info('API CALL', method, path)
-      console.info('url', `${apiUrl}${path}`)
-      const fetchResponse = await fetch(`${apiUrl}${path}`, options)
-      const jsonResponse = await fetchResponse.json()
+      console.info('url', `${SERVER_BASE_URL}${path}`)
+      const axiosResponse = await axios(`${SERVER_BASE_URL}${path}`, options)
 
-      console.info('API RESPONSE', jsonResponse)
+      console.info('API RESPONSE', axiosResponse)
 
       response = {
-        status: fetchResponse.status,
-        data: jsonResponse,
+        status: axiosResponse.status,
+        data: axiosResponse.data,
       }
     } catch (e) {
       console.error('Error in api call', e)

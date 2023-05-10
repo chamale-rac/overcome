@@ -15,8 +15,6 @@ import { loginSchema } from '@schemas'
 
 import { authStore } from '@context'
 
-import axios from '@api/axios'
-
 const Login = ({ customStyles, successAction, failAction }) => {
   const [loading, setLoading] = useState(false)
   const [handleError, setHandleError] = useState()
