@@ -80,7 +80,7 @@ const Login = ({ customStyles, successAction, failAction }) => {
       className={`${styles.container} rounded-md xl:w-1/5 w-4/5 m-6 ${customStyles}`}
     >
       <h1 className={`${styles.title} font-bebas-neue text-[4rem]`}>
-        Sign in ✔️
+        Sign in 🔑
       </h1>
       <div>
         <Input
