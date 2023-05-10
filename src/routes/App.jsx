@@ -12,6 +12,10 @@ import { Routes, Route } from 'react-router-dom'
 
 import HomePage from '@features/render/HomePage'
 
+import GlobalEvents from '@features/render/RenderGlobalEvents'
+
+import Profile from '@features/render/RenderProfile'
+
 /*
 TODO: Add roles to users and use them to restrict access to certain routes
 const ROLES = {
@@ -33,8 +37,9 @@ function App() {
       <Route element={<RequireAuth />}>
         <Route path="/home" element={<Home />}>
           <Route path="/home" element={<HomePage />} />
-          <Route path="/home/profile" element={<div>Profile</div>} />
-          <Route path="/home/events" element={<UserEvents />} />
+          <Route path="/home/profile" element={<Profile />} />
+          <Route path="/home/events" element={<GlobalEvents />} />
+          <Route path="/home/myevents" element={<UserEvents />} />
         </Route>
       </Route>
 

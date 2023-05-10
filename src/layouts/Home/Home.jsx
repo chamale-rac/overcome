@@ -15,6 +15,11 @@ const Home = () => {
     {
       name: 'Events',
       path: '/home/events',
+      icon: '🎮'
+    },
+    {
+      name: 'My Events',
+      path: '/home/myevents',
       icon: '🎉',
     },
     {

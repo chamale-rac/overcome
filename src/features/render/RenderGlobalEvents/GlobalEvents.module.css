@@ -1,9 +1,4 @@
-* {
-  font-family: 'Figtree', sans-serif;
-  font-weight: 500;
-}
-
-.root {
+.container {
   border-radius: 5px;
   margin: 0;
   background-color: white;
@@ -19,15 +14,15 @@
   box-shadow: 5px 5px 0px 0px #000;
 }
 
-.root::-webkit-scrollbar{
+.container::-webkit-scrollbar{
   width: 10px;
 }
 
-.root::-webkit-scrollbar-thumb:hover {
+.container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
-.root h1 {
+.container h1 {
   font-family: 'Bebas Neue', cursive;
   font-size: 70px;
   font-weight: bold;
@@ -37,7 +32,17 @@
   padding: 0;
 }
 
-.container {
+.container h2 {
+  font-family: 'Overpass Mono', monospace;
+  font-size: x-large;
+  font-weight: bold;
+  height: fit-content;
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+}
+
+.eventsContainer {
   width: 90%;
   height: 100%;
   display: grid;
@@ -49,4 +54,10 @@
   margin-right: auto;
   margin-bottom: 50px;
   grid-gap: 20px;
+}
+
+.eventsContainer h1 {
+  text-align: center;
+  font-size: xx-large;
+  margin: 0 auto 0 auto;
 }
