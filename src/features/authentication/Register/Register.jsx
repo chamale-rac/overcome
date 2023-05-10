@@ -13,9 +13,10 @@ import { useApi, useForm } from '@hooks'
 
 import { registerSchema } from '@schemas'
 
-const Register = ({ customStyles }) => {
+const Register = ({ customStyles, successAction, failAction }) => {
   const [loading, setLoading] = useState(false)
   const [handleError, setHandleError] = useState()
+  const [handleSuccess, setHandleSuccess] = useState()
   const { handleRequest } = useApi()
   const [showPassword, setShowPassword] = useState([false, false])
   const form = useForm(
@@ -25,15 +26,22 @@ const Register = ({ customStyles }) => {
     registerSchema.initialErrorPrompts,
   )
 
-  const postRegister = async (username, password) => {
-    /*HANDLE REQUEST */
+  const postRegister = async (username, email, name, lastname, password) => {
+    setLoading(true)
 
-    setLoading(!loading)
-
-    const response = await handleRequest('post', '/register', {
-      username,
-      password,
-    })
+    const response = await handleRequest(
+      'post',
+      '/register',
+      {
+        username,
+        name,
+        lastname,
+        email,
+        password,
+      },
+      {},
+      true,
+    )
 
     if (response) {
       console.log(response.status)
@@ -41,13 +49,23 @@ const Register = ({ customStyles }) => {
         console.log('response', response)
         setLoading(false)
         setHandleError(null)
-        alert('User created successfully')
-      } else {
+        setHandleSuccess('User created successfully!')
+      } else if (response.status === 409) {
         setLoading(false)
-        setHandleError(response.data.message)
+        setHandleSuccess(null)
+        setHandleError('This username is already in use')
+      } else if (response.status === 400) {
+        setLoading(false)
+        setHandleSuccess(null)
+        setHandleError('Username and password are required')
+      } else if (response.status === 500) {
+        setLoading(false)
+        setHandleSuccess(null)
+        setHandleError('Server error, try later')
       }
     } else {
       setLoading(false)
+      setHandleSuccess(null)
       setHandleError('Something went wrong')
     }
   }
@@ -55,7 +73,13 @@ const Register = ({ customStyles }) => {
   const handleRegister = () => {
     console.log('handle register')
     if (!form.error) {
-      postRegister(form.values.username, form.values.password)
+      postRegister(
+        form.values.username,
+        form.values.email,
+        form.values.name,
+        form.values.last_name,
+        form.values.password,
+      )
     }
   }
 
@@ -140,6 +164,7 @@ const Register = ({ customStyles }) => {
                 : null
             }
           />
+
           {form.values.password2 && (
             <ToggleView
               open={showPassword[1]}
@@ -156,24 +181,44 @@ const Register = ({ customStyles }) => {
           </Notification>
         ) : null}
 
-        <Button
-          type="primary"
-          onClick={handleRegister}
-          disabled={
-            form.error ||
-            form.values.password !== form.values.password2 ||
-            form.values.password === '' ||
-            form.values.password2 === '' ||
-            form.values.username === '' ||
-            form.values.email === '' ||
-            form.values.name === '' ||
-            form.values.last_name === '' ||
-            loading
-          }
-          loading={loading}
-        >
-          Sign up
-        </Button>
+        {
+          /*
+          Consider change button style
+           */
+          handleSuccess ? (
+            <Notification type="" customStyles="mb-3">
+              <p className="mb-1 p-1">{handleSuccess}</p>
+              <Button
+                customStyles="mb-1"
+                type="primary"
+                onClick={successAction}
+              >
+                Let's go! 🚀
+              </Button>
+            </Notification>
+          ) : null
+        }
+
+        {!handleSuccess ? (
+          <Button
+            type="primary"
+            onClick={handleRegister}
+            disabled={
+              form.error ||
+              form.values.password !== form.values.password2 ||
+              form.values.password === '' ||
+              form.values.password2 === '' ||
+              form.values.username === '' ||
+              form.values.email === '' ||
+              form.values.name === '' ||
+              form.values.last_name === '' ||
+              loading
+            }
+            loading={loading}
+          >
+            Sign up
+          </Button>
+        ) : null}
       </div>
     </div>
   )

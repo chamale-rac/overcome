@@ -1,9 +1,17 @@
+/*
+Please consider not using * operator cause even it is in a module affect all.
+Att: chama
+Para: daniel gomez
 * {
   font-family: 'Figtree', sans-serif;
   font-weight: 500;
 }
+*/
 
 .root {
+  font-family: 'Figtree', sans-serif;
+  font-weight: 500;
+
   border-radius: 5px;
   margin: 0;
   background-color: white;
@@ -19,7 +27,7 @@
   box-shadow: 5px 5px 0px 0px #000;
 }
 
-.root::-webkit-scrollbar{
+.root::-webkit-scrollbar {
   width: 10px;
 }
 

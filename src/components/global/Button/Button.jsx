@@ -7,11 +7,12 @@ const Button = ({
   type = 'primary',
   disabled = false,
   loading = false,
+  customStyles = '',
 }) => (
   <button
     className={`${styles.button} ${
       type === 'primary' ? styles.primary : styles.secondary
-    } ${loading ? styles.loading : ''}`}
+    } ${loading ? styles.loading : ''} ${customStyles}`}
     type="button"
     onClick={() => {
       if (!loading && !disabled) {
