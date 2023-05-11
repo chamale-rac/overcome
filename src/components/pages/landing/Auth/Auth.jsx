@@ -33,7 +33,7 @@ const Auth = () => {
             className="flex flex-col items-center justify-center h-full"
             {...fastFadeAnimation}
           >
-            <Register />
+            <Register successAction={() => navigate('/login')} />
             <NavButton
               type="link"
               handleClick={() => navigate('/login')}
