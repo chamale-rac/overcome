@@ -10,10 +10,6 @@ font-family: 'Roboto Mono', monospace;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  transition: all 0.2s ease-in-out;
-}
-
 html {
   background-color: #f8f6dd;
   font-family: 'Roboto Mono', monospace;
