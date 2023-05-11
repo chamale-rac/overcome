@@ -1,88 +1,73 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useApi } from '@hooks'
 import * as styles from './GlobalEvents.module.css'
-import Event from '@components/global/Event'
-
-function findSimilarStrings(inputString, stringArray) {
-  const similarStrings = [];
-  for (let i = 0; i < stringArray.length; i++) {
-    const currentString = stringArray[i].title;
-    if (currentString.includes(inputString)) {
-      similarStrings.push(stringArray[i]);
-    }
-  }
-  return similarStrings;
-}
-
+import { Events } from '@features/render'
+import { Input, SearchInput, ClockLoader } from '@components/global'
 
 function GlobalEvents() {
   const [userEvents, setUserEvents] = useState([])
+  const [preLoadedEvents, setPreLoadedEvents] = useState([])
   const { handleRequest } = useApi()
-  const [searchInput, setSearchInput] = useState("")
-  const [searching, setSearching] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
-    getEvents()
-    setSearching(false)
+    getInitialEvents()
   }, [])
 
-  const getEvents = async () => {
+  const getInitialEvents = async () => {
+    // TODO deprimente, no hay error handling
+    setLoading(true)
     const response = await handleRequest('GET', '/events', {}, {}, false)
-    // console.log('data!', response)
-    setUserEvents(response.data)
+    console.log('events!', response)
+
+    setTimeout(() => {
+      setUserEvents(response.data)
+      setPreLoadedEvents(response.data)
+      setLoading(false)
+    }, 1000)
   }
 
-  const SearchBar = () => {
-    return (
-      <div className={styles.searchBarContainer} > 
-        <div className={styles.searchBarOutline}>
-          <input
-            type="text"
-            // id="header-search"
-            placeholder="Search Events"
-            name="s"
-            // onChange={setSearching(false)}
-            // onClick={setSearching(false)}
-          />
-          <button 
-            type="submit"
-            onChange={setSearching(false)}
-          >
-            Search
-          </button>
-        </div>
-      </div>
-    )
-  }
+  useEffect(() => {
+    if (search === '') {
+      setUserEvents(preLoadedEvents)
+    } else {
+      const filteredEvents = userEvents.filter((event) => {
+        return event.title.toLowerCase().includes(search.toLowerCase())
+      })
+      setUserEvents(filteredEvents)
+    }
+  }, [search])
 
   return (
     <div className={styles.container}>
-      <div className={styles.flexContainer} >
+      <div className={styles.flexContainer}>
         <h1>Community Events!</h1>
-        <SearchBar />
+        <div className={styles.search}>
+          <SearchInput
+            name={'search'}
+            value={search}
+            onChange={setSearch}
+            placeholder={'Buscar...'}
+            isDynamic={false}
+            searchIcon={'🔍'}
+          />
+        </div>
       </div>
       <h2>This are today's Hooks!</h2>
-      <div className={styles.eventsContainer}>
-        {!searching &&
-        userEvents.map((event) => (
-          <Event
-            name={event.title}
-            hour={event.hour}
-            date={event.date != undefined && event.date.substring(0, 10)}
-            people={event.participants}
-            link={
-              event.tags != undefined &&
-              "Tags: "+
-              JSON.stringify(event.tags)
-                .replace('[', '')
-                .replace(']', '')
-                .replace(/"/g, '')
-                .replace(/,/g, ', ')
-            }
-          />
-        ))
-        }
-      </div>
+      {userEvents.length > 0 ? (
+        <div className={styles.eventsContainer}>
+          <Events events={userEvents} />
+        </div>
+      ) : loading ? (
+        <div className={`${styles.noEvents} font-bebas-neue`}>
+          Loading... <ClockLoader fontSize={'3.8'} />
+        </div>
+      ) : (
+        <div className={`${styles.noEvents} font-bebas-neue`}>
+          No events found! 😔
+        </div>
+      )}
     </div>
   )
 }
