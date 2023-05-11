@@ -18,6 +18,14 @@ const useForm = (
     }))
   }
 
+  const totalClean = () => {
+    const emptyValues = Object.keys(values).reduce((acc, key) => {
+      acc[key] = ''
+      return acc
+    }, {})
+    setValues(emptyValues)
+  }
+
   const setErrorMessage = (field, error) =>
     setErrorMessages((old) => ({
       ...old,
@@ -61,6 +69,7 @@ const useForm = (
     error,
     errorMessages,
     validate,
+    totalClean,
   }
 }
 

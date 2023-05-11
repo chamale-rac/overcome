@@ -1,3 +1,5 @@
 import Landing from './Landing'
 import Login from './Login'
-export { Landing, Login }
+import EventsDashboard from './EventsDashboard/EventsDashboard'
+
+export { Landing, Login, EventsDashboard }
