@@ -6,13 +6,24 @@ import { useNavigate } from 'react-router-dom'
 const SideBar = ({ links }) => {
   const navigate = useNavigate()
   const [active, setActive] = useState(links[0].path)
+  const [isRetracted, setIsRetracted] = useState(false)
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${isRetracted ? styles.retracted : ''} `}
+    >
+      <div className={styles.retract}>
+        <div
+          className={styles.retract_button}
+          onClick={() => setIsRetracted((prev) => !prev)}
+        >
+          📌
+        </div>
+      </div>
       <img
         src="/icon.svg"
         alt="logo"
-        className="w-14 h-14 object-contain mb-4"
+        className={`${styles.image} ${isRetracted ? styles.retracted : ''}`}
       />
       <div className={styles.links}>
         {links.map((link) => {
@@ -23,15 +34,20 @@ const SideBar = ({ links }) => {
               }`}
             >
               <button
+                className={styles.custom_button}
                 onClick={() => {
                   navigate(link.path)
                   setActive(link.path)
                 }}
               >
                 <span>{link.icon}</span>
-                <span className={`${styles.text} font-bebas-neue`}>
+                <div
+                  className={`${styles.text} ${
+                    isRetracted ? styles.retracted : ''
+                  } font-bebas-neue`}
+                >
                   {link.name}
-                </span>
+                </div>
               </button>
             </div>
           )
