@@ -15,7 +15,7 @@ const Home = () => {
     {
       name: 'Events',
       path: '/home/events',
-      icon: '🎮'
+      icon: '🎮',
     },
     {
       name: 'My Events',
