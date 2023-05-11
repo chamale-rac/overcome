@@ -1,6 +1,6 @@
 import { ErrorPage } from '@assets'
 
-import { Landing, Login } from '@pages'
+import { Landing, Login, EventsDashboard } from '@pages'
 
 import { Home } from '@layouts'
 
@@ -40,6 +40,7 @@ function App() {
           <Route path="/home/profile" element={<Profile />} />
           <Route path="/home/events" element={<GlobalEvents />} />
           <Route path="/home/myevents" element={<UserEvents />} />
+          <Route path="/home/newevent" element={<EventsDashboard />} />
         </Route>
       </Route>
 

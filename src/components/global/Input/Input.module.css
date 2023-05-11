@@ -39,3 +39,40 @@
   border-width: 2px;
   border-color: black;
 }
+
+.inputContainer label textarea {
+  font-size: medium;
+  padding: 5px;
+  text-indent: 2px;
+  outline: none;
+  width: 100%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+}
+
+.inputTags {
+  color: #333;
+
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  border-radius: 0px 0px 5px 5px;
+  border-color: black;
+  padding: 4px;
+  font-size: medium;
+  display: flex;
+  flex-direction: row;
+}
+
+.tag {
+  font-size: 0.7rem;
+  border-radius: 5px;
+  background-color: #cdd57e;
+  color: black;
+  font-weight: semibold;
+  margin: 4px;
+  padding: 0px 5px;
+  text-align: center;
+  border-width: 1px;
+  border-color: black;
+}

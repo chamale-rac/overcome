@@ -1,9 +1,6 @@
-* {
+.root {
   font-family: 'Figtree', sans-serif;
   font-weight: 500;
-}
-
-.root {
   border-radius: 5px;
   margin: 0;
   background-color: white;
@@ -19,7 +16,7 @@
   box-shadow: 5px 5px 0px 0px #000;
 }
 
-.root::-webkit-scrollbar{
+.root::-webkit-scrollbar {
   width: 10px;
 }
 
