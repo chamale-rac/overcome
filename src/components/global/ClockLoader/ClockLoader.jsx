@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from './ClockLoader.module.css'
 
-const ClockLoader = ({ fontSize = 1.2 }) => {
+const ClockLoader = ({ fontSize = '1.2rem' }) => {
   return (
     <div
       className={styles.loader}
       style={{
-        fontSize,
+        fontSize: `${fontSize}rem`,
       }}
     ></div>
   )
