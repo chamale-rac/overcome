@@ -19,12 +19,16 @@ function GlobalEvents() {
   const [userEvents, setUserEvents] = useState([])
   const { handleRequest } = useApi()
   const [searchInput, setSearchInput] = useState("")
-  const [searching, setSearching] = useState(false)
+  // const [searching, setSearching] = useState(false)
 
   useEffect(() => {
     getEvents()
-    setSearching(false)
+    // setSearching(false)
   }, [])
+
+  useEffect(() => {
+    console.log(searchInput)
+  }, [searchInput])
 
   const getEvents = async () => {
     const response = await handleRequest('GET', '/events', {}, {}, false)
@@ -32,21 +36,36 @@ function GlobalEvents() {
     setUserEvents(response.data)
   }
 
+  const getSearchInputValue = () => {
+    if(document.getElementById('search-input').value != null){
+      setSearchInput(document.getElementById('search-input').value)
+    }
+    console.log('changging')
+  }
+
   const SearchBar = () => {
+    const getSearchInputValue = () => {
+      if(document.getElementById('search-input').value != null){
+        setSearchInput(document.getElementById('search-input').value)
+        // console.log('changging')
+      }
+    }
+
     return (
       <div className={styles.searchBarContainer} > 
         <div className={styles.searchBarOutline}>
           <input
             type="text"
-            // id="header-search"
+            id="search-input"
             placeholder="Search Events"
-            name="s"
-            // onChange={setSearching(false)}
+            // name="s"
+            onChange={() => getSearchInputValue()}
+            // onClick={getSearchInputValue()}
             // onClick={setSearching(false)}
           />
           <button 
             type="submit"
-            onChange={setSearching(false)}
+            // onChange={}
           >
             Search
           </button>
@@ -63,7 +82,7 @@ function GlobalEvents() {
       </div>
       <h2>This are today's Hooks!</h2>
       <div className={styles.eventsContainer}>
-        {!searching &&
+        {
         userEvents.map((event) => (
           <Event
             name={event.title}
