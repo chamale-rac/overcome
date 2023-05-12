@@ -1,22 +1,12 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useApi } from '@hooks'
 import * as styles from './GlobalEvents.module.css'
-import Event from '@components/global/Event'
-
-function findSimilarStrings(inputString, stringArray) {
-  const similarStrings = [];
-  for (let i = 0; i < stringArray.length; i++) {
-    const currentString = stringArray[i].title;
-    if (currentString.includes(inputString)) {
-      similarStrings.push(stringArray[i]);
-    }
-  }
-  return similarStrings;
-}
-
+import { Events } from '@features/render'
+import { Input, SearchInput, ClockLoader } from '@components/global'
 
 function GlobalEvents() {
   const [userEvents, setUserEvents] = useState([])
+  const [preLoadedEvents, setPreLoadedEvents] = useState([])
   const { handleRequest } = useApi()
   const [searchInput, setSearchInput] = useState("")
   // const [searching, setSearching] = useState(false)
@@ -32,8 +22,13 @@ function GlobalEvents() {
 
   const getEvents = async () => {
     const response = await handleRequest('GET', '/events', {}, {}, false)
-    // console.log('data!', response)
-    setUserEvents(response.data)
+    console.log('events!', response)
+
+    setTimeout(() => {
+      setUserEvents(response.data)
+      setPreLoadedEvents(response.data)
+      setLoading(false)
+    }, 1000)
   }
 
   const getSearchInputValue = () => {
@@ -76,9 +71,18 @@ function GlobalEvents() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.flexContainer} >
+      <div className={styles.flexContainer}>
         <h1>Community Events!</h1>
-        <SearchBar />
+        <div className={styles.search}>
+          <SearchInput
+            name={'search'}
+            value={search}
+            onChange={setSearch}
+            placeholder={'Buscar...'}
+            isDynamic={false}
+            searchIcon={'🔍'}
+          />
+        </div>
       </div>
       <h2>This are today's Hooks!</h2>
       <div className={styles.eventsContainer}>

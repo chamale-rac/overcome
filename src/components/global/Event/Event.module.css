@@ -1,6 +1,10 @@
+/*
+  TODO make the event container responsive
+*/
+
 .container {
   background-color: #fefae0ef;
-  height: fit-content;
+  min-height: 230px;
   width: 100%;
   padding: 30px;
   border-radius: 20px;
@@ -10,6 +14,9 @@
   box-shadow: 5px 5px 0px 0px #000;
 }
 
+/*
+  TODO utilizar las clases de tailwind no colocar las font acá, att: chama
+*/
 .container h1 {
   font-family: 'Bebas Neue', cursive;
   font-size: xx-large;
@@ -18,14 +25,23 @@
   height: fit-content;
 }
 
+/*
+  TODO utilizar las clases de tailwind no colocar las font acá, att: chama
+*/
 .container p {
   font-family: 'Roboto Mono', monospace;
 }
 
+/*
+  TODO utilizar las clases de tailwind no colocar las font acá, att: chama
+*/
 .container div {
   font-family: 'Roboto Mono', monospace;
 }
 
+/*
+  TODO utilizar las clases de tailwind no colocar las font acá, att: chama
+*/
 .container a {
   font-size: small;
   font-family: 'Overpass Mono', monospace;

@@ -5,6 +5,7 @@ import Notification from './Notification/Notification'
 import Input from './Input/Input'
 import Button from './Button/Button'
 import ClockLoader from './ClockLoader/ClockLoader'
+import SearchInput from './SearchInput/SearchInput'
 
 export {
   NavButton,
@@ -14,4 +15,5 @@ export {
   Input,
   Button,
   ClockLoader,
+  SearchInput,
 }

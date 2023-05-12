@@ -4,7 +4,6 @@
 .loader::before {
   width: 1em;
   height: 1em;
-  font-size: 1.2rem;
   text-align: center;
   transform: translate(-50%, -50%);
   /*
