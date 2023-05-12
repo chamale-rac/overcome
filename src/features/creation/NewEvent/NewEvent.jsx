@@ -36,6 +36,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
     hour,
     tags,
     creator,
+    link,
   ) => {
     setLoading(true)
     const tagArray = tags
@@ -50,6 +51,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
       hour,
       tags: tagArray,
       creator,
+      link,
     })
 
     if (response) {
@@ -84,6 +86,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
         form.values.hour,
         form.values.tags,
         auth.user.id,
+        form.values.link,
       )
     }
   }
@@ -107,24 +110,22 @@ const Register = ({ customStyles, successAction, failAction }) => {
           required
         />
         <Input
-          value={form.values.description}
-          onChange={form.onChange('description')}
-          name="description"
-          label="Description"
-          type="text"
-          error={form.errorMessages.description}
-          required
-          isTextArea
-          customStyles="h-20"
-          maxLength={60}
-        />
-        <Input
           value={form.values.date}
           onChange={form.onChange('date')}
           name="date"
           label="Date"
           type="date"
           error={form.errorMessages.date}
+          required
+        />
+
+        <Input
+          value={form.values.hour}
+          onChange={form.onChange('hour')}
+          name="hour"
+          label="Hour"
+          type="time"
+          error={form.errorMessages.hour}
           required
         />
         <Input
@@ -138,12 +139,12 @@ const Register = ({ customStyles, successAction, failAction }) => {
         />
 
         <Input
-          value={form.values.hour}
-          onChange={form.onChange('hour')}
-          name="hour"
-          label="Hour"
-          type="time"
-          error={form.errorMessages.hour}
+          value={form.values.link}
+          onChange={form.onChange('link')}
+          name="link"
+          label="Link"
+          type="text"
+          error={form.errorMessages.link}
           required
         />
 
@@ -157,6 +158,19 @@ const Register = ({ customStyles, successAction, failAction }) => {
           required
           hasTags
           delimiter=","
+        />
+
+        <Input
+          value={form.values.description}
+          onChange={form.onChange('description')}
+          name="description"
+          label="Description"
+          type="text"
+          error={form.errorMessages.description}
+          required
+          isTextArea
+          customStyles="h-20"
+          maxLength={60}
         />
 
         {handleError ? (

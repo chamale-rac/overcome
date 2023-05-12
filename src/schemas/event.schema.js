@@ -6,6 +6,7 @@ import {
   DATE_REGEX,
   DURATION_REGEX,
   TAG_REGEX,
+  LINK_REGEX,
 } from '@utils/regex.patterns'
 
 const eventSchema = {
@@ -16,6 +17,7 @@ const eventSchema = {
     duration: Joi.string().pattern(DURATION_REGEX),
     hour: Joi.string().pattern(HOUR_REGEX),
     tags: Joi.string().pattern(TAG_REGEX),
+    link: Joi.string().pattern(LINK_REGEX),
   }),
 
   initialValues: {
@@ -25,6 +27,7 @@ const eventSchema = {
     duration: '',
     hour: '',
     tags: '',
+    link: '',
   },
 
   initialErrorMessages: {
@@ -34,6 +37,7 @@ const eventSchema = {
     duration: false,
     hour: false,
     tags: false,
+    link: false,
   },
 
   initialErrorPrompts: {
@@ -43,6 +47,7 @@ const eventSchema = {
     duration: 'Needs to be a number between 0 and 720. 0 means all day.',
     hour: 'Type a valid hour, e.g. 12:00.',
     tags: 'Tags for your event, separated by commas. e.g. Halo, CSGO, Valorant.',
+    link: 'Type a valid link, e.g. https://www.google.com.',
   },
 }
 

@@ -11,6 +11,7 @@ const Events = ({ events }) => {
           hour={event.hour}
           date={event.date != undefined && event.date.substring(0, 10)}
           people={event.participants}
+          creator={event.creator?.username}
           link={
             event.tags != undefined &&
             'Tags: ' +
@@ -20,6 +21,7 @@ const Events = ({ events }) => {
                 .replace(/"/g, '')
                 .replace(/,/g, ', ')
           }
+          url={event?.link}
         />
       ))}
     </>
