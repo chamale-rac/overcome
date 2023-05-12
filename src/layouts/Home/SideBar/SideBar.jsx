@@ -32,6 +32,7 @@ const SideBar = ({ links }) => {
               className={`${styles.link} ${
                 active === link.path ? styles.active : ''
               }`}
+              style={link.name==='Sign out'?{marginTop: 'auto'}:{}}
             >
               <button
                 className={styles.custom_button}
