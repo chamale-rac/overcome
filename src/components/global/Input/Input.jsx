@@ -17,6 +17,7 @@ const Input = ({
   maxLength = 60,
   hasTags = false,
   delimiter = ',',
+  disabled = false,
 }) => {
   return (
     <div className={styles.inputContainer}>
@@ -37,8 +38,13 @@ const Input = ({
             name={name}
             value={value}
             onChange={onChange}
-            placeholder={placeholder}
+            placeholder={
+              disabled
+                ? 'Disabled, first fill the other fields...'
+                : placeholder
+            }
             maxLength={maxLength}
+            disabled={disabled}
           />
         ) : (
           <input

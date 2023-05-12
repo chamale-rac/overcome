@@ -42,7 +42,7 @@ const eventSchema = {
 
   initialErrorPrompts: {
     title: '8 to 30 characters. No just spaces.',
-    description: '14 to 60 characters. No just spaces.',
+    description: '14 to 200 characters. No just spaces.',
     date: 'Type a valid date, e.g. 01/01/2024.',
     duration: 'Needs to be a number between 0 and 720. 0 means all day.',
     hour: 'Type a valid hour, e.g. 12:00.',

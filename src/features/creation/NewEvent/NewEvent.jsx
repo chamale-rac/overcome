@@ -3,6 +3,7 @@
 // Created at: 22-04-2023
 
 import React, { useRef, useState, useEffect } from 'react'
+import { SERVICES_BASE_URL } from '@utils/constants'
 
 import { authStore } from '@context'
 
@@ -17,6 +18,7 @@ import { registerSchema, eventSchema } from '@schemas'
 const Register = ({ customStyles, successAction, failAction }) => {
   const { auth } = authStore
 
+  const [iaLoading, setIALoading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [handleError, setHandleError] = useState()
   const [handleSuccess, setHandleSuccess] = useState()
@@ -91,6 +93,43 @@ const Register = ({ customStyles, successAction, failAction }) => {
     }
   }
 
+  const postAI = async (title, date, duration, hour, tags) => {
+    setIALoading(true)
+    try {
+      const response = await fetch(`${SERVICES_BASE_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          date,
+          duration,
+          hour,
+          tags,
+        }),
+      })
+
+      const data = await response.json()
+      form.setValue('description', data.description.replace(/\n/g, ''))
+    } catch (error) {
+      alert(error)
+      form.setValue('description', 'Error getting description')
+    }
+    setIALoading(false)
+  }
+
+  const handleIA = () => {
+    console.log('handle AI')
+    postAI(
+      form.values.title,
+      form.values.date,
+      form.values.duration,
+      form.values.hour,
+      form.values.tags,
+    )
+  }
+
   return (
     /*TODO check for correct xl:w */
     <div
@@ -160,18 +199,40 @@ const Register = ({ customStyles, successAction, failAction }) => {
           delimiter=","
         />
 
-        <Input
-          value={form.values.description}
-          onChange={form.onChange('description')}
-          name="description"
-          label="Description"
-          type="text"
-          error={form.errorMessages.description}
-          required
-          isTextArea
-          customStyles="h-20"
-          maxLength={60}
-        />
+        <aside>
+          <Input
+            value={form.values.description}
+            onChange={form.onChange('description')}
+            name="description"
+            label="Description"
+            type="text"
+            error={form.errorMessages.description}
+            required
+            isTextArea
+            customStyles="h-20"
+            maxLength={60}
+            disabled={
+              form.values.title === '' ||
+              form.values.date === '' ||
+              form.values.duration === '' ||
+              form.values.hour === '' ||
+              form.values.tags === ''
+            }
+            placeholder={iaLoading ? 'AI description will appear here.."' : ''}
+          />
+          {!(
+            form.values.title === '' ||
+            form.values.date === '' ||
+            form.values.duration === '' ||
+            form.values.hour === '' ||
+            form.values.tags === ''
+          ) && (
+            <div className={styles.ai} onClick={handleIA}>
+              <div className={styles.ai_emoji}>✨</div>
+              <span className={styles.tool}>AI description</span>
+            </div>
+          )}
+        </aside>
 
         {handleError ? (
           <Notification type="danger" customStyles="mb-3">
@@ -196,8 +257,8 @@ const Register = ({ customStyles, successAction, failAction }) => {
             onClick={handlePublish}
             disabled={
               form.error ||
-              form.values.title === '' ||
               form.values.description === '' ||
+              form.values.title === '' ||
               form.values.date === '' ||
               form.values.duration === '' ||
               form.values.hour === '' ||
