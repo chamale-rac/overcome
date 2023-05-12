@@ -8,16 +8,19 @@ function GlobalEvents() {
   const [userEvents, setUserEvents] = useState([])
   const [preLoadedEvents, setPreLoadedEvents] = useState([])
   const { handleRequest } = useApi()
-  const [loading, setLoading] = useState(false)
-  const [search, setSearch] = useState('')
+  const [searchInput, setSearchInput] = useState("")
+  // const [searching, setSearching] = useState(false)
 
   useEffect(() => {
-    getInitialEvents()
+    getEvents()
+    // setSearching(false)
   }, [])
 
-  const getInitialEvents = async () => {
-    // TODO deprimente, no hay error handling
-    setLoading(true)
+  useEffect(() => {
+    console.log(searchInput)
+  }, [searchInput])
+
+  const getEvents = async () => {
     const response = await handleRequest('GET', '/events', {}, {}, false)
     console.log('events!', response)
 
@@ -28,16 +31,43 @@ function GlobalEvents() {
     }, 1000)
   }
 
-  useEffect(() => {
-    if (search === '') {
-      setUserEvents(preLoadedEvents)
-    } else {
-      const filteredEvents = userEvents.filter((event) => {
-        return event.title.toLowerCase().includes(search.toLowerCase())
-      })
-      setUserEvents(filteredEvents)
+  const getSearchInputValue = () => {
+    if(document.getElementById('search-input').value != null){
+      setSearchInput(document.getElementById('search-input').value)
     }
-  }, [search])
+    console.log('changging')
+  }
+
+  const SearchBar = () => {
+    const getSearchInputValue = () => {
+      if(document.getElementById('search-input').value != null){
+        setSearchInput(document.getElementById('search-input').value)
+        // console.log('changging')
+      }
+    }
+
+    return (
+      <div className={styles.searchBarContainer} > 
+        <div className={styles.searchBarOutline}>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search Events"
+            // name="s"
+            onChange={() => getSearchInputValue()}
+            // onClick={getSearchInputValue()}
+            // onClick={setSearching(false)}
+          />
+          <button 
+            type="submit"
+            // onChange={}
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className={styles.container}>
@@ -55,19 +85,27 @@ function GlobalEvents() {
         </div>
       </div>
       <h2>This are today's Hooks!</h2>
-      {userEvents.length > 0 ? (
-        <div className={styles.eventsContainer}>
-          <Events events={userEvents} />
-        </div>
-      ) : loading ? (
-        <div className={`${styles.noEvents} font-bebas-neue`}>
-          Loading... <ClockLoader fontSize={'3.8'} />
-        </div>
-      ) : (
-        <div className={`${styles.noEvents} font-bebas-neue`}>
-          No events found! 😔
-        </div>
-      )}
+      <div className={styles.eventsContainer}>
+        {
+        userEvents.map((event) => (
+          <Event
+            name={event.title}
+            hour={event.hour}
+            date={event.date != undefined && event.date.substring(0, 10)}
+            people={event.participants}
+            link={
+              event.tags != undefined &&
+              "Tags: "+
+              JSON.stringify(event.tags)
+                .replace('[', '')
+                .replace(']', '')
+                .replace(/"/g, '')
+                .replace(/,/g, ', ')
+            }
+          />
+        ))
+        }
+      </div>
     </div>
   )
 }
