@@ -1,9 +1,9 @@
 .container {
   background-color: #ddfdfe;
-  background-image: url("https://github.com/JDgomez2002/ing_soft_production/blob/main/ing-soft-production/src/img/background%20transparent.png?raw=true");
+  background-image: url('https://github.com/JDgomez2002/ing_soft_production/blob/main/ing-soft-production/src/img/background%20transparent.png?raw=true');
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100%;
+  height: auto;
   width: 100%;
   padding: 25px;
   border-radius: 20px;
@@ -11,6 +11,8 @@
   border-width: 2px;
   border-color: black;
   box-shadow: 5px 5px 0px 0px #000;
+  display: flex;
+  flex-direction: column;
 }
 
 .container h1 {
@@ -31,4 +33,51 @@
   width: fit-content;
   margin: 0;
   padding: 0;
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2em;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+}
+.board div {
+  height: 200px;
+  padding: 1em;
+  font-family: 'Overpass Mono', monospace;
+  font-weight: bold;
+  min-width: 250px;
+  border-radius: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  box-shadow: 5px 5px 0px 0px #000;
+}
+.boardItem {
+  background-color: rgb(255, 245, 245);
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.boardItem:last-child {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.boardItem:last-child:hover {
+  background-color: white;
+  color: black;
+  box-shadow: 0px 0px 0px 0px #000;
+  filter: invert(1);
+  transform: translateY(4px);
+}
+
+.boardItem:last-child h1 {
+  align-self: center;
 }
