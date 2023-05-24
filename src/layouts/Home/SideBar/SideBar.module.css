@@ -30,12 +30,12 @@
 }
 
 .link:hover {
-  background-color: #cdd57e;
+  background-color: #cd9777;
   cursor: pointer;
 }
 
 .link.active {
-  background-color: #cdd57e;
+  background-color: #ddb892;
 }
 
 .custom_button {
