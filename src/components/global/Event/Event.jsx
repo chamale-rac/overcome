@@ -17,7 +17,7 @@ function Event({ name, people, hour, date, link, creator, url }) {
           textAlign: 'end',
         }}
       >
-        <a>{link}</a>
+        <a>{link}<br/></a>
         {url && (
           <>
             <br />
@@ -26,6 +26,10 @@ function Event({ name, people, hour, date, link, creator, url }) {
             </a>
           </>
         )}
+      </div>
+      <div className={styles.flex}>
+      <button>Save 💾</button>
+      <button>Details 🧮</button>
       </div>
     </div>
   )

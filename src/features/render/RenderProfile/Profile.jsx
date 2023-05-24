@@ -3,12 +3,12 @@ import * as styles from './Profile.module.css'
 function Profile() {
   return (
     <div className={styles.container}>
-      <h1>Perfil de usuario</h1>
+      <h1>Mi Perfil</h1>
       <section className={styles.custom_section}>
         <div className={styles.main_info}>
           <img src="/public/profile-400.png" alt="Foto de perfil de Juan" />
           <h3>Juan Pérez</h3>
-          <h4>@username</h4>
+          <h4>@liebert1</h4>
         </div>
         <p>
           ¡Hola! Soy Juan, tengo 28 años y me encanta el deporte. Me dedico a la
@@ -17,7 +17,7 @@ function Profile() {
         </p>
       </section>
       <section className={`${styles.custom_section} ${styles.sub_section}`}>
-        <h2>Mis actividades</h2>
+        <h2>Hooks guardados</h2>
         <ul>
           <li>Grand Theft Auto 5</li>
           <li>Minecraft</li>
