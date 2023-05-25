@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import * as styles from './Event.module.css'
 import { authStore } from '@context'
 
- function Event({ name, people, hour, date, link, creator, url }) {
+function Event({ name, people, hour, date, link, creator, url, _id }) {
   const { auth } = authStore
 
   useEffect(() => {
@@ -14,9 +14,6 @@ import { authStore } from '@context'
   const navigate = useNavigate()
   return (
     <div className={styles.container}>
-      <button onClick={() => navigate(`/home/events/${_id}`)}>
-        Go to Event Page
-      </button>
       <h1>{name}</h1>
       <p>Creator: {creator}</p>
       <p>Hour: {hour}</p>
@@ -31,7 +28,10 @@ import { authStore } from '@context'
           textAlign: 'end',
         }}
       >
-        <a>{link}<br/></a>
+        <a>
+          {link}
+          <br />
+        </a>
         {url && (
           <>
             <br />
@@ -42,8 +42,10 @@ import { authStore } from '@context'
         )}
       </div>
       <div className={styles.flex}>
-      <button>Save 💾</button>
-      <button>Details 🧮</button>
+        <button>Save 💾</button>
+        <button onClick={() => navigate(`/home/events/${_id}`)}>
+          Details 🧮
+        </button>
       </div>
     </div>
   )

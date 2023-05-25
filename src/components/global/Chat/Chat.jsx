@@ -83,11 +83,14 @@ const Chat = ({ _id, name }) => {
   }, [messages])
 
   // Check for new messages every 5 seconds
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      getMessages()
-    }, 5000)
-    return () => clearInterval(interval)
+    if (messages) {
+      const interval = setInterval(() => {
+        getMessages()
+      }, 5000)
+      return () => clearInterval(interval)
+    }
   }, [])
 
   return (
