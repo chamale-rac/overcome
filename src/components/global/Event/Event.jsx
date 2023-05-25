@@ -3,7 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import * as styles from './Event.module.css'
 import { authStore } from '@context'
 
-function Event({ name, people, hour, date, link, creator, url, _id }) {
+function Event({
+  name,
+  people,
+  hour,
+  date,
+  link,
+  creator,
+  url,
+  _id,
+  creator_id,
+}) {
   const { auth } = authStore
 
   useEffect(() => {
@@ -15,7 +25,18 @@ function Event({ name, people, hour, date, link, creator, url, _id }) {
   return (
     <div className={styles.container}>
       <h1>{name}</h1>
-      <p>Creator: {creator}</p>
+      <p className={styles.creator}>
+        Creator:{' '}
+        <span
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+          }}
+          onClick={() => navigate(`/home/users/${creator_id}`)}
+        >
+          {creator}
+        </span>
+      </p>
       <p>Hour: {hour}</p>
       <p>Date: {date}</p>
       {/*

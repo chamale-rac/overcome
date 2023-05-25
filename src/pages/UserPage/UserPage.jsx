@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useApi } from '@hooks'
 import { useParams, useNavigate } from 'react-router-dom'
 import { NavButton, Chat } from '@components/global'
-import * as styles from './EventPage.module.css'
+import * as styles from './UserPage.module.css'
 
-const EventPage = () => {
+const UserPage = () => {
   const navigate = useNavigate()
-  const { _id } = useParams()
+  const { creator_id } = useParams()
   const { handleRequest } = useApi()
   const [event, setEvent] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -41,9 +41,10 @@ const EventPage = () => {
         >
           ⇐ Back
         </NavButton>
+        {creator_id}
       </div>
     </div>
   )
 }
 
-export default EventPage
+export default UserPage
