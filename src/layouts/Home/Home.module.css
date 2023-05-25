@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   flex-direction: row;
-  background-color: #d1b19a;
+  background-color: var(--ink-background-dark);
 }
 
 /* Add flex property to the sidebar */

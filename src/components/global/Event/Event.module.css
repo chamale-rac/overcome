@@ -3,7 +3,7 @@
 */
 
 .container {
-  background-color: #ddb892;
+  background-color: var(--ink-background-light);
   min-height: 230px;
   width: 100%;
   padding: 30px;

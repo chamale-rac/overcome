@@ -1,14 +1,12 @@
 .container {
-  border: 1px solid black;
-  border-radius: 10px;
   margin: 0.25rem;
   padding: 0.7rem;
-  background-color: #202a30ea;
   width: fit-content;
   max-width: 70%;
   min-width: 40%;
-  margin-left: 0.6rem;
-  color: white;
+  margin-left: 0.8rem;
+  color: black;
+  background-color: var(--ink-background-messages);
 
   display: flex;
   flex-direction: column;
@@ -16,7 +14,7 @@
 
 .container.mine {
   margin-left: 0rem;
-  margin-right: 0.6rem;
+  margin-right: 0.8rem;
   align-self: flex-end;
   font-size: small;
 }

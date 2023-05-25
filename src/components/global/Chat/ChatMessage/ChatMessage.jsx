@@ -17,12 +17,12 @@ const ChatMessage = ({
     <div
       className={`${styles.container} ${
         user._id == actual_user_id ? styles.mine : ''
-      }`}
+      } standard_border`}
     >
       <h4
         className={`${styles.user}  font-overpass-mono`}
         style={{
-          color: user._id == actual_user_id ? '#14ca9c' : '#35afeb',
+          color: user._id == actual_user_id ? '#000000' : '#000000',
         }}
       >
         {user.username}

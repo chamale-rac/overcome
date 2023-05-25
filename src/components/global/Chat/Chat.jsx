@@ -120,7 +120,9 @@ const Chat = ({ _id, name }) => {
             })}
           {messages?.length === 0 && (
             <div className={styles.no_messages}>
-              There are no messages yet. <br /> Start the conversation!
+              <div className={`${styles.no_messages_text} standard_border`}>
+                There are no messages yet. <br /> Start the conversation!
+              </div>
             </div>
           )}
         </div>
