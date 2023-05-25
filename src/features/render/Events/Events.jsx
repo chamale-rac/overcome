@@ -7,6 +7,8 @@ const Events = ({ events }) => {
     <>
       {events.map((event) => (
         <Event
+          key={event._id}
+          _id={event._id}
           name={event.title}
           hour={event.hour}
           date={event.date != undefined && event.date.substring(0, 10)}

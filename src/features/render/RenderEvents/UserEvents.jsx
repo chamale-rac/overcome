@@ -3,69 +3,13 @@ import Event from '@components/global/Event'
 import useRefreshToken from '@hooks/useRefreshToken'
 import { useState, useEffect } from 'react'
 
-const events = [
-  {
-    title: 'Call of duty',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-  {
-    title: 'League of Legends',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-  {
-    title: 'Minecraft',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-  {
-    title: 'Chess',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-  {
-    title: 'FIFA',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-  {
-    title: 'Need for Speed',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-  {
-    title: 'Cuphead',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-  {
-    title: 'Spiderman PS4',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-  {
-    title: 'NBA 2k24',
-    hour: '11:23',
-    people: 'Pablo, Andres',
-    link: 'https://discord.gg/XvNTrMyE',
-  },
-]
-
 function UserEvents({ event }) {
   const refresh = useRefreshToken()
   const [userEvents, setUserEvents] = useState([])
 
   useEffect(() => {
     setUserEvents(events)
+    console.log('events in UserEvents', events)
   }, [])
 
   return (
@@ -75,6 +19,7 @@ function UserEvents({ event }) {
       <div className={styles.container}>
         {userEvents.map((event) => (
           <Event
+            _id={event._id}
             name={event.title}
             hour={event.hour}
             people={event.people}
