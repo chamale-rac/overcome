@@ -1,6 +1,15 @@
+import { useEffect } from 'react'
 import * as styles from './Event.module.css'
+import { authStore } from '@context'
 
 function Event({ name, people, hour, date, link, creator, url }) {
+  const { auth } = authStore
+
+  useEffect(() => {
+    console.log(auth)
+    console.log(auth.user.username, auth.user.id)
+  }, [auth])
+
   return (
     <div className={styles.container}>
       <h1>{name}</h1>
