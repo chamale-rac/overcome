@@ -3,7 +3,7 @@
 */
 
 .container {
-  background-color: var(--ink-background-light);
+  background-color: transparent;
   min-height: 230px;
   width: 100%;
   padding: 30px;
@@ -54,15 +54,11 @@
 .container button {
   color: grey;
   display: block;
-  padding: 5px;
   margin: 15px 0 0 0;
   margin-left: auto;
   margin-right: auto;
-  padding: 5px;
+  padding: 0.5rem 1rem;
   border-radius: 20px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  box-shadow: 2px 2px 0px 0px #000;
   background-color: white;
+  transform: scaleY(-2px) scaleX(-2px);
 }

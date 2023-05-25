@@ -42,8 +42,11 @@ function Event({ name, people, hour, date, link, creator, url, _id }) {
         )}
       </div>
       <div className={styles.flex}>
-        <button>Save 💾</button>
-        <button onClick={() => navigate(`/home/events/${_id}`)}>
+        <button className={`button asap`}>Save 💾</button>
+        <button
+          className={`button asap`}
+          onClick={() => navigate(`/home/events/${_id}`)}
+        >
           Details 🧮
         </button>
       </div>

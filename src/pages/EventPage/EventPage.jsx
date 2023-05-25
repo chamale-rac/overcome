@@ -36,7 +36,7 @@ const EventPage = () => {
       <div className={styles.event_container}>
         <NavButton
           type="normal"
-          handleClick={() => navigate('/home/events')}
+          handleClick={() => navigate(-1)}
           customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base mb-20"
         >
           ⇐ Back
