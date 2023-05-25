@@ -50,6 +50,7 @@ const Chat = ({ _id, name }) => {
         if (messages.length < response.data.messages.length) {
           const newMessages = response.data.messages.slice(messages.length)
           setMessages([...messages, ...newMessages])
+          scrollToBottom()
         }
       } else {
         setError('Error getting messages')
@@ -77,10 +78,6 @@ const Chat = ({ _id, name }) => {
     const chatDisplay = document.getElementById('chatDisplay')
     chatDisplay.scrollTop = chatDisplay.scrollHeight
   }
-
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages])
 
   // Check for new messages every 5 seconds
   useEffect(() => {
