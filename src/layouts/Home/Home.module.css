@@ -5,9 +5,19 @@
   flex-direction: row;
 }
 
+/* Add flex property to the sidebar */
+.sidebar {
+  flex: 0 0 200px; /* Change the width of the sidebar as needed */
+}
+
 .outlet {
   display: flex;
   flex-direction: column;
   padding: 30px;
   width: 100%;
+  position: relative;
+  /* Add flex property to the outlet */
+  flex: 1;
+  /* Add overflow property */
+  overflow: auto;
 }

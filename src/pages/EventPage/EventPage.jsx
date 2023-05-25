@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useApi } from '@hooks'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import { NavButton } from '@components/global'
 import * as styles from './EventPage.module.css'
 
 const EventPage = () => {
+  const navigate = useNavigate()
   const { _id } = useParams()
   const { handleRequest } = useApi()
   const [event, setEvent] = useState(null)
@@ -30,33 +32,67 @@ const EventPage = () => {
   }, [])
 
   return (
-    <div className={`${styles.container} ${styles.standard_border}`}>
-      <div className={styles.event}>
+    <div className={`${styles.container} standard_border`}>
+      <div className={styles.event_container}>
+        <NavButton
+          type="normal"
+          handleClick={() => navigate('/home/events')}
+          customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base mb-10"
+        >
+          ⇐ Back
+        </NavButton>
         {event && (
           <>
-            <h2 className={styles.event_title}>{event?.title}</h2>
+            <div className={styles.title_wrapper}>
+              <h2 className={`${styles.event_title} font-bebas-neue`}>
+                {event?.title}
+              </h2>
+              <p className={styles.event_creator}>
+                Created by: {event?.creator?.username}
+              </p>
+            </div>
+            <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
+            {/* TODO: add participants
             <ul className={styles.event_participants}>
               {event?.participants.map((participant) => (
                 <li key={participant._id}>{participant.username}</li>
               ))}
-            </ul>
-            <p className={styles.event_date}>
-              {event && new Date(event.date).toLocaleDateString()}
-            </p>
-            <p className={styles.event_duration}>{event?.duration} minutes</p>
-            <p className={styles.event_chat}>{event?.chat}</p>
-            <ul className={styles.event_tags}>
+            </ul> */}
+            <div className={styles.content_wrapper}>
+              <h3>Schedule:</h3>
+              <p className={styles.event_hour}>{event?.hour}</p>
+              <p className={styles.event_date}>
+                {event && new Date(event.date).toLocaleDateString()}
+              </p>
+              <p className={styles.event_duration}>{event?.duration} minutes</p>
+            </div>
+            <div className={styles.content_wrapper}>
+              <h3>Tags:</h3>
               {event?.tags.map((tag) => (
-                <li key={tag}>{tag}</li>
+                <p key={tag}>{tag}</p>
               ))}
-            </ul>
+            </div>
+            <div className={styles.content_wrapper}>
+              <h3>Link:</h3>
+              <a
+                href={event?.link}
+                target="_blank"
+                className={styles.event_link}
+              >
+                {event?.link}
+              </a>
+            </div>
           </>
         )}
       </div>
+      <div className={styles.chat_container}>
+        <p className={styles.event_chat}>{event?.chat}</p>
+      </div>
+      {/**      
       <div>{loading && <div>Loading...</div>}</div>
       <div>{error && <div>{error}</div>}</div>
-      <div>{event && <div>{JSON.stringify(event)}</div>}</div>
+       */}
     </div>
   )
 }
