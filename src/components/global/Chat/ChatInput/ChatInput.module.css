@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.container > input {
+  flex: 2;
+  padding: 0.3rem;
+  padding-inline: 1rem;
+}
+
+.container > input:focus {
+  outline: none;
+}
+
+.button {
+  padding-inline: 1rem;
+  border-left: 2px solid black;
+  background-color: #cdd57e;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.button:hover {
+  background-color: #b9c96b;
+}
+
+.button.disabled {
+  background-color: #e7e4e4;
+  cursor: not-allowed;
+}

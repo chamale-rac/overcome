@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useApi } from '@hooks'
 import { useParams, useNavigate } from 'react-router-dom'
-import { NavButton } from '@components/global'
+import { NavButton, Chat } from '@components/global'
 import * as styles from './EventPage.module.css'
 
 const EventPage = () => {
@@ -37,7 +37,7 @@ const EventPage = () => {
         <NavButton
           type="normal"
           handleClick={() => navigate('/home/events')}
-          customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base mb-10"
+          customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base mb-20"
         >
           ⇐ Back
         </NavButton>
@@ -51,6 +51,13 @@ const EventPage = () => {
                 Created by: {event?.creator?.username}
               </p>
             </div>
+            <hr
+              style={{
+                width: '100%',
+                height: '1px',
+                backgroundColor: '#000',
+              }}
+            />
             <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
             {/* TODO: add participants
@@ -87,7 +94,7 @@ const EventPage = () => {
         )}
       </div>
       <div className={styles.chat_container}>
-        <p className={styles.event_chat}>{event?.chat}</p>
+        <Chat _id={event?.chat} name={event?.title} />
       </div>
       {/**      
       <div>{loading && <div>Loading...</div>}</div>
