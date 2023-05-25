@@ -15,6 +15,7 @@ import HomePage from '@features/render/HomePage'
 import GlobalEvents from '@features/render/RenderGlobalEvents'
 
 import Profile from '@features/render/RenderProfile'
+import EventPage from '../pages/EventPage/EventPage'
 
 /*
 TODO: Add roles to users and use them to restrict access to certain routes
@@ -41,6 +42,7 @@ function App() {
           <Route path="/home/events" element={<GlobalEvents />} />
           <Route path="/home/myevents" element={<UserEvents />} />
           <Route path="/home/newevent" element={<EventsDashboard />} />
+          <Route path="/home/events/:_id" element={<EventPage />} />
         </Route>
       </Route>
 

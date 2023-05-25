@@ -6,6 +6,7 @@ import Input from './Input/Input'
 import Button from './Button/Button'
 import ClockLoader from './ClockLoader/ClockLoader'
 import SearchInput from './SearchInput/SearchInput'
+import Chat from './Chat/Chat'
 
 export {
   NavButton,
@@ -16,4 +17,5 @@ export {
   Button,
   ClockLoader,
   SearchInput,
+  Chat,
 }

@@ -18,6 +18,16 @@ import { registerSchema, eventSchema } from '@schemas'
 const Register = ({ customStyles, successAction, failAction }) => {
   const { auth } = authStore
 
+  const [dateError, setDateError] = useState({
+    error: false,
+    code: null,
+    message: '',
+  })
+  const [hourError, setHourError] = useState({
+    error: false,
+    message: '',
+  })
+
   const [iaLoading, setIALoading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [handleError, setHandleError] = useState()
@@ -130,6 +140,91 @@ const Register = ({ customStyles, successAction, failAction }) => {
     )
   }
 
+  const checkDate = (desiredDate) => {
+    const now = new Date()
+    const today = new Date(
+      now.toLocaleString('en-US', { timeZone: 'America/Guatemala' }),
+    )
+    const date = new Date(desiredDate + 'T00:00:00-06:00')
+
+    const todayUtc6 = new Date(
+      Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()),
+    )
+    const dateUtc6 = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+    )
+    console.log('today', todayUtc6.getTime())
+    console.log('date', dateUtc6.getTime())
+
+    if (dateUtc6.getTime() < todayUtc6.getTime()) {
+      return -1
+    } else if (dateUtc6.getTime() === todayUtc6.getTime()) {
+      return 0
+    } else {
+      return 1
+    }
+  }
+
+  useEffect(() => {
+    if (form.values.date) {
+      if (checkDate(form.values.date) === -1) {
+        setDateError({
+          error: true,
+          code: -1,
+          message: 'Date must be in the future',
+        })
+      } else if (checkDate(form.values.date) === 0) {
+        setDateError({
+          error: false,
+          code: 0,
+          message: '',
+        })
+      } else {
+        setDateError({
+          error: false,
+          code: 1,
+          message: '',
+        })
+      }
+    }
+  }, [form.values.date])
+
+  useEffect(() => {
+    if (form.values.date && form.values.hour) {
+      const now = new Date()
+      const utcMinus6Hours = now.getUTCHours() - 6
+      const minutes = now.getUTCMinutes()
+      console.log('utcMinus6Hours', utcMinus6Hours)
+      console.log('minutes', minutes)
+      const timeString = utcMinus6Hours.toString() + minutes.toString()
+      const timeIntNow = parseInt(timeString, 10)
+
+      const timeIntHour = parseInt(form.values.hour.replace(':', ''), 10)
+
+      console.log('timeIntNow', timeIntNow)
+      console.log('timeIntHour', timeIntHour)
+
+      if (dateError.code === 0) {
+        if (timeIntHour < timeIntNow) {
+          setHourError({
+            error: true,
+            message: 'Hour must be in the future',
+          })
+        } else {
+          setHourError({
+            error: false,
+            message: '',
+          })
+        }
+      } else if (dateError.code === 1) {
+        setHourError({
+          error: false,
+          message: '',
+        })
+      }
+    }
+  }, [form.values.date, form.values.hour])
+
   return (
     /*TODO check for correct xl:w */
     <div
@@ -154,7 +249,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
           name="date"
           label="Date"
           type="date"
-          error={form.errorMessages.date}
+          error={form.errorMessages.date || dateError.message}
           required
         />
 
@@ -164,8 +259,11 @@ const Register = ({ customStyles, successAction, failAction }) => {
           name="hour"
           label="Hour"
           type="time"
-          error={form.errorMessages.hour}
+          error={form.errorMessages.hour || hourError.message}
           required
+          disabled={
+            dateError.error || !form.values.date || form.errorMessages.date
+          }
         />
         <Input
           value={form.values.duration}
@@ -263,7 +361,9 @@ const Register = ({ customStyles, successAction, failAction }) => {
               form.values.duration === '' ||
               form.values.hour === '' ||
               form.values.tags === '' ||
-              loading
+              loading ||
+              dateError.error ||
+              hourError.error
             }
             loading={loading}
           >
