@@ -14,8 +14,10 @@
   box-shadow: 5px 5px 0px 0px #000;
   display: flex;
 }
-.event_container {width: 50%;
+.event_container {
+  width: 50%;
   padding: 1rem;
+  margin-right: 2rem;
 }
 
 .event_title {
@@ -45,8 +47,9 @@
 }
 
 .chat_container {
-    padding: 1rem;width: 50%;
-    position: relative;
+  padding: 1rem;
+  width: 50%;
+  position: relative;
 }
 
 .content_wrapper > h3,
@@ -54,6 +57,10 @@
   margin: 0;
   padding: 0.2rem 0.3rem;
   font-weight: bold;
+}
+
+.content_title {
+  margin-top: 1.5rem;
 }
 
 .content_wrapper > p {
