@@ -1,7 +1,16 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as styles from './Event.module.css'
+import { authStore } from '@context'
 
-function Event({ name, people, hour, date, link, creator, url, _id }) {
+ function Event({ name, people, hour, date, link, creator, url }) {
+  const { auth } = authStore
+
+  useEffect(() => {
+    console.log(auth)
+    console.log(auth.user.username, auth.user.id)
+  }, [auth])
+
   const navigate = useNavigate()
   return (
     <div className={styles.container}>
@@ -22,7 +31,7 @@ function Event({ name, people, hour, date, link, creator, url, _id }) {
           textAlign: 'end',
         }}
       >
-        <a>{link}</a>
+        <a>{link}<br/></a>
         {url && (
           <>
             <br />
@@ -31,6 +40,10 @@ function Event({ name, people, hour, date, link, creator, url, _id }) {
             </a>
           </>
         )}
+      </div>
+      <div className={styles.flex}>
+      <button>Save 💾</button>
+      <button>Details 🧮</button>
       </div>
     </div>
   )
