@@ -50,7 +50,6 @@ const Chat = ({ _id, name }) => {
         if (messages.length < response.data.messages.length) {
           const newMessages = response.data.messages.slice(messages.length)
           setMessages([...messages, ...newMessages])
-          scrollToBottom()
         }
       } else {
         setError('Error getting messages')
@@ -79,6 +78,10 @@ const Chat = ({ _id, name }) => {
     chatDisplay.scrollTop = chatDisplay.scrollHeight
   }
 
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
   // Check for new messages every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
@@ -100,17 +103,23 @@ const Chat = ({ _id, name }) => {
       </div>
       <div className={styles.display_wrapper}>
         <div id="chatDisplay" className={styles.messages_wrapper}>
-          {messages?.map((message, index) => {
-            return (
-              <ChatMessage
-                key={message._id}
-                user={message.user}
-                text={message.message}
-                sent_at={message.sent_at}
-                actual_user_id={auth.user.id}
-              />
-            )
-          })}
+          {messages?.length > 0 &&
+            messages?.map((message, index) => {
+              return (
+                <ChatMessage
+                  key={message._id}
+                  user={message.user}
+                  text={message.message}
+                  sent_at={message.sent_at}
+                  actual_user_id={auth.user.id}
+                />
+              )
+            })}
+          {messages?.length === 0 && (
+            <div className={styles.no_messages}>
+              There are no messages yet. <br /> Start the conversation!
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.input_wrapper}>
