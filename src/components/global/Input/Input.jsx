@@ -32,7 +32,10 @@ const Input = ({
           <textarea
             rows={rows}
             wrap="hard"
-            style={{ resize: resize }}
+            style={{
+              resize: resize,
+              cursor: disabled ? 'not-allowed' : 'auto',
+            }}
             className={customStyles}
             id={name}
             name={name}
@@ -55,6 +58,10 @@ const Input = ({
             value={value}
             onChange={onChange}
             placeholder={placeholder}
+            disabled={disabled}
+            style={{
+              cursor: disabled ? 'not-allowed' : 'auto',
+            }}
           />
         )}
       </label>
