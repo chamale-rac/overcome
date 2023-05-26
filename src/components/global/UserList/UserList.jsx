@@ -34,9 +34,9 @@ const UserList = ({
         users?.map((relation) => (
           <div
             className={styles.user_container}
-            onClick={() => onClickFunction(relation.user1._id)}
+            onClick={() => onClickFunction(relation.user._id)}
           >
-            {relation.user1.username}{' '}
+            {relation.user.username}{' '}
             <span
               style={{
                 fontSize: '0.8rem',
@@ -54,17 +54,11 @@ const UserList = ({
           <div
             className={styles.user_container}
             onClick={() =>
-              onClickFunction(
-                relation.chat_id,
-                actualUser === relation.user1._id
-                  ? relation.user2.username
-                  : relation.user1.username,
-              )
+              onClickFunction(relation.chat_id, relation.user.username)
             }
           >
-            {actualUser === relation.user1._id
-              ? relation.user2.username
-              : relation.user1.username}{' '}
+            {relation.user.username}
+            {''}
             <span
               style={{
                 fontSize: '0.8rem',

@@ -18,7 +18,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   const [friendResponse, setFriendResponse] = useState(null)
 
   useEffect(() => {
-    console.log('theUSER' ,user)
+    console.log('theUSER', user)
   }, [user])
 
   const sendFriendRequest = async () => {
@@ -26,12 +26,14 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
       setLoading(true)
       const response = await handleRequest(
         'post',
-        `/userRelations/friendRequest`,
+        `/relations/friendRequest`,
         {
           first_user_id: auth.user.id,
           second_user_id: user_id,
         },
-        {},
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
         true,
       )
       console.log(response.data)
@@ -99,11 +101,14 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         {user && (
           <>
             <div className={styles.title_wrapper}>
-              <div className={styles.flex} >
+              <div className={styles.flex}>
                 <h2 className={`${styles.event_title} font-bebas-neue`}>
                   @{user?.username}
                 </h2>
-                <img src="/public/profile-400.png" alt="Foto de perfil de Juan" />
+                <img
+                  src="/public/profile-400.png"
+                  alt="Foto de perfil de Juan"
+                />
               </div>
             </div>
 
@@ -118,10 +123,15 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
             />
 
             <div className={styles.profile_info}>
-            <button className={styles.button} onClick={() => handleSendFriendRequest()}>
-              Send Friend Request 😎
-            </button>
-              <h3>Name: {user?.name} {user?.lastname}</h3>
+              <button
+                className={styles.button}
+                onClick={() => handleSendFriendRequest()}
+              >
+                Send Friend Request 😎
+              </button>
+              <h3>
+                Name: {user?.name} {user?.lastname}
+              </h3>
               <h3>Email: {user?.email}</h3>
               <div className={styles.eventsContainer}>
                 {!(user?.savedEvents === undefined) && (

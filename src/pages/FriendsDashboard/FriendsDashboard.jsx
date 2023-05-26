@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Collapse, Chat } from '@components/global'
+import { Collapse, Chat, NavButton } from '@components/global'
 import { useApi } from '@hooks'
 
 import { authStore } from '@context'
@@ -21,12 +21,16 @@ const FriendsDashboard = () => {
   const [friends, setFriends] = useState(null)
   const [friendResponse, setFriendResponse] = useState(null)
 
-  const acceptFriendRequest = async (user_id) => {
+  // New version variables
+  const [relationsRequests, setRelationsRequests] = useState(null)
+  const [relationsFriends, setRelationsFriends] = useState(null)
+
+  const postAcceptFriendRequest = async (user_id) => {
     try {
       setLoading(true)
       const response = await handleRequest(
         'post',
-        `/userRelations/acceptFriendRequest`,
+        `/relations/acceptFriendRequest`,
         {
           accepter_user_id: auth.user.id,
           requester_user_id: user_id,
@@ -43,12 +47,17 @@ const FriendsDashboard = () => {
       )
     } finally {
       setLoading(false)
-      getUserRelations()
+      handleGetUserRelations()
     }
   }
 
+  const handleGetUserRelations = () => {
+    getFriends()
+    getFriendRequests()
+  }
+
   const handleAcceptFriendRequest = (user_id) => {
-    acceptFriendRequest(user_id)
+    postAcceptFriendRequest(user_id)
   }
 
   const handleSetViewProfile = (user_id) => {
@@ -56,15 +65,6 @@ const FriendsDashboard = () => {
       type: 'profile',
       user_id,
     })
-  }
-  const filterFriendRequests = () => {
-    const requests = userRelations.filter(
-      (relation) =>
-        relation.user2._id === auth.user.id &&
-        relation.second_user_agreement === false,
-    )
-    setFriendRequests(requests)
-    console.log('friendRequests', friendRequests)
   }
 
   const handleSetViewChat = (chat_id, name) => {
@@ -75,36 +75,49 @@ const FriendsDashboard = () => {
     })
   }
 
-  const filterFriends = () => {
-    const friends = userRelations.filter(
-      (relation) =>
-        (relation.user1._id === auth.user.id ||
-          relation.user2._id === auth.user.id) &&
-        relation.second_user_agreement === true &&
-        relation.first_user_agreement === true,
-    )
-    setFriends(friends)
-    console.log('friends', friends)
-  }
-
-  const getUserRelations = async () => {
+  const getFriends = async () => {
     try {
-      setLoading(true)
-      const response = await handleRequest(
+      const friendsResponse = await handleRequest(
         'GET',
-        `/userRelations`,
+        `/relations/friends/${auth.user.id}`,
         {},
         {
           Authorization: 'Bearer ' + auth.authToken,
         },
         true,
       )
-      console.log(response.data)
-      setUserRelations(response.data)
+      console.log('friendResponse LISt', friendsResponse.data)
+      setRelationsFriends(friendsResponse.data)
     } catch (error) {
       console.error(error)
       setError(
-        'Error fetching event details, please try again later or contact support',
+        'Error fetching friends, please try again later or contact support',
+      )
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const getFriendRequests = async () => {
+    try {
+      setLoading(true)
+      console.log('getFriendRequests', auth.user.id)
+      const requests = await handleRequest(
+        'GET',
+        `/relations/requests/${auth.user.id}`,
+        {},
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+
+      console.log('friendsRequestRespose', requests.data)
+      setRelationsRequests(requests.data)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error fetching friend requests, please try again later or contact support',
       )
     } finally {
       setLoading(false)
@@ -135,16 +148,10 @@ const FriendsDashboard = () => {
       setLoading(false)
     }
   }
-  useEffect(() => {
-    if (userRelations) {
-      filterFriendRequests()
-      filterFriends()
-    }
-  }, [userRelations])
 
   useEffect(() => {
     getAllUsers()
-    getUserRelations()
+    handleGetUserRelations()
   }, [])
 
   return (
@@ -153,6 +160,15 @@ const FriendsDashboard = () => {
       <div className={styles.content_container}>
         <div className={styles.wrapper}>
           <div className={styles.collapse_wrapper}>
+            <div className={styles.refresh_container}>
+              <NavButton
+                type="normal"
+                handleClick={() => handleGetUserRelations()}
+                customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base mb-6"
+              >
+                Refresh ↻
+              </NavButton>
+            </div>
             <Collapse title="Search Users" closed={true}>
               <div className={styles.search_container}>
                 <SearchInput
@@ -174,9 +190,9 @@ const FriendsDashboard = () => {
           </div>
           <div className={styles.collapse_wrapper}>
             <Collapse title="Friend List">
-              {friends && (
+              {relationsFriends && (
                 <UserList
-                  users={friends}
+                  users={relationsFriends}
                   onClickFunction={handleSetViewChat}
                   type="friends"
                   actualUser={auth.user.id}
@@ -186,9 +202,9 @@ const FriendsDashboard = () => {
           </div>
           <div className={styles.collapse_wrapper}>
             <Collapse title="Friend Requests">
-              {friendRequests && (
+              {relationsRequests && (
                 <UserList
-                  users={friendRequests}
+                  users={relationsRequests}
                   onClickFunction={handleAcceptFriendRequest}
                   type="requests"
                 />
