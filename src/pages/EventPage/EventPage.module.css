@@ -100,3 +100,16 @@
   border: none;
   padding-left: 0.1rem;
 }
+
+.saveButton {
+  color: grey;
+  display: block;
+  margin: 15px 0 0 0;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background-color: white;
+  transform: scaleY(-2px) scaleX(-2px);
+}
+

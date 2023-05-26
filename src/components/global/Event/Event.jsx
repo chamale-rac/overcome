@@ -45,7 +45,7 @@ function Event({
 
   const navigate = useNavigate()
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={{margin: !inProfile===true ? '0px' : ''}}>
       <h1>{name}</h1>
 
       <p className={styles.creator}>
