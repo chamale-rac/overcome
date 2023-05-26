@@ -3,6 +3,7 @@ import { Collapse } from '@components/global'
 import { useApi } from '@hooks'
 
 import { authStore } from '@context'
+import { UserPage } from '@pages'
 import * as styles from './FriendsDashboard.module.css'
 import { SearchInput, UserList } from '@components/global'
 
@@ -14,7 +15,16 @@ const FriendsDashboard = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
+  const [actualView, setActualView] = useState(null)
 
+  const handleSetViewProfile = (user_id) => {
+    setActualView({
+      type: 'profile',
+      user_id,
+    })
+  }
+
+  // TODO get all users, and quit actual user
   const getAllUsers = async () => {
     try {
       setLoading(true)
@@ -60,7 +70,12 @@ const FriendsDashboard = () => {
                   searchIcon={'🔍'}
                 />
               </div>
-              {allUsers && <UserList users={allUsers} />}
+              {allUsers && (
+                <UserList
+                  users={allUsers}
+                  onClickFunction={handleSetViewProfile}
+                />
+              )}
             </Collapse>
           </div>
           <div className={styles.collapse_wrapper}>
@@ -75,11 +90,26 @@ const FriendsDashboard = () => {
               <div>a</div>
               <div>b</div>
               <div>b</div>
+              <div>a</div>
+              <div>b</div>
+              <div>b</div>
+              <div>a</div>
+              <div>b</div>
+              <div>b</div>
             </Collapse>
           </div>
         </div>
         <div className={styles.chat_container}>
-          Here is where the chat will go
+          {actualView && actualView.type === 'profile' && (
+            <UserPage user_id={actualView.user_id} isCreator={false} />
+          )}
+          {!actualView && (
+            <div className={styles.chat_placeholder}>
+              <h2 className={styles.chat_placeholder_title}>
+                Select a user to chat with
+              </h2>
+            </div>
+          )}
         </div>
       </div>
     </div>
