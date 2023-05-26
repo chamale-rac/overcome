@@ -1,8 +1,27 @@
-import React from 'react'
+import { useEffect, useState} from 'react'
 import * as styles from './Events.module.css'
 import Event from '@components/global/Event'
+import { authStore } from '@context'
+import { useApi } from '@hooks'
 
 const Events = ({ events }) => {
+  const { handleRequest } = useApi()
+  const { auth } = authStore
+
+  const getUser = async () => {
+    const response = await handleRequest('GET', '/users/:', {}, 
+      {
+        'Authorization': 'Bearer ' + auth.authToken
+      },
+      true)
+    console.log('USER!', response)
+  }
+
+  useEffect(() => {
+    console.log(auth)
+    // console.log(auth.user.username, auth.user.id)
+  }, [auth])
+
   return (
     <>
       {events.map((event) => (
