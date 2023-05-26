@@ -33,9 +33,9 @@ function Event({ name, people, hour, date, link, creator, url, _id }) {
   return (
     <div className={styles.container}>
       <h1>{name}</h1>
-      <p>Creator: {creator}</p>
-      <p>Hour: {hour}</p>
-      <p>Date: {date}</p>
+      <p style={{padding:"0", margin:"0"}} >Creator: {creator}</p>
+      <p style={{padding:"0px", margin:"0"}}>Hour: {hour}</p>
+      <p style={{padding:"0px", margin:"0"}}>Date: {date}</p>
       {/*
       //people is still no added to the model
       <div>People: {people.map((person) => person.username).join(', ')}</div> */}
@@ -43,19 +43,19 @@ function Event({ name, people, hour, date, link, creator, url, _id }) {
         className="mt-3"
         style={{
           width: '100%',
-          textAlign: 'end',
+          textAlign: 'center',
         }}
       >
-        <a>
+        <a style={{padding:"0", margin:"0", textAlign:"left"}}>
           {link}
           <br />
         </a>
         {url && (
           <>
             <br />
-            <a href={url} target="_blank">
+            {/* <a href={url} target="_blank">
               Link: {url}
-            </a>
+            </a> */}
           </>
         )}
       </div>
