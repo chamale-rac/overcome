@@ -39,17 +39,21 @@ const Chat = ({ _id, name }) => {
     return true
   }
 
-  const getMessages = async () => {
+  const getMessages = async (type) => {
     try {
       setLoading(true)
-      const response = await handleRequest('GET', `/chats/${_id}`, {}, true)
+      const response = await handleRequest('GET', `/chats/${_id}`, {}, {}, true)
       console.log('Chat!', response)
       if (response.status === 200) {
         console.log('200')
         // get just new messages
-        if (messages.length < response.data.messages.length) {
-          const newMessages = response.data.messages.slice(messages.length)
-          setMessages([...messages, ...newMessages])
+        if (type === 'refresh') {
+          if (messages.length < response.data.messages.length) {
+            const newMessages = response.data.messages.slice(messages.length)
+            setMessages([...messages, ...newMessages])
+          }
+        } else {
+          setMessages(response.data.messages)
         }
       } else {
         setError('Error getting messages')
@@ -69,7 +73,7 @@ const Chat = ({ _id, name }) => {
 
   useEffect(() => {
     if (_id) {
-      getMessages()
+      getMessages('change')
     }
   }, [_id])
 
@@ -85,13 +89,13 @@ const Chat = ({ _id, name }) => {
   // Check for new messages every 5 seconds
 
   useEffect(() => {
-    if (messages) {
+    if (messages && _id) {
       const interval = setInterval(() => {
-        getMessages()
+        getMessages('refresh')
       }, 5000)
       return () => clearInterval(interval)
     }
-  }, [])
+  }, [messages, _id])
 
   return (
     <div id={_id} className={`${styles.container} standard_border`}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Collapse } from '@components/global'
+import { Collapse, Chat } from '@components/global'
 import { useApi } from '@hooks'
 
 import { authStore } from '@context'
@@ -19,6 +19,37 @@ const FriendsDashboard = () => {
   const [userRelations, setUserRelations] = useState(null)
   const [friendRequests, setFriendRequests] = useState(null)
   const [friends, setFriends] = useState(null)
+  const [friendResponse, setFriendResponse] = useState(null)
+
+  const acceptFriendRequest = async (user_id) => {
+    try {
+      setLoading(true)
+      const response = await handleRequest(
+        'post',
+        `/userRelations/acceptFriendRequest`,
+        {
+          accepter_user_id: auth.user.id,
+          requester_user_id: user_id,
+        },
+        {},
+        true,
+      )
+      console.log(response.data)
+      setFriendResponse(response.data)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error sending friend request, please try again later or contact support',
+      )
+    } finally {
+      setLoading(false)
+      getUserRelations()
+    }
+  }
+
+  const handleAcceptFriendRequest = (user_id) => {
+    acceptFriendRequest(user_id)
+  }
 
   const handleSetViewProfile = (user_id) => {
     setActualView({
@@ -29,20 +60,31 @@ const FriendsDashboard = () => {
   const filterFriendRequests = () => {
     const requests = userRelations.filter(
       (relation) =>
-        relation.user2 === auth.user.id &&
+        relation.user2._id === auth.user.id &&
         relation.second_user_agreement === false,
     )
     setFriendRequests(requests)
+    console.log('friendRequests', friendRequests)
+  }
+
+  const handleSetViewChat = (chat_id, name) => {
+    setActualView({
+      type: 'chat',
+      chat_id,
+      name,
+    })
   }
 
   const filterFriends = () => {
     const friends = userRelations.filter(
       (relation) =>
-        (relation.user1 === auth.user.id || relation.user2 === auth.user.id) &&
+        (relation.user1._id === auth.user.id ||
+          relation.user2._id === auth.user.id) &&
         relation.second_user_agreement === true &&
         relation.first_user_agreement === true,
     )
     setFriends(friends)
+    console.log('friends', friends)
   }
 
   const getUserRelations = async () => {
@@ -132,28 +174,34 @@ const FriendsDashboard = () => {
           </div>
           <div className={styles.collapse_wrapper}>
             <Collapse title="Friend List">
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
+              {friends && (
+                <UserList
+                  users={friends}
+                  onClickFunction={handleSetViewChat}
+                  type="friends"
+                  actualUser={auth.user.id}
+                />
+              )}
             </Collapse>
           </div>
           <div className={styles.collapse_wrapper}>
             <Collapse title="Friend Requests">
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
+              {friendRequests && (
+                <UserList
+                  users={friendRequests}
+                  onClickFunction={handleAcceptFriendRequest}
+                  type="requests"
+                />
+              )}
             </Collapse>
           </div>
         </div>
         <div className={styles.chat_container}>
           {actualView && actualView.type === 'profile' && (
             <UserPage user_id={actualView.user_id} isCreator={false} />
+          )}
+          {actualView && actualView.type === 'chat' && (
+            <Chat _id={actualView.chat_id} name={actualView.name} />
           )}
           {!actualView && (
             <div className={styles.chat_placeholder}>
