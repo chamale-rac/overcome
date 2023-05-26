@@ -29,20 +29,23 @@ const FriendsDashboard = () => {
   const filterFriendRequests = () => {
     const requests = userRelations.filter(
       (relation) =>
-        relation.user2 === auth.user.id &&
+        relation.user2._id === auth.user.id &&
         relation.second_user_agreement === false,
     )
     setFriendRequests(requests)
+    console.log('friendRequests', friendRequests)
   }
 
   const filterFriends = () => {
     const friends = userRelations.filter(
       (relation) =>
-        (relation.user1 === auth.user.id || relation.user2 === auth.user.id) &&
+        (relation.user1._id === auth.user.id ||
+          relation.user2._id === auth.user.id) &&
         relation.second_user_agreement === true &&
         relation.first_user_agreement === true,
     )
     setFriends(friends)
+    console.log('friends', friends)
   }
 
   const getUserRelations = async () => {
@@ -132,22 +135,24 @@ const FriendsDashboard = () => {
           </div>
           <div className={styles.collapse_wrapper}>
             <Collapse title="Friend List">
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
+              {friends && (
+                <UserList
+                  users={friends}
+                  onClickFunction={handleSetViewProfile}
+                  type="friends"
+                />
+              )}
             </Collapse>
           </div>
           <div className={styles.collapse_wrapper}>
             <Collapse title="Friend Requests">
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
+              {friendRequests && (
+                <UserList
+                  users={friendRequests}
+                  onClickFunction={handleSetViewProfile}
+                  type="requests"
+                />
+              )}
             </Collapse>
           </div>
         </div>

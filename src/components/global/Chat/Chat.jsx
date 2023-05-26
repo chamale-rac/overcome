@@ -42,7 +42,7 @@ const Chat = ({ _id, name }) => {
   const getMessages = async () => {
     try {
       setLoading(true)
-      const response = await handleRequest('GET', `/chats/${_id}`, {}, true)
+      const response = await handleRequest('GET', `/chats/${_id}`, {}, {}, true)
       console.log('Chat!', response)
       if (response.status === 200) {
         console.log('200')
@@ -85,13 +85,13 @@ const Chat = ({ _id, name }) => {
   // Check for new messages every 5 seconds
 
   useEffect(() => {
-    if (messages) {
+    if (messages && _id) {
       const interval = setInterval(() => {
         getMessages()
       }, 5000)
       return () => clearInterval(interval)
     }
-  }, [])
+  }, [messages, _id])
 
   return (
     <div id={_id} className={`${styles.container} standard_border`}>
