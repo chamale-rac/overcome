@@ -3,20 +3,31 @@ import { useApi } from '@hooks'
 import { useParams, useNavigate } from 'react-router-dom'
 import { NavButton, Chat } from '@components/global'
 import * as styles from './UserPage.module.css'
+import { authStore } from '@context'
 
 const UserPage = () => {
+  const { auth } = authStore
   const navigate = useNavigate()
   const { creator_id } = useParams()
   const { handleRequest } = useApi()
-  const [event, setEvent] = useState(null)
+  const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const getEventDetails = async (_id) => {
+  const getUserDetails = async (_id) => {
     try {
       setLoading(true)
-      const response = await handleRequest('GET', `/events/${_id}`)
-      setEvent(response.data)
+      const response = await handleRequest(
+        'GET',
+        `/users/${_id}`,
+        {},
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+      console.log(response.data)
+      setUser(response.data)
     } catch (error) {
       console.error(error)
       setError(
@@ -28,12 +39,12 @@ const UserPage = () => {
   }
 
   useEffect(() => {
-    // getEventDetails(_id)
+    getUserDetails(creator_id)
   }, [])
 
   return (
     <div className={`${styles.container} standard_border`}>
-      <div className={styles.event_container}>
+      <div className={styles.profile_info_container}>
         <NavButton
           type="normal"
           handleClick={() => navigate(-1)}
@@ -41,7 +52,25 @@ const UserPage = () => {
         >
           ⇐ Back
         </NavButton>
-        {creator_id}
+        {user && (
+          <>
+            <div className={styles.title_wrapper}>
+              <h2 className={`${styles.event_title} font-bebas-neue`}>
+                {user?.username}
+              </h2>
+            </div>
+
+            <hr
+              style={{
+                width: '100%',
+                height: '2px',
+                backgroundColor: '#333',
+                border: 'none',
+                margin: '0px 0',
+              }}
+            />
+          </>
+        )}
       </div>
     </div>
   )
