@@ -103,7 +103,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
             <div className={styles.title_wrapper}>
               <div className={styles.flex}>
                 <h2 className={`${styles.event_title} font-bebas-neue`}>
-                  @{user?.username}
+                  @{user?.username} {user?._id === auth.user.id && '(You)'}
                 </h2>
                 <img
                   src="/public/profile-400.png"
@@ -123,12 +123,18 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
             />
 
             <div className={styles.profile_info}>
-              <button
-                className={`${styles.button} button `}
-                onClick={() => handleSendFriendRequest()}
-              >
-                Send Friend Request 😎
-              </button>
+              {user?._id === auth.user.id ? (
+                <button className={`${styles.button} button`}>
+                  Reflexive Friend Request 😎
+                </button>
+              ) : (
+                <button
+                  className={`${styles.button} button `}
+                  onClick={() => handleSendFriendRequest()}
+                >
+                  Send Friend Request 😎
+                </button>
+              )}
               <h3>
                 Name: {user?.name} {user?.lastname}
               </h3>

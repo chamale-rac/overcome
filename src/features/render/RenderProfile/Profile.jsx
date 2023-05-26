@@ -66,7 +66,7 @@ function Profile() {
 
   return (
     <div className={styles.container}>
-      <h1>Mi Perfil</h1>
+      <h1>My profile</h1>
       <section className={styles.custom_section}>
         <div className={styles.main_info}>
           <img src="/public/profile-400.png" alt="Foto de perfil de Juan" />
@@ -98,6 +98,8 @@ function Profile() {
           <li>Valorant</li>
         </ul> */}
       </section>
+      {/**
+        
       <section className={`${styles.custom_section} ${styles.sub_section}`}>
         <h2>Mis amigos</h2>
         <ul>
@@ -106,6 +108,9 @@ function Profile() {
           <li>Valorant</li>
         </ul>
       </section>
+        
+
+         */}
     </div>
   )
 }

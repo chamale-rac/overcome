@@ -23,14 +23,14 @@ const Home = () => {
       icon: '📝',
     },
     {
-      name: 'Profile',
-      path: '/home/profile',
-      icon: '🤖',
-    },
-    {
       name: 'Users',
       path: '/home/users',
       icon: '👥',
+    },
+    {
+      name: 'Profile',
+      path: '/home/profile',
+      icon: '🤖',
     },
     {
       name: 'Sign out',

@@ -67,8 +67,13 @@ const EventPage = () => {
               <h2 className={`${styles.event_title} font-bebas-neue`}>
                 {event?.title}
               </h2>
-              <p className={styles.event_creator}>
+              <p
+                className={styles.event_creator}
+                style={{ cursor: 'pointer' }}
+                onClick={() => navigate(`/home/users/${event.creator._id}`)}
+              >
                 Created by: {event?.creator?.username}
+                {event?.creator?._id === auth.user.id && ' (You)'}
               </p>
             </div>
             <hr
@@ -80,7 +85,10 @@ const EventPage = () => {
                 margin: '0px 0',
               }}
             />
-            <button className={`${styles.saveButton} button asap`} onClick={() => saveEvent()}>
+            <button
+              className={`${styles.saveButton} button asap`}
+              onClick={() => saveEvent()}
+            >
               Save 💾
             </button>
             <h3 className={styles.content_title}>Description:</h3>

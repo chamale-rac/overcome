@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import * as styles from './ChatMessage.module.css'
 
 const ChatMessage = ({
@@ -8,6 +9,8 @@ const ChatMessage = ({
   actual_user_id,
   color = '#35afeb',
 }) => {
+  const navigate = useNavigate()
+
   const sentAtDate = new Date(sent_at)
   const sentAtUtcMinusSix = sentAtDate.toLocaleString('en-US', {
     timeZone: 'America/Guatemala',
@@ -23,7 +26,9 @@ const ChatMessage = ({
         className={`${styles.user}  font-overpass-mono`}
         style={{
           color: user._id == actual_user_id ? '#000000' : '#000000',
+          cursor: 'pointer',
         }}
+        onClick={() => navigate(`/home/users/${user._id}`)}
       >
         {user.username}
       </h4>

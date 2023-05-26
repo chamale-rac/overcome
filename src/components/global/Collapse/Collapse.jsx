@@ -24,7 +24,7 @@ const Collapse = ({
   useEffect(() => {
     setTimeout(() => {
       setContentHeight(contentRef.current.scrollHeight)
-    }, 1000)
+    }, 300)
   }, [change])
 
   const handleClose = () => {
