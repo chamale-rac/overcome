@@ -12,6 +12,7 @@ const FriendsDashboard = () => {
 
   const { handleRequest } = useApi()
   const [allUsers, setAllUsers] = useState(null)
+  const [allPreLoadedUsers, setAllPreLoadedUsers] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
@@ -139,6 +140,7 @@ const FriendsDashboard = () => {
       )
       console.log(response.data)
       setAllUsers(response.data)
+      setAllPreLoadedUsers(response.data)
     } catch (error) {
       console.error(error)
       setError(
@@ -153,6 +155,17 @@ const FriendsDashboard = () => {
     getAllUsers()
     handleGetUserRelations()
   }, [])
+
+  useEffect(() => {
+    if (search === '') {
+      setAllUsers(allPreLoadedUsers)
+    } else {
+      const usersFiltered = allUsers.filter((user) => {
+        return user.username.toLowerCase().includes(search.toLowerCase())
+      })
+      setAllUsers(usersFiltered)
+    }
+  }, [search])
 
   return (
     <div className={styles.container}>
@@ -169,14 +182,14 @@ const FriendsDashboard = () => {
                 Refresh ↻
               </NavButton>
             </div>
-            <Collapse title="Search Users" closed={true}>
+            <Collapse title="Search Users" closed={true} change={allUsers}>
               <div className={styles.search_container}>
                 <SearchInput
                   name={'search'}
                   value={search}
                   onChange={setSearch}
                   placeholder={'Search...'}
-                  isDynamic={true}
+                  isDynamic={false}
                   searchIcon={'🔍'}
                 />
               </div>

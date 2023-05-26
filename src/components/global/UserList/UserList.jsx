@@ -23,6 +23,7 @@ const UserList = ({
                 fontSize: '0.8rem',
                 color: '#00000',
                 opacity: '0.4',
+                marginLeft: '0.2rem',
               }}
             >
               (Click to view profile)
@@ -42,6 +43,7 @@ const UserList = ({
                 fontSize: '0.8rem',
                 color: '#00000',
                 opacity: '0.5',
+                marginLeft: '0.2rem',
               }}
             >
               (Click to accept)
@@ -64,6 +66,7 @@ const UserList = ({
                 fontSize: '0.8rem',
                 color: '#00000',
                 opacity: '0.5',
+                marginLeft: '0.2rem',
               }}
             >
               (Click to chat)

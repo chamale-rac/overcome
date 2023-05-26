@@ -124,7 +124,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
 
             <div className={styles.profile_info}>
               <button
-                className={styles.button}
+                className={`${styles.button} button `}
                 onClick={() => handleSendFriendRequest()}
               >
                 Send Friend Request 😎
