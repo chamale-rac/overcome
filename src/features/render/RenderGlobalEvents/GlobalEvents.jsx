@@ -48,7 +48,7 @@ function GlobalEvents() {
             name={'search'}
             value={search}
             onChange={setSearch}
-            placeholder={'Buscar...'}
+            placeholder={'Search...'}
             isDynamic={false}
             searchIcon={'🔍'}
           />

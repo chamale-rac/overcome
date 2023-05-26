@@ -36,7 +36,7 @@ const EventPage = () => {
       <div className={styles.event_container}>
         <NavButton
           type="normal"
-          handleClick={() => navigate('/home/events')}
+          handleClick={() => navigate(-1)}
           customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base mb-20"
         >
           ⇐ Back
@@ -54,8 +54,10 @@ const EventPage = () => {
             <hr
               style={{
                 width: '100%',
-                height: '1px',
-                backgroundColor: '#000',
+                height: '2px',
+                backgroundColor: '#333',
+                border: 'none',
+                margin: '0px 0',
               }}
             />
             <h3 className={styles.content_title}>Description:</h3>

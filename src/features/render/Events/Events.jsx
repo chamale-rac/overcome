@@ -33,6 +33,7 @@ const Events = ({ events }) => {
           date={event.date != undefined && event.date.substring(0, 10)}
           people={event.participants}
           creator={event.creator?.username}
+          creator_id={event.creator?._id}
           link={
             event.tags != undefined &&
             'Tags: ' +

@@ -4,7 +4,18 @@ import * as styles from './Event.module.css'
 import { authStore } from '@context'
 import { useApi } from '@hooks'
 
-function Event({ name, people, hour, date, link, creator, url, _id }) {
+function Event({
+  name,
+  people,
+  hour,
+  date,
+  link,
+  creator,
+  url,
+  _id,
+  creator_id,
+}) {
+  
   const { handleRequest } = useApi()
   const { auth } = authStore
 
@@ -33,7 +44,20 @@ function Event({ name, people, hour, date, link, creator, url, _id }) {
   return (
     <div className={styles.container}>
       <h1>{name}</h1>
-      <p style={{padding:"0", margin:"0"}} >Creator: {creator}</p>
+       
+  
+    <p className={styles.creator}>
+        Creator:{' '}
+        <span
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline', padding:"0", margin:"0"
+          }}
+          onClick={() => navigate(`/home/users/${creator_id}`)}
+        >
+          {creator}
+        </span>
+      </p>
       <p style={{padding:"0px", margin:"0"}}>Hour: {hour}</p>
       <p style={{padding:"0px", margin:"0"}}>Date: {date}</p>
       {/*
@@ -60,8 +84,11 @@ function Event({ name, people, hour, date, link, creator, url, _id }) {
         )}
       </div>
       <div className={styles.flex}>
-        <button onClick={() => saveEvent()} >Save 💾</button>
-        <button onClick={() => navigate(`/home/events/${_id}`)}>
+        <button className={`button asap`} onClick={() => saveEvent()} >Save 💾</button>
+        <button
+          className={`button asap`}
+          onClick={() => navigate(`/home/events/${_id}`)}
+        >
           Details 🧮
         </button>
       </div>

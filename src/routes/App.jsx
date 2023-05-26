@@ -1,6 +1,13 @@
 import { ErrorPage } from '@assets'
 
-import { Landing, Login, EventsDashboard } from '@pages'
+import {
+  Landing,
+  Login,
+  EventsDashboard,
+  EventPage,
+  UserPage,
+  FriendsDashboard,
+} from '@pages'
 
 import { Home } from '@layouts'
 
@@ -15,7 +22,6 @@ import HomePage from '@features/render/HomePage'
 import GlobalEvents from '@features/render/RenderGlobalEvents'
 
 import Profile from '@features/render/RenderProfile'
-import EventPage from '../pages/EventPage/EventPage'
 
 /*
 TODO: Add roles to users and use them to restrict access to certain routes
@@ -43,6 +49,8 @@ function App() {
           <Route path="/home/myevents" element={<UserEvents />} />
           <Route path="/home/newevent" element={<EventsDashboard />} />
           <Route path="/home/events/:_id" element={<EventPage />} />
+          <Route path="/home/users" element={<FriendsDashboard />} />
+          <Route path="/home/users/:creator_id" element={<UserPage />} />
         </Route>
       </Route>
 

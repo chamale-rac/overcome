@@ -28,6 +28,11 @@ const Home = () => {
       icon: '🤖',
     },
     {
+      name: 'Users',
+      path: '/home/users',
+      icon: '👥',
+    },
+    {
       name: 'Sign out',
       path: '/',
       icon: '📤',

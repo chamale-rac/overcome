@@ -18,6 +18,7 @@ font-family: 'Roboto Mono', monospace;
 }
 
 html {
+  background-color: var(--ink-background-dark);
   scroll-behavior: smooth;
   font-family: 'Roboto Mono', monospace;
 }
@@ -65,6 +66,15 @@ html {
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.1s ease-in-out;
   border: 2px solid black;
+}
+
+.button.asap:hover {
+  transform: translateY(2px);
+  box-shadow: 0px 0px 0px 0px #000;
+}
+
+.button.asap {
+  box-shadow: 2px 2px 0px 0px #000;
 }
 
 .standard_border {
