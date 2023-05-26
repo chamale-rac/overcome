@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Collapse } from '@components/global'
+import { Collapse, Chat } from '@components/global'
 import { useApi } from '@hooks'
 
 import { authStore } from '@context'
@@ -19,6 +19,37 @@ const FriendsDashboard = () => {
   const [userRelations, setUserRelations] = useState(null)
   const [friendRequests, setFriendRequests] = useState(null)
   const [friends, setFriends] = useState(null)
+  const [friendResponse, setFriendResponse] = useState(null)
+
+  const acceptFriendRequest = async (user_id) => {
+    try {
+      setLoading(true)
+      const response = await handleRequest(
+        'post',
+        `/userRelations/acceptFriendRequest`,
+        {
+          accepter_user_id: auth.user.id,
+          requester_user_id: user_id,
+        },
+        {},
+        true,
+      )
+      console.log(response.data)
+      setFriendResponse(response.data)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error sending friend request, please try again later or contact support',
+      )
+    } finally {
+      setLoading(false)
+      getUserRelations()
+    }
+  }
+
+  const handleAcceptFriendRequest = (user_id) => {
+    acceptFriendRequest(user_id)
+  }
 
   const handleSetViewProfile = (user_id) => {
     setActualView({
@@ -34,6 +65,14 @@ const FriendsDashboard = () => {
     )
     setFriendRequests(requests)
     console.log('friendRequests', friendRequests)
+  }
+
+  const handleSetViewChat = (chat_id, name) => {
+    setActualView({
+      type: 'chat',
+      chat_id,
+      name,
+    })
   }
 
   const filterFriends = () => {
@@ -138,8 +177,9 @@ const FriendsDashboard = () => {
               {friends && (
                 <UserList
                   users={friends}
-                  onClickFunction={handleSetViewProfile}
+                  onClickFunction={handleSetViewChat}
                   type="friends"
+                  actualUser={auth.user.id}
                 />
               )}
             </Collapse>
@@ -149,7 +189,7 @@ const FriendsDashboard = () => {
               {friendRequests && (
                 <UserList
                   users={friendRequests}
-                  onClickFunction={handleSetViewProfile}
+                  onClickFunction={handleAcceptFriendRequest}
                   type="requests"
                 />
               )}
@@ -159,6 +199,9 @@ const FriendsDashboard = () => {
         <div className={styles.chat_container}>
           {actualView && actualView.type === 'profile' && (
             <UserPage user_id={actualView.user_id} isCreator={false} />
+          )}
+          {actualView && actualView.type === 'chat' && (
+            <Chat _id={actualView.chat_id} name={actualView.name} />
           )}
           {!actualView && (
             <div className={styles.chat_placeholder}>
