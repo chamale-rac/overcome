@@ -13,23 +13,31 @@ function Profile() {
 
   const getUsers = async () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
-    const response = await handleRequest('GET', '/users/', {}, 
+    const response = await handleRequest(
+      'GET',
+      '/users/',
+      {},
       {
-        'Authorization': 'Bearer ' + auth.authToken
+        Authorization: 'Bearer ' + auth.authToken,
       },
-      true)
+      true,
+    )
     console.log('USERS!', response)
     setUsers(response.data)
   }
 
   const getUser = async () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
-    console.log('testttt' ,auth.user.id)
-    const response = await handleRequest('GET', `/users/${auth.user.id}`, {}, 
+    console.log('testttt', auth.user.id)
+    const response = await handleRequest(
+      'GET',
+      `/users/${auth.user.id}`,
+      {},
       {
-        'Authorization': 'Bearer ' + auth.authToken
+        Authorization: 'Bearer ' + auth.authToken,
       },
-      true)
+      true,
+    )
     console.log('USER!!!', response)
     setUser(response.data)
   }
@@ -41,12 +49,11 @@ function Profile() {
     setUserid({
       username: auth.user.username,
       userid: auth.user.id,
-    }
-    )
+    })
   }, [auth])
 
   useEffect(() => {
-    console.log('Var userid',userid)
+    console.log('Var userid', userid)
   }, [userid])
 
   useEffect(() => {
@@ -63,7 +70,9 @@ function Profile() {
       <section className={styles.custom_section}>
         <div className={styles.main_info}>
           <img src="/public/profile-400.png" alt="Foto de perfil de Juan" />
-          <h3>{user.name} {user.lastname}</h3>
+          <h3>
+            {user.name} {user.lastname}
+          </h3>
           <h4>@{user.username}</h4>
           <h5>Email: {user.email}</h5>
         </div>
@@ -78,20 +87,16 @@ function Profile() {
       </section>
       <section className={`${styles.custom_section} ${styles.sub_section}`}>
         <h2>Hooks guardados</h2>
-        <div className={styles.eventsContainer} >
-          {
-            !(user.savedEvents===undefined) && (
-              <Events events={user.savedEvents} />
-            )
-          }
-
+        <div className={styles.eventsContainer}>
+          {!(user.savedEvents === undefined) && (
+            <Events events={user.savedEvents} inProfile={true} />
+          )}
         </div>
         {/* <ul>
           <li>Grand Theft Auto 5</li>
           <li>Minecraft</li>
           <li>Valorant</li>
         </ul> */}
-        
       </section>
       <section className={`${styles.custom_section} ${styles.sub_section}`}>
         <h2>Mis amigos</h2>

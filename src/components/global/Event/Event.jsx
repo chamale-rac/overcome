@@ -14,23 +14,26 @@ function Event({
   url,
   _id,
   creator_id,
+  inProfile = false,
 }) {
-  
   const { handleRequest } = useApi()
   const { auth } = authStore
 
-  // const response = await handleRequest('GET', '/users/saveEvent', {user_id: asdasd, event_id: asdasda}, 
+  // const response = await handleRequest('GET', '/users/saveEvent', {user_id: asdasd, event_id: asdasda},
   const saveEvent = async () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
-    const response = await handleRequest('POST', '/users/saveEvent', 
+    const response = await handleRequest(
+      'POST',
+      '/users/saveEvent',
       {
         user_id: auth.user.id,
         event_id: _id,
-      }, 
-      {
-        'Authorization': 'Bearer ' + auth.authToken
       },
-      true)
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
     console.log('SaveEvent FUNC', response)
     // setUsers(response.data)
   }
@@ -44,22 +47,23 @@ function Event({
   return (
     <div className={styles.container}>
       <h1>{name}</h1>
-       
-  
-    <p className={styles.creator}>
+
+      <p className={styles.creator}>
         Creator:{' '}
         <span
           style={{
             cursor: 'pointer',
-            textDecoration: 'underline', padding:"0", margin:"0"
+            textDecoration: 'underline',
+            padding: '0',
+            margin: '0',
           }}
           onClick={() => navigate(`/home/users/${creator_id}`)}
         >
           {creator}
         </span>
       </p>
-      <p style={{padding:"0px", margin:"0"}}>Hour: {hour}</p>
-      <p style={{padding:"0px", margin:"0"}}>Date: {date}</p>
+      <p style={{ padding: '0px', margin: '0' }}>Hour: {hour}</p>
+      <p style={{ padding: '0px', margin: '0' }}>Date: {date}</p>
       {/*
       //people is still no added to the model
       <div>People: {people.map((person) => person.username).join(', ')}</div> */}
@@ -70,7 +74,7 @@ function Event({
           textAlign: 'center',
         }}
       >
-        <a style={{padding:"0", margin:"0", textAlign:"left"}}>
+        <a style={{ padding: '0', margin: '0', textAlign: 'left' }}>
           {link}
           <br />
         </a>
@@ -84,7 +88,11 @@ function Event({
         )}
       </div>
       <div className={styles.flex}>
-        <button className={`button asap`} onClick={() => saveEvent()} >Save 💾</button>
+        {!inProfile && (
+          <button className={`button asap`} onClick={() => saveEvent()}>
+            Save 💾
+          </button>
+        )}
         <button
           className={`button asap`}
           onClick={() => navigate(`/home/events/${_id}`)}
