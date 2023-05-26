@@ -1,0 +1,33 @@
+.messages_container {
+  position: relative;
+  margin: 1rem;
+  max-height: 230px;
+  overflow-y: scroll;
+}
+
+.messages_container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.messages_container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0px 0px transparent;
+  border: solid 0px transparent;
+}
+
+.messages_container::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, 0.589);
+  border: solid 0px transparent;
+  border-top: solid 7px transparent;
+  border-bottom: solid 5px transparent;
+  border-radius: 10px;
+}
+
+.user_container {
+  padding: 1rem 1rem;
+  border-bottom: 1px solid black;
+}
+
+.user_container:hover {
+  cursor: pointer;
+  background-color: #e6e6e6;
+}

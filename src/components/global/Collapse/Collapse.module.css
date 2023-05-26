@@ -58,7 +58,7 @@
 
 .content {
   overflow: hidden;
-  border-bottom: 1px solid black;
+  border-bottom: 0px solid black;
   transition: max-height 0.7s cubic-bezier(0.645, 0.045, 0.355, 1),
     border-bottom 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
