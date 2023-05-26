@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { NavButton, Chat } from '@components/global'
 import * as styles from './UserPage.module.css'
 import { authStore } from '@context'
+import { Events } from '@features/render'
 
 const UserPage = ({ isCreator = true, user_id = null }) => {
   const { auth } = authStore
@@ -15,6 +16,10 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   const [error, setError] = useState(null)
 
   const [friendResponse, setFriendResponse] = useState(null)
+
+  useEffect(() => {
+    console.log('theUSER' ,user)
+  }, [user])
 
   const sendFriendRequest = async () => {
     try {
@@ -94,9 +99,12 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         {user && (
           <>
             <div className={styles.title_wrapper}>
-              <h2 className={`${styles.event_title} font-bebas-neue`}>
-                {user?.username}
-              </h2>
+              <div className={styles.flex} >
+                <h2 className={`${styles.event_title} font-bebas-neue`}>
+                  @{user?.username}
+                </h2>
+                <img src="/public/profile-400.png" alt="Foto de perfil de Juan" />
+              </div>
             </div>
 
             <hr
@@ -110,9 +118,16 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
             />
 
             <div className={styles.profile_info}>
-              <button onClick={() => handleSendFriendRequest()}>
-                Send Friend Request
-              </button>
+            <button className={styles.button} onClick={() => handleSendFriendRequest()}>
+              Send Friend Request 😎
+            </button>
+              <h3>Name: {user?.name} {user?.lastname}</h3>
+              <h3>Email: {user?.email}</h3>
+              <div className={styles.eventsContainer}>
+                {!(user?.savedEvents === undefined) && (
+                  <Events events={user?.savedEvents} inProfile={true} />
+                )}
+              </div>
             </div>
           </>
         )}

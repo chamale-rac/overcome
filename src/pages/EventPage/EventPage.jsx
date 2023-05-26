@@ -3,6 +3,7 @@ import { useApi } from '@hooks'
 import { useParams, useNavigate } from 'react-router-dom'
 import { NavButton, Chat } from '@components/global'
 import * as styles from './EventPage.module.css'
+import { authStore } from '@context'
 
 const EventPage = () => {
   const navigate = useNavigate()
@@ -11,6 +12,7 @@ const EventPage = () => {
   const [event, setEvent] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const { auth } = authStore
 
   const getEventDetails = async (_id) => {
     try {
@@ -25,6 +27,24 @@ const EventPage = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const saveEvent = async () => {
+    // const response = await handleRequest('GET', '/users/', {}, {}, true)
+    const response = await handleRequest(
+      'POST',
+      '/users/saveEvent',
+      {
+        user_id: auth.user.id,
+        event_id: _id,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    console.log('SaveEvent FUNC', response)
+    // setUsers(response.data)
   }
 
   useEffect(() => {
@@ -60,6 +80,9 @@ const EventPage = () => {
                 margin: '0px 0',
               }}
             />
+            <button className={`${styles.saveButton} button asap`} onClick={() => saveEvent()}>
+              Save 💾
+            </button>
             <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
             {/* TODO: add participants
