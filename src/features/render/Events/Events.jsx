@@ -1,19 +1,23 @@
-import { useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import * as styles from './Events.module.css'
 import Event from '@components/global/Event'
 import { authStore } from '@context'
 import { useApi } from '@hooks'
 
-const Events = ({ events }) => {
+const Events = ({ events, inProfile = false }) => {
   const { handleRequest } = useApi()
   const { auth } = authStore
 
   const getUser = async () => {
-    const response = await handleRequest('GET', '/users/:', {}, 
+    const response = await handleRequest(
+      'GET',
+      '/users/:',
+      {},
       {
-        'Authorization': 'Bearer ' + auth.authToken
+        Authorization: 'Bearer ' + auth.authToken,
       },
-      true)
+      true,
+    )
     console.log('USER!', response)
   }
 
@@ -44,6 +48,7 @@ const Events = ({ events }) => {
                 .replace(/,/g, ', ')
           }
           url={event?.link}
+          inProfile={inProfile}
         />
       ))}
     </>

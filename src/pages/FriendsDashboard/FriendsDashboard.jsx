@@ -16,12 +16,60 @@ const FriendsDashboard = () => {
   const [error, setError] = useState(null)
   const [search, setSearch] = useState('')
   const [actualView, setActualView] = useState(null)
+  const [userRelations, setUserRelations] = useState(null)
+  const [friendRequests, setFriendRequests] = useState(null)
+  const [friends, setFriends] = useState(null)
 
   const handleSetViewProfile = (user_id) => {
     setActualView({
       type: 'profile',
       user_id,
     })
+  }
+  const filterFriendRequests = () => {
+    const requests = userRelations.filter(
+      (relation) =>
+        relation.user2._id === auth.user.id &&
+        relation.second_user_agreement === false,
+    )
+    setFriendRequests(requests)
+    console.log('friendRequests', friendRequests)
+  }
+
+  const filterFriends = () => {
+    const friends = userRelations.filter(
+      (relation) =>
+        (relation.user1._id === auth.user.id ||
+          relation.user2._id === auth.user.id) &&
+        relation.second_user_agreement === true &&
+        relation.first_user_agreement === true,
+    )
+    setFriends(friends)
+    console.log('friends', friends)
+  }
+
+  const getUserRelations = async () => {
+    try {
+      setLoading(true)
+      const response = await handleRequest(
+        'GET',
+        `/userRelations`,
+        {},
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+      console.log(response.data)
+      setUserRelations(response.data)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error fetching event details, please try again later or contact support',
+      )
+    } finally {
+      setLoading(false)
+    }
   }
 
   // TODO get all users, and quit actual user
@@ -48,9 +96,16 @@ const FriendsDashboard = () => {
       setLoading(false)
     }
   }
+  useEffect(() => {
+    if (userRelations) {
+      filterFriendRequests()
+      filterFriends()
+    }
+  }, [userRelations])
 
   useEffect(() => {
     getAllUsers()
+    getUserRelations()
   }, [])
 
   return (
@@ -80,22 +135,24 @@ const FriendsDashboard = () => {
           </div>
           <div className={styles.collapse_wrapper}>
             <Collapse title="Friend List">
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
+              {friends && (
+                <UserList
+                  users={friends}
+                  onClickFunction={handleSetViewProfile}
+                  type="friends"
+                />
+              )}
             </Collapse>
           </div>
           <div className={styles.collapse_wrapper}>
             <Collapse title="Friend Requests">
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
-              <div>a</div>
-              <div>b</div>
-              <div>b</div>
+              {friendRequests && (
+                <UserList
+                  users={friendRequests}
+                  onClickFunction={handleSetViewProfile}
+                  type="requests"
+                />
+              )}
             </Collapse>
           </div>
         </div>
