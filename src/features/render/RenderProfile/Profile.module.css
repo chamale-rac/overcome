@@ -144,7 +144,8 @@
 
   display: grid;
   /* grid-template-columns: repeat(4, 1fr); */
-  grid-template-columns: 2fr 2fr 1fr 1fr;
+  /* grid-template-columns: 2fr 2fr 1fr 2fr; */
+  grid-template-columns: 300px 300px 300px 300px;
   grid-auto-rows: min-content;
   grid-gap: 20px;
 }

@@ -93,14 +93,14 @@ function Profile() {
         </ul> */}
         
       </section>
-      {/* <section className={`${styles.custom_section} ${styles.sub_section}`}> */}
+      <section className={`${styles.custom_section} ${styles.sub_section}`}>
         <h2>Mis amigos</h2>
         <ul>
           <li>Grand Theft Auto 5</li>
           <li>Minecraft</li>
           <li>Valorant</li>
         </ul>
-      {/* </section> */}
+      </section>
     </div>
   )
 }
