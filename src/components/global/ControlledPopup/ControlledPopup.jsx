@@ -14,9 +14,9 @@ const ControlledPopup = ({ children, title, isOpen, closeFunction }) => {
       >
         <div className={styles.modal}>
           <a className={styles.close} onClick={() => closeFunction()}>
-            &times;
+            ❌
           </a>
-          <div className={styles.title}> {title}</div>
+          <div className={styles.header}> {title}</div>
           <div className={styles.content}>{children}</div>
         </div>
       </Popup>

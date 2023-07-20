@@ -105,10 +105,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
                 <h2 className={`${styles.event_title} font-bebas-neue`}>
                   @{user?.username} {user?._id === auth.user.id && '(You)'}
                 </h2>
-                <img
-                  src="/public/profile-400.png"
-                  alt="Foto de perfil de Juan"
-                />
+                <img src="/profile-400.png" alt="Foto de perfil de Juan" />
               </div>
             </div>
 

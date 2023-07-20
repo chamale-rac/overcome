@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useApi } from '@hooks'
 import { authStore } from '@context'
 import { Events } from '@features/render'
+import { ImageCustomizer } from '@features/creation'
 import { ControlledPopup } from '@components/global'
 import * as styles from './Profile.module.css'
 
@@ -75,16 +76,17 @@ function Profile() {
         Controlled Popup
       </button>
       <ControlledPopup
-        title={'📷 Profile Picture'}
+        title={'🖼️ Profile Picture'}
         isOpen={openProfilePopup}
         closeFunction={closeProfilePopup}
       >
-        Random content, here need to be the editable image and prompt to change
+        Upload a new profile picture, or ask AI to generate one for you! 🤖
+        <ImageCustomizer />
       </ControlledPopup>
       <h1>My profile</h1>
       <section className={styles.custom_section}>
         <div className={styles.main_info}>
-          <img src="/public/profile-400.png" alt="Foto de perfil de Juan" />
+          <img src="/profile-400.png" alt="Foto de perfil de Juan" />
           <h3>
             {user.name} {user.lastname}
           </h3>

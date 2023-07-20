@@ -10,6 +10,8 @@ import Chat from './Chat/Chat'
 import Collapse from './Collapse/Collapse'
 import UserList from './UserList/UserList'
 import ControlledPopup from './ControlledPopup/ControlledPopup'
+import AIPicker from './AIPicker/AIPicker'
+import FilePicker from './FilePicker/FilePicker'
 
 export {
   NavButton,
@@ -24,4 +26,6 @@ export {
   Collapse,
   UserList,
   ControlledPopup,
+  AIPicker,
+  FilePicker,
 }
