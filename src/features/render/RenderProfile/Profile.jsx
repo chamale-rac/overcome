@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useApi } from '@hooks'
 import { authStore } from '@context'
 import { Events } from '@features/render'
+import { ControlledPopup } from '@components/global'
 import * as styles from './Profile.module.css'
 
 function Profile() {
@@ -9,6 +10,10 @@ function Profile() {
   const [user, setUser] = useState({})
   const [userid, setUserid] = useState({})
   const [users, setUsers] = useState([])
+
+  const [openProfilePopup, setOpenProfilePopup] = useState(false)
+  const closeProfilePopup = () => setOpenProfilePopup(false)
+
   const { auth } = authStore
 
   const getUsers = async () => {
@@ -66,6 +71,16 @@ function Profile() {
 
   return (
     <div className={styles.container}>
+      <button type="button" onClick={() => setOpenProfilePopup((o) => !o)}>
+        Controlled Popup
+      </button>
+      <ControlledPopup
+        title={'📷 Profile Picture'}
+        isOpen={openProfilePopup}
+        closeFunction={closeProfilePopup}
+      >
+        Random content, here need to be the editable image and prompt to change
+      </ControlledPopup>
       <h1>My profile</h1>
       <section className={styles.custom_section}>
         <div className={styles.main_info}>
