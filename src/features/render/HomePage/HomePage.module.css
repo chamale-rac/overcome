@@ -47,7 +47,7 @@
   width: 100%;
 }
 .board div {
-  height: 200px;
+  /* height: 200px; */
   padding: 1em;
   font-family: 'Overpass Mono', monospace;
   font-weight: bold;
@@ -61,6 +61,7 @@
 .boardItem {
   background-color: rgb(255, 245, 245);
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  height: fit-content;
 }
 
 .boardItem:last-child {

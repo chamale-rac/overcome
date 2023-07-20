@@ -9,6 +9,7 @@ import SearchInput from './SearchInput/SearchInput'
 import Chat from './Chat/Chat'
 import Collapse from './Collapse/Collapse'
 import UserList from './UserList/UserList'
+import EventPreview from './EventPreview/'
 
 export {
   NavButton,
@@ -22,4 +23,5 @@ export {
   Chat,
   Collapse,
   UserList,
+  EventPreview
 }
