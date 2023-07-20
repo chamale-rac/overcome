@@ -34,6 +34,25 @@
   border: 1px solid #333;
 }
 
+.button.tertiary {
+  background-color: #cdd57e;
+  color: #000000;
+  border: 1px solid #1d1d1d;
+}
+.button.tertiary:hover {
+  transform: translateY(0px);
+  box-shadow: 5px 5px 0px 0px #000;
+  background-color: white;
+  color: black;
+}
+
+.button.secondary:hover {
+  transform: translateY(0px);
+  box-shadow: 5px 5px 0px 0px #000;
+  background-color: white;
+  color: black;
+}
+
 .button.primary {
   background-color: black;
   color: white;

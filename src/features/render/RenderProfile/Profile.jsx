@@ -80,7 +80,6 @@ function Profile() {
         isOpen={openProfilePopup}
         closeFunction={closeProfilePopup}
       >
-        Upload a new profile picture, or ask AI to generate one for you! 🤖
         <ImageCustomizer />
       </ControlledPopup>
       <h1>My profile</h1>

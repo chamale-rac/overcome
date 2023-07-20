@@ -1,35 +1,24 @@
 import React from 'react'
+import { Button, Notification } from '@components/global'
+import * as styles from './AIPicker.module.css'
 
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
   return (
-    <div>
+    <div className={styles.container}>
       <textarea
-        placeholder="Pregutale a una IA..."
+        placeholder="Ask to the AI..."
         rows={5}
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
       />
-      <div>
-        {generatingImg ? (
-          <button type="outlined" title="Generando..." />
-        ) : (
-          <>
-            <button
-              type="outlined"
-              title="AI Logo"
-              onClick={() => handleSubmit('logo')}
-            >
-              Logo
-            </button>
-            <button
-              type="outlined"
-              title="AI Full"
-              onClick={() => handleSubmit('full')}
-            >
-              Full
-            </button>
-          </>
-        )}
+      <div className={styles.buttonWrapper}>
+        <Button
+          customStyles="mb-2 mt-1 text-xs"
+          onClick={handleSubmit}
+          disabled={prompt === '' || generatingImg}
+        >
+          {generatingImg ? 'Generating... ‎‍💼' : 'Ask! ✨'}
+        </Button>
       </div>
     </div>
   )

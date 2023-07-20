@@ -11,7 +11,11 @@ const Button = ({
 }) => (
   <button
     className={`${styles.button} ${
-      type === 'primary' ? styles.primary : styles.secondary
+      type === 'primary'
+        ? styles.primary
+        : type === 'secondary'
+        ? styles.secondary
+        : styles.tertiary
     } ${loading ? styles.loading : ''} ${customStyles}`}
     type="button"
     onClick={() => {
