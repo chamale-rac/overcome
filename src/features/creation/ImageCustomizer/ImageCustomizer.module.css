@@ -24,12 +24,16 @@
 
 .imageWrapper {
   margin: 1rem;
-  max-width: 256px;
-  max-height: 256px;
+  width: 256px;
+  height: 256px;
   position: relative;
   overflow: hidden;
   border-radius: 20px;
   border: 1px solid #585757;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .imageWrapper img {

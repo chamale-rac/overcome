@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AIPicker, FilePicker, Button } from '@components/global'
+import { AIPicker, FilePicker, Button, ClockLoader } from '@components/global'
 import {
   SERVICES_BASE_URL,
   PROFILE_IMAGES_HEIGHT as height,
@@ -11,9 +11,8 @@ import { useSnapshot } from 'valtio'
 import { image } from '@context'
 
 import * as styles from './ImageCustomizer.module.css'
-import { authStore } from '../../../context'
 
-const ImageCustomizer = (actualImage = '', saveNewImage) => {
+const ImageCustomizer = ({ actualImage = '', saveNewImage }) => {
   const snap = useSnapshot(image)
   const [file, setFile] = useState('')
   const [prompt, setPrompt] = useState('')
@@ -21,8 +20,8 @@ const ImageCustomizer = (actualImage = '', saveNewImage) => {
 
   const handleSaveImage = () => {
     const newImage = snap.result
-    // saveNewImage(newImage)
-    image.result = ''
+    console.log('SAVING')
+    saveNewImage(newImage)
   }
 
   const handleStoreImage = (result) => {
@@ -44,6 +43,7 @@ const ImageCustomizer = (actualImage = '', saveNewImage) => {
       })
       const data = await response.json()
       handleStoreImage(`data:image/png;base64,${data.photo}`)
+      setFile('')
     } catch (error) {
       alert(error)
     } finally {
@@ -61,13 +61,21 @@ const ImageCustomizer = (actualImage = '', saveNewImage) => {
     <div className={styles.container}>
       <div className={styles.imagesContainer}>
         <div className={styles.imageWrapper}>
-          <img src={actualImage == !'' ? actualImage : '/profile-400.png'} />
+          <img src={actualImage} />
         </div>
         {snap.result && !generatingImg && (
           <>
             <div className={styles.arrow}>⇒</div>
             <div className={styles.imageWrapper}>
               <img src={snap.result} alt="result" className={styles.image} />
+            </div>
+          </>
+        )}
+        {generatingImg && (
+          <>
+            <div className={styles.arrow}>⇒</div>
+            <div className={styles.imageWrapper}>
+              <ClockLoader fontSize="5" />
             </div>
           </>
         )}
@@ -88,22 +96,23 @@ const ImageCustomizer = (actualImage = '', saveNewImage) => {
       </div>
       <div className={styles.buttonsContainer}>
         {snap.result && !generatingImg && (
-          <Button
-            customStyles="mb-1 mt-3 mr-1"
-            type="secondary"
-            onClick={() => (image.result = '')}
-          >
-            Cancel ✖
-          </Button>
-        )}
-        {snap.result && !generatingImg && (
-          <Button
-            customStyles="mb-1 mt-3 ml-1"
-            type="tertiary"
-            onClick={() => handleSaveImage()}
-          >
-            Save changes 🗝️
-          </Button>
+          <>
+            {' '}
+            <Button
+              customStyles="mb-1 mt-3 mr-1"
+              type="secondary"
+              onClick={() => (image.result = '')}
+            >
+              Cancel ❌
+            </Button>
+            <Button
+              customStyles="mb-1 mt-3 ml-1"
+              type="tertiary"
+              onClick={() => handleSaveImage()}
+            >
+              Save changes 🗝️
+            </Button>
+          </>
         )}
       </div>
     </div>

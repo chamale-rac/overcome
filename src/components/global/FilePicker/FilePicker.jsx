@@ -17,6 +17,7 @@ const FilePicker = ({ file, setFile, readFile }) => {
           accept=".jpg, .jpeg, .png"
           onChange={(e) => {
             console.log('uploaded file')
+            setFile(e.target.files[0])
             readFile(e.target.files[0])
           }}
         />
