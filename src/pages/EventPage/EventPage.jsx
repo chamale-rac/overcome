@@ -13,6 +13,30 @@ const EventPage = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const { auth } = authStore
+  const [userEventStatus, setUserEventStatus] = useState(null)
+
+  const checkUserEventStatus = async () => {
+    try {
+      const response = await handleRequest(
+        'POST',
+        `/users/checkEvent/${auth.user.id}`,
+        {
+          event_id: _id,
+        },
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+      console.log('save', response.data.saved)
+      setUserEventStatus(response.data.saved)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error fetching event details, please try again later or contact support',
+      )
+    }
+  }
 
   const getEventDetails = async (_id) => {
     try {
@@ -44,11 +68,13 @@ const EventPage = () => {
       true,
     )
     console.log('SaveEvent FUNC', response)
+    checkUserEventStatus()
     // setUsers(response.data)
   }
 
   useEffect(() => {
     getEventDetails(_id)
+    checkUserEventStatus()
   }, [])
 
   return (
@@ -85,12 +111,22 @@ const EventPage = () => {
                 margin: '0px 0',
               }}
             />
-            <button
-              className={`${styles.saveButton} button asap`}
-              onClick={() => saveEvent()}
-            >
-              Save 💾
-            </button>
+            {!userEventStatus && (
+              <button
+                className={`${styles.saveButton} button asap`}
+                onClick={() => saveEvent()}
+              >
+                Save 💾
+              </button>
+            )}
+            {userEventStatus && (
+              <button
+                className={`${styles.saveButton} ${styles.disabled}`}
+                disabled
+              >
+                Saved
+              </button>
+            )}
             <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
             {/* TODO: add participants
