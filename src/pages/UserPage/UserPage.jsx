@@ -102,10 +102,13 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
           <>
             <div className={styles.title_wrapper}>
               <div className={styles.flex}>
+                <img
+                  src={user.profilePicture ?? '/profile-400.png'}
+                  alt="Foto de perfil de Juan"
+                />
                 <h2 className={`${styles.event_title} font-bebas-neue`}>
                   @{user?.username} {user?._id === auth.user.id && '(You)'}
                 </h2>
-                <img src="/profile-400.png" alt="Foto de perfil de Juan" />
               </div>
             </div>
 
@@ -122,7 +125,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
             <div className={styles.profile_info}>
               {user?._id === auth.user.id ? (
                 <button className={`${styles.button} button`}>
-                  Reflexive Friend Request 😎
+                  Recursive Friend Request 😎
                 </button>
               ) : (
                 <button

@@ -36,8 +36,9 @@ function Profile() {
         true,
       )
       console.log(response.data)
+      // add just a new field or update the profilePicture field
+      setUser({ ...user, profilePicture: newImage })
       image.result = ''
-      getUser()
     } catch (error) {
       console.error(error)
       setError(

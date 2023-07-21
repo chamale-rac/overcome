@@ -65,8 +65,11 @@
 }
 
 .container img {
-  height: 100px;
-  width: auto;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
 }
 
 .eventsContainer {
