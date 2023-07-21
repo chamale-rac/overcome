@@ -5,6 +5,7 @@ const SearchInput = ({
   name,
   value,
   onChange,
+  onClick,
   placeholder,
   isDynamic = true,
   searchIcon = '🔍',
@@ -18,14 +19,11 @@ const SearchInput = ({
           <input
             id={name}
             name={name}
-            value={internalSearch}
-            onChange={(e) => setInternalSearch(e.target.value)}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
           />
-          <div
-            className={styles.searchIcon}
-            onClick={() => onChange(internalSearch)}
-          >
+          <div className={styles.searchIcon} onClick={() => onClick()}>
             🔍
           </div>
         </>

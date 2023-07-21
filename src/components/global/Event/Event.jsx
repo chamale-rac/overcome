@@ -34,18 +34,17 @@ function Event({
       },
       true,
     )
-    console.log('SaveEvent FUNC', response)
     // setUsers(response.data)
   }
 
-  useEffect(() => {
-    console.log(auth)
-    console.log(auth.user.username, auth.user.id)
-  }, [auth])
+  useEffect(() => {}, [auth])
 
   const navigate = useNavigate()
   return (
-    <div className={styles.container} style={{margin: !inProfile===true ? '0px' : ''}}>
+    <div
+      className={styles.container}
+      style={{ margin: !inProfile === true ? '0px' : '' }}
+    >
       <h1>{name}</h1>
 
       <p className={styles.creator}>
