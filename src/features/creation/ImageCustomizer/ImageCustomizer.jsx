@@ -75,7 +75,7 @@ const ImageCustomizer = ({ actualImage = '', saveNewImage }) => {
           <>
             <div className={styles.arrow}>⇒</div>
             <div className={styles.imageWrapper}>
-              <ClockLoader fontSize="5" />
+              <ClockLoader fontSize="2" />
             </div>
           </>
         )}

@@ -121,28 +121,32 @@ function Event({
         )}
       </div>
       <div className={styles.flex}>
-        {!inProfile && !userEventStatus && (
-          <button
-            className={`${styles.saveButton} button asap`}
-            onClick={() => saveEvent()}
-          >
-            Save 💾
-          </button>
+        {userEventStatus !== null && (
+          <>
+            {!inProfile && !userEventStatus && (
+              <button
+                className={`${styles.saveButton} button asap`}
+                onClick={() => saveEvent()}
+              >
+                Save 💾
+              </button>
+            )}
+            {!inProfile && userEventStatus && (
+              <button
+                className={`${styles.saveButton} ${styles.disabled}`}
+                disabled
+              >
+                Saved
+              </button>
+            )}
+            <button
+              className={`button asap`}
+              onClick={() => navigate(`/home/events/${_id}`)}
+            >
+              Details 🧮
+            </button>
+          </>
         )}
-        {!inProfile && userEventStatus && (
-          <button
-            className={`${styles.saveButton} ${styles.disabled}`}
-            disabled
-          >
-            Saved
-          </button>
-        )}
-        <button
-          className={`button asap`}
-          onClick={() => navigate(`/home/events/${_id}`)}
-        >
-          Details 🧮
-        </button>
       </div>
     </div>
   )

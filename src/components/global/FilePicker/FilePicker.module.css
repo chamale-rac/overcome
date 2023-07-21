@@ -31,13 +31,13 @@
 }
 
 .uploader .likeButton span {
-  font-size: 20px;
+  font-size: 24px;
   font-family: 'Bebas Neue', cursive;
   font-weight: semi-bold;
 }
 
 .uploader p {
-  font-size: 12px;
+  font-size: 13px;
   color: #252525;
-  opacity: 0.7;
+  opacity: 0.9;
 }
