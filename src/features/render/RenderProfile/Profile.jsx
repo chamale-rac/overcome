@@ -9,6 +9,7 @@ import { image } from '@context'
 
 function Profile() {
   const [error, setError] = useState(null)
+  const [profileLoading, setProfileLoading] = useState(true)
   const [loading, setLoading] = useState(false)
 
   const { handleRequest } = useApi()
@@ -70,6 +71,7 @@ function Profile() {
   }
 
   const getUser = async () => {
+    setProfileLoading(true)
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
     console.log('testttt', auth.user.id)
     const response = await handleRequest(
@@ -83,6 +85,7 @@ function Profile() {
     )
     console.log('USER!!!', response)
     setUser(response.data)
+    setProfileLoading(false)
   }
 
   useEffect(() => {
@@ -109,9 +112,6 @@ function Profile() {
 
   return (
     <div className={styles.container}>
-      <button type="button" onClick={() => setOpenProfilePopup((o) => !o)}>
-        Controlled Popup
-      </button>
       <ControlledPopup
         title={'🖼️ Profile Picture'}
         isOpen={openProfilePopup}
@@ -130,40 +130,56 @@ function Profile() {
         )}
       </ControlledPopup>
       <h1>My profile</h1>
-      <section className={styles.custom_section}>
-        <div className={styles.main_info}>
-          <img
-            src={user.profilePicture ?? '/profile-400.png'}
-            alt="Foto de perfil de Juan"
-          />
-          <h3>
-            {user.name} {user.lastname}
-          </h3>
-          <h4>@{user.username}</h4>
-          <h5>Email: {user.email}</h5>
-        </div>
-        {/* <p>
+      {!profileLoading ? (
+        <>
+          <section className={styles.custom_section}>
+            <div className={styles.main_info}>
+              <div className={styles.imageWrapper}>
+                <img
+                  src={user.profilePicture ?? '/profile-400.png'}
+                  alt="Foto de perfil de Juan"
+                />
+                <button
+                  type="button"
+                  onClick={() => setOpenProfilePopup((o) => !o)}
+                >
+                  ✏️
+                </button>
+              </div>
+              <h3>
+                {user.name} {user.lastname}
+              </h3>
+              <h4>@{user.username}</h4>
+              <h5>Email: {user.email}</h5>
+            </div>
+            {/* <p>
           ¡Hola! Tengo 22 años y me encanta el deporte. Me dedico a la
           enseñanza del yoga y me gusta mucho compartir mis conocimientos con
           otras personas.
         </p> */}
-        {/* <p>
+            {/* <p>
           {JSON.stringify( user.savedEvents)}
         </p> */}
-      </section>
-      <section className={`${styles.custom_section} ${styles.sub_section}`}>
-        <h2>Hooks guardados</h2>
-        <div className={styles.eventsContainer}>
-          {!(user.savedEvents === undefined) && (
-            <Events events={user.savedEvents} inProfile={true} />
-          )}
-        </div>
-        {/* <ul>
+          </section>
+          <section className={`${styles.custom_section} ${styles.sub_section}`}>
+            <h2>Hooks guardados</h2>
+            <div className={styles.eventsContainer}>
+              {!(user.savedEvents === undefined) && (
+                <Events events={user.savedEvents} inProfile={true} />
+              )}
+            </div>
+            {/* <ul>
           <li>Grand Theft Auto 5</li>
           <li>Minecraft</li>
           <li>Valorant</li>
         </ul> */}
-      </section>
+          </section>
+        </>
+      ) : (
+        <div className={`${styles.noEvents} font-bebas-neue`}>
+          Loading... <ClockLoader fontSize={'3.8'} />
+        </div>
+      )}
       {/**
         
       <section className={`${styles.custom_section} ${styles.sub_section}`}>

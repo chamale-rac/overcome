@@ -13,11 +13,20 @@ const UserList = ({
     <div className={`${styles.messages_container} standard_border`}>
       {type === 'users' &&
         users?.map((user) => (
-          <div
-            className={styles.user_container}
-            onClick={() => onClickFunction(user._id)}
-          >
-            {user.username}{' '}
+          <div className={styles.user_container}>
+            {user.username}
+            <button
+              className="button asap"
+              onClick={() => onClickFunction(user._id)}
+              style={{
+                borderRadius: '10px',
+                padding: '0.1rem 0.4rem',
+                fontSize: '10px',
+              }}
+            >
+              Info
+            </button>
+            {/**            
             <span
               style={{
                 fontSize: '0.8rem',
@@ -28,6 +37,7 @@ const UserList = ({
             >
               (Click to view profile)
             </span>
+             */}
           </div>
         ))}
 

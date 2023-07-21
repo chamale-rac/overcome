@@ -24,8 +24,10 @@
 }
 
 .user_container {
-  padding: 1rem 1rem;
+  padding: 1rem 2rem;
   border-bottom: 1px solid black;
+  display: flex;
+  justify-content: space-between;
 }
 
 .user_container:hover {
