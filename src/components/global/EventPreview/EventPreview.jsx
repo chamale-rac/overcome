@@ -5,13 +5,6 @@ function EventPreview({
 }) {
 
   return (
-    // <aside className={styles.border} >
-    //   {/* title */}
-    //   <p id={styles['previewTitle']} >{title}</p>
-    //   <p>-&gt; {date}</p>
-    //   <p>-&gt; {hour}</p>
-    // </aside>
-
   <>
     {!(events === undefined) && (
       events.map((event) => (

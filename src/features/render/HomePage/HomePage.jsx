@@ -1,6 +1,7 @@
 import * as styles from './HomePage.module.css'
 import { useState, useEffect } from 'react'
 import EventPreview from '../../../components/global/EventPreview'
+import ChatPreview from '../../../components/global/ChatPreview'
 import { authStore } from '@context'
 import { useApi } from '@hooks'
 
@@ -21,9 +22,13 @@ function HomePage() {
   }, [savedEvents])
 
   useEffect(() => {
-    console.log(auth)
-    console.log(auth.user.username, auth.user.id)
-  }, [auth])
+    console.log('Var Chats:',chats)
+  }, [chats])
+
+  // useEffect(() => {
+  //   console.log(auth)
+  //   console.log(auth.user.username, auth.user.id)
+  // }, [auth])
 
   const getSavedEvents = async () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
@@ -36,7 +41,7 @@ function HomePage() {
       },
       true,
     )
-    console.log('RESPONSE!!', response)
+    console.log('RESPONSE saved events!!', response)
     setSavedEvents(response.data.savedEvents)
   }
 
@@ -51,8 +56,8 @@ function HomePage() {
       },
       true,
     )
-    console.log('RESPONSE CHATS!!', response)
-    setChats(response.data.savedEvents)
+    console.log('RESPONSE CHATS!!', response.data)
+    setChats(response.data)
   }
 
   return (
@@ -75,12 +80,12 @@ function HomePage() {
             /> */}
           We're sorry,<br/>
           Saving games feature<br/>
-          not available.
+          not available yet.
         </div>
         <div className={styles.boardItem}>
           <h3>🗨️ Recent Chats:</h3>
-          <EventPreview
-            events={savedEvents}
+          <ChatPreview 
+            chats={chats}
           />
         </div>
         <div className={styles.boardItem}>

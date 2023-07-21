@@ -10,6 +10,7 @@ import Chat from './Chat/Chat'
 import Collapse from './Collapse/Collapse'
 import UserList from './UserList/UserList'
 import EventPreview from './EventPreview/'
+import ChatPreview from './ChatPreview'
 
 export {
   NavButton,
@@ -23,5 +24,6 @@ export {
   Chat,
   Collapse,
   UserList,
-  EventPreview
+  EventPreview,
+  ChatPreview
 }
