@@ -58,16 +58,13 @@ function Event({
         Authorization: 'Bearer ' + auth.authToken,
       },
       true,
-    )
+    )    
     console.log('SaveEvent FUNC', response)
     checkUserEventStatus()
     // setUsers(response.data)
   }
 
-  useEffect(() => {
-    console.log(auth)
-    console.log(auth.user.username, auth.user.id)
-  }, [auth])
+  useEffect(() => {}, [auth])
 
   useEffect(() => {
     checkUserEventStatus()

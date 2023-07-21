@@ -1,0 +1,22 @@
+.border {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  height: fit-content;
+  background-color: white;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.border:hover {
+  background-color: rgba(128, 128, 128, 0.091);
+  cursor: pointer;
+}
+
+#previewChat {
+  font-family: 'Bebas Neue', cursive;
+  font-size: x-large;
+  font-weight: bolder;
+  text-align: center;
+}

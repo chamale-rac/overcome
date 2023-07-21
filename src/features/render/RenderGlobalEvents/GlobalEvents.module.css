@@ -75,10 +75,42 @@
   flex-shrink: 0;
 }
 
-.flexContainer .search {
+.search {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   flex-grow: 1;
+}
+
+.inputTags {
+  color: #333;
+  font-family: 'Overpass Mono', monospace;
+  font-weight: bold;
+  border-style: solid;
+  border-color: black;
+  font-size: medium;
+  display: flex;
+  flex-direction: row;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  align-items: center;
+}
+
+.dateFilter {
+  display: flex;
+  gap: 1em;
+}
+
+.tag {
+  font-size: 0.9rem;
+  border-radius: 5px;
+  background-color: #cdd57e;
+  color: black;
+  font-weight: semibold;
+  margin: 4px;
+  padding: 0px 5px;
+  text-align: center;
+  border-width: 1px;
+  border-color: black;
 }
 
 .noEvents {
