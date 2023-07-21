@@ -19,16 +19,8 @@
   color: black;
 }
 
-.button[disabled] {
-  background-color: black;
-  text-decoration: line-through;
-  color: white;
-  cursor: not-allowed;
-  transform: translateY(4px);
-  box-shadow: 1px 2px 0px 0px #000;
-}
-
 .button.secondary {
+  transform: translateY(0px);
   background-color: white;
   color: #333;
   border: 1px solid #333;
@@ -47,10 +39,11 @@
 }
 
 .button.secondary:hover {
-  transform: translateY(0px);
+  transform: translateY(4px);
   box-shadow: 5px 5px 0px 0px #000;
   background-color: white;
   color: black;
+  box-shadow: 1px 2px 0px 0px #000;
 }
 
 .button.primary {
@@ -69,4 +62,13 @@
 .loading {
   text-decoration: none !important;
   background-color: white !important;
+}
+
+.button[disabled] {
+  background-color: black;
+  text-decoration: line-through;
+  color: white;
+  cursor: not-allowed;
+  transform: translateY(4px);
+  box-shadow: 1px 2px 0px 0px #000;
 }

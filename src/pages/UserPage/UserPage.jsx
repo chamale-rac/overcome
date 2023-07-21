@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useApi } from '@hooks'
 import { useParams, useNavigate } from 'react-router-dom'
-import { NavButton, Chat } from '@components/global'
+import { NavButton, Chat, Button } from '@components/global'
 import * as styles from './UserPage.module.css'
 import { authStore } from '@context'
 import { Events } from '@features/render'
@@ -14,12 +14,37 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [friendStatus, setFriendStatus] = useState(null)
 
   const [friendResponse, setFriendResponse] = useState(null)
 
   useEffect(() => {
     console.log('theUSER', user)
   }, [user])
+
+  const checkFriendStatus = async () => {
+    try {
+      const response = await handleRequest(
+        'POST',
+        `/relations/friendStatus`,
+        {
+          id: auth.user.id,
+          friend_id: user_id,
+        },
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+      console.log('CHECK FRIEND', response.data)
+      setFriendStatus(response.data.isFriend)
+    } catch (error) {
+      console.error('CHECK ERROR', error)
+      setError(
+        'Error sending friend request, please try again later or contact support',
+      )
+    }
+  }
 
   const sendFriendRequest = async () => {
     try {
@@ -38,6 +63,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
       )
       console.log(response.data)
       setFriendResponse(response.data)
+      checkFriendStatus()
     } catch (error) {
       console.error(error)
       setError(
@@ -66,6 +92,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
       )
       console.log(response.data)
       setUser(response.data)
+      checkFriendStatus()
     } catch (error) {
       console.error(error)
       setError(
@@ -109,6 +136,28 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
                 <h2 className={`${styles.event_title} font-bebas-neue`}>
                   @{user?.username} {user?._id === auth.user.id && '(You)'}
                 </h2>
+                <div className={styles.buttonWrapper}>
+                  {user?._id === auth.user.id ? (
+                    <Button type="primary" disabled customStyles="text-xs">
+                      Recursive Friend Request 😎
+                    </Button>
+                  ) : (
+                    <Button
+                      type="secondary"
+                      customStyles="text-xs"
+                      onClick={handleSendFriendRequest}
+                      disabled={friendStatus !== false}
+                    >
+                      {!friendStatus && 'Send Friend Request ✉️'}
+                      {friendStatus &&
+                        friendStatus != 'pending' &&
+                        friendStatus != 'requested' &&
+                        'Already your friend!'}
+                      {friendStatus == 'pending' && 'Pending response'}
+                      {friendStatus == 'requested' && 'Solitude received'}
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -123,18 +172,6 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
             />
 
             <div className={styles.profile_info}>
-              {user?._id === auth.user.id ? (
-                <button className={`${styles.button} button`}>
-                  Recursive Friend Request 😎
-                </button>
-              ) : (
-                <button
-                  className={`${styles.button} button `}
-                  onClick={() => handleSendFriendRequest()}
-                >
-                  Send Friend Request 😎
-                </button>
-              )}
               <h3>
                 Name: {user?.name} {user?.lastname}
               </h3>
