@@ -16,3 +16,8 @@ export const authStore = proxy({
     },
   },
 })
+
+export const image = proxy({
+  result: '',
+  saved: false,
+})

@@ -24,11 +24,21 @@
 }
 
 .user_container {
-  padding: 1rem 1rem;
+  padding: 1rem 2rem;
   border-bottom: 1px solid black;
+  display: flex;
+  justify-content: space-between;
 }
 
 .user_container:hover {
   cursor: pointer;
   background-color: #e6e6e6;
+}
+
+.buttonsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

@@ -9,6 +9,10 @@ import SearchInput from './SearchInput/SearchInput'
 import Chat from './Chat/Chat'
 import Collapse from './Collapse/Collapse'
 import UserList from './UserList/UserList'
+
+import ControlledPopup from './ControlledPopup/ControlledPopup'
+import AIPicker from './AIPicker/AIPicker'
+import FilePicker from './FilePicker/FilePicker'
 import EventPreview from './EventPreview/'
 import ChatPreview from './ChatPreview'
 
@@ -24,6 +28,9 @@ export {
   Chat,
   Collapse,
   UserList,
+  ControlledPopup,
+  AIPicker,
+  FilePicker,
   EventPreview,
   ChatPreview
 }

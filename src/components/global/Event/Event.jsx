@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as styles from './Event.module.css'
 import { authStore } from '@context'
@@ -19,6 +19,31 @@ function Event({
   const { handleRequest } = useApi()
   const { auth } = authStore
 
+  const [userEventStatus, setUserEventStatus] = useState(null)
+
+  const checkUserEventStatus = async () => {
+    try {
+      const response = await handleRequest(
+        'POST',
+        `/users/checkEvent/${auth.user.id}`,
+        {
+          event_id: _id,
+        },
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+      console.log('save', response.data.saved)
+      setUserEventStatus(response.data.saved)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error fetching event details, please try again later or contact support',
+      )
+    }
+  }
+
   // const response = await handleRequest('GET', '/users/saveEvent', {user_id: asdasd, event_id: asdasda},
   const saveEvent = async () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
@@ -33,11 +58,17 @@ function Event({
         Authorization: 'Bearer ' + auth.authToken,
       },
       true,
-    )
+    )    
+    console.log('SaveEvent FUNC', response)
+    checkUserEventStatus()
     // setUsers(response.data)
   }
 
   useEffect(() => {}, [auth])
+
+  useEffect(() => {
+    checkUserEventStatus()
+  }, [])
 
   const navigate = useNavigate()
   return (
@@ -87,17 +118,32 @@ function Event({
         )}
       </div>
       <div className={styles.flex}>
-        {!inProfile && (
-          <button className={`button asap`} onClick={() => saveEvent()}>
-            Save 💾
-          </button>
+        {userEventStatus !== null && (
+          <>
+            {!inProfile && !userEventStatus && (
+              <button
+                className={`${styles.saveButton} button asap`}
+                onClick={() => saveEvent()}
+              >
+                Save 💾
+              </button>
+            )}
+            {!inProfile && userEventStatus && (
+              <button
+                className={`${styles.saveButton} ${styles.disabled}`}
+                disabled
+              >
+                Saved
+              </button>
+            )}
+            <button
+              className={`button asap`}
+              onClick={() => navigate(`/home/events/${_id}`)}
+            >
+              Details 🧮
+            </button>
+          </>
         )}
-        <button
-          className={`button asap`}
-          onClick={() => navigate(`/home/events/${_id}`)}
-        >
-          Details 🧮
-        </button>
       </div>
     </div>
   )

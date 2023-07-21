@@ -1,0 +1,39 @@
+.modal {
+  font-size: 14px;
+  background-color: #ffffff;
+  border-width: 2px;
+  border-color: black;
+
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+.modal > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 38px;
+  text-align: center;
+  padding: 5px;
+
+  font-family: 'Bebas Neue', cursive;
+  font-weight: bold;
+}
+
+.modal > .content {
+  width: 100%;
+  padding: 10px 5px;
+}
+
+.modal > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 3px 6px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 12px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 2px solid #000000;
+}

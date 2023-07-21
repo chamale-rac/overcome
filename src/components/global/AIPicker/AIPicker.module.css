@@ -1,0 +1,40 @@
+.container {
+  margin-top: 1rem;
+  padding: 0.4rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border: 1px solid #585757;
+  background-color: #ededed;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+
+  transition: background-color 0.2s ease-in-out;
+}
+
+.container:hover {
+  background-color: #cdd57e;
+}
+
+.container textarea {
+  border: 1px solid #5857570b;
+  font-size: 13px;
+  padding: 0.5rem;
+  margin-top: 0.2rem;
+  border-radius: 15px;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #58575786;
+}
+
+.container textarea:focus {
+  outline: none;
+  border: 1px solid #0f0f0fd0;
+}
+
+.container .buttonWrapper {
+  margin-right: 0.3rem;
+}

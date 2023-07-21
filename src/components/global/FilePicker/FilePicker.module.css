@@ -1,0 +1,43 @@
+.container {
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  padding: 0.3rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  border: 1px solid #585757;
+  background-color: #ededed;
+  border-radius: 15px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.container:hover {
+  background-color: #cdd57e;
+}
+
+.uploader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.uploader label {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.uploader .likeButton span {
+  font-size: 24px;
+  font-family: 'Bebas Neue', cursive;
+  font-weight: semi-bold;
+}
+
+.uploader p {
+  font-size: 13px;
+  color: #252525;
+  opacity: 0.9;
+}

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useApi } from '@hooks'
 import { useParams, useNavigate } from 'react-router-dom'
-import { NavButton, Chat } from '@components/global'
+import { NavButton, Chat, Button, ControlledPopup } from '@components/global'
 import * as styles from './UserPage.module.css'
 import { authStore } from '@context'
 import { Events } from '@features/render'
 
 const UserPage = ({ isCreator = true, user_id = null }) => {
+  const [openProfilePopup, setOpenProfilePopup] = useState(false)
+  const closeProfilePopup = () => setOpenProfilePopup(false)
+  const openProfilePopupFunction = () => setOpenProfilePopup(true)
+
   const { auth } = authStore
   const navigate = useNavigate()
   const { creator_id } = useParams()
@@ -14,12 +18,37 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [friendStatus, setFriendStatus] = useState(null)
 
   const [friendResponse, setFriendResponse] = useState(null)
 
   useEffect(() => {
     console.log('theUSER', user)
   }, [user])
+
+  const checkFriendStatus = async () => {
+    try {
+      const response = await handleRequest(
+        'POST',
+        `/relations/friendStatus`,
+        {
+          id: auth.user.id,
+          friend_id: user_id,
+        },
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+      console.log('CHECK FRIEND', response.data)
+      setFriendStatus(response.data.isFriend)
+    } catch (error) {
+      console.error('CHECK ERROR', error)
+      setError(
+        'Error sending friend request, please try again later or contact support',
+      )
+    }
+  }
 
   const sendFriendRequest = async () => {
     try {
@@ -38,6 +67,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
       )
       console.log(response.data)
       setFriendResponse(response.data)
+      checkFriendStatus()
     } catch (error) {
       console.error(error)
       setError(
@@ -66,6 +96,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
       )
       console.log(response.data)
       setUser(response.data)
+      checkFriendStatus()
     } catch (error) {
       console.error(error)
       setError(
@@ -88,6 +119,34 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
 
   return (
     <div className={`${styles.container} standard_border`}>
+      <ControlledPopup
+        title={'Enviar solicitud'}
+        isOpen={openProfilePopup}
+        closeFunction={closeProfilePopup}
+      >
+        ¿Estas seguro de enviar una solicitud de amistad de{' '}
+        <span style={{ fontWeight: 'bold' }}>{user?.username}</span>?
+        <div className={styles.buttonsContainer}>
+          <Button
+            customStyles="mb-1 mt-3 mr-2"
+            type="secondary"
+            onClick={() => setOpenProfilePopup((o) => !o)}
+          >
+            Cancelar ❌
+          </Button>
+          <Button
+            customStyles="mb-1 mt-3 ml-2"
+            type="tertiary"
+            onClick={() => {
+              setOpenProfilePopup((o) => !o)
+              handleSendFriendRequest()
+            }}
+          >
+            Aceptar 🗝️
+          </Button>
+        </div>
+      </ControlledPopup>
+
       <div className={styles.profile_info_container}>
         {isCreator && (
           <NavButton
@@ -102,13 +161,35 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
           <>
             <div className={styles.title_wrapper}>
               <div className={styles.flex}>
+                <img
+                  src={user.profilePicture ?? '/profile-400.png'}
+                  alt="Foto de perfil de Juan"
+                />
                 <h2 className={`${styles.event_title} font-bebas-neue`}>
                   @{user?.username} {user?._id === auth.user.id && '(You)'}
                 </h2>
-                <img
-                  src="/public/profile-400.png"
-                  alt="Foto de perfil de Juan"
-                />
+                <div className={styles.buttonWrapper}>
+                  {user?._id === auth.user.id ? (
+                    <Button type="primary" disabled customStyles="text-xs">
+                      Recursive Friend Request 😎
+                    </Button>
+                  ) : (
+                    <Button
+                      type="secondary"
+                      customStyles="text-xs"
+                      onClick={openProfilePopupFunction}
+                      disabled={friendStatus !== false}
+                    >
+                      {!friendStatus && 'Send Friend Request ✉️'}
+                      {friendStatus &&
+                        friendStatus != 'pending' &&
+                        friendStatus != 'requested' &&
+                        'Already your friend!'}
+                      {friendStatus == 'pending' && 'Pending response'}
+                      {friendStatus == 'requested' && 'Solitude received'}
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -123,18 +204,6 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
             />
 
             <div className={styles.profile_info}>
-              {user?._id === auth.user.id ? (
-                <button className={`${styles.button} button`}>
-                  Reflexive Friend Request 😎
-                </button>
-              ) : (
-                <button
-                  className={`${styles.button} button `}
-                  onClick={() => handleSendFriendRequest()}
-                >
-                  Send Friend Request 😎
-                </button>
-              )}
               <h3>
                 Name: {user?.name} {user?.lastname}
               </h3>

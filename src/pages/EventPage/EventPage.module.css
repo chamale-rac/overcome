@@ -113,3 +113,10 @@
   transform: scaleY(-2px) scaleX(-2px);
 }
 
+.disabled {
+  transition: all 0.25s ease-in-out;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: not-allowed !important;
+  text-decoration: line-through;
+}

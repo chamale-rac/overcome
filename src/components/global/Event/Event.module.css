@@ -1,6 +1,13 @@
 /*
   TODO make the event container responsive
 */
+.disabled {
+  transition: all 0.25s ease-in-out;
+  border: 1px solid black;
+  text-decoration: none;
+  cursor: not-allowed !important;
+  text-decoration: line-through;
+}
 
 .container {
   background-color: transparent;
