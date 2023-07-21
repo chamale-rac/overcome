@@ -34,3 +34,11 @@
   cursor: pointer;
   background-color: #e6e6e6;
 }
+
+.buttonsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

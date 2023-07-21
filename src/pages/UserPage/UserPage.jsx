@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useApi } from '@hooks'
 import { useParams, useNavigate } from 'react-router-dom'
-import { NavButton, Chat, Button } from '@components/global'
+import { NavButton, Chat, Button, ControlledPopup } from '@components/global'
 import * as styles from './UserPage.module.css'
 import { authStore } from '@context'
 import { Events } from '@features/render'
 
 const UserPage = ({ isCreator = true, user_id = null }) => {
+  const [openProfilePopup, setOpenProfilePopup] = useState(false)
+  const closeProfilePopup = () => setOpenProfilePopup(false)
+  const openProfilePopupFunction = () => setOpenProfilePopup(true)
+
   const { auth } = authStore
   const navigate = useNavigate()
   const { creator_id } = useParams()
@@ -115,6 +119,34 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
 
   return (
     <div className={`${styles.container} standard_border`}>
+      <ControlledPopup
+        title={'Enviar solicitud'}
+        isOpen={openProfilePopup}
+        closeFunction={closeProfilePopup}
+      >
+        ¿Estas seguro de enviar una solicitud de amistad de{' '}
+        <span style={{ fontWeight: 'bold' }}>{user?.username}</span>?
+        <div className={styles.buttonsContainer}>
+          <Button
+            customStyles="mb-1 mt-3 mr-2"
+            type="secondary"
+            onClick={() => setOpenProfilePopup((o) => !o)}
+          >
+            Cancelar ❌
+          </Button>
+          <Button
+            customStyles="mb-1 mt-3 ml-2"
+            type="tertiary"
+            onClick={() => {
+              setOpenProfilePopup((o) => !o)
+              handleSendFriendRequest()
+            }}
+          >
+            Aceptar 🗝️
+          </Button>
+        </div>
+      </ControlledPopup>
+
       <div className={styles.profile_info_container}>
         {isCreator && (
           <NavButton
@@ -145,7 +177,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
                     <Button
                       type="secondary"
                       customStyles="text-xs"
-                      onClick={handleSendFriendRequest}
+                      onClick={openProfilePopupFunction}
                       disabled={friendStatus !== false}
                     >
                       {!friendStatus && 'Send Friend Request ✉️'}

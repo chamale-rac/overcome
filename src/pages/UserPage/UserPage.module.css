@@ -78,3 +78,11 @@
 .buttonWrapper {
   width: 100px;
 }
+
+.buttonsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
