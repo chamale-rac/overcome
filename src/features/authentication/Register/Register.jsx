@@ -212,7 +212,8 @@ const Register = ({ customStyles, successAction, failAction }) => {
               form.values.email === '' ||
               form.values.name === '' ||
               form.values.last_name === '' ||
-              loading
+              loading ||
+              form.errorMessages.password
             }
             loading={loading}
           >

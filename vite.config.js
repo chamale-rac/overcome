@@ -40,4 +40,9 @@ export default defineConfig({
       { find: '@api', replacement: path.resolve(__dirname, 'src/api') },
     ],
   },
+  test: {
+    setupFiles: './src/setupTests.js',
+    globals: true,
+    environment: 'jsdom',
+  },
 })
