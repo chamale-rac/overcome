@@ -44,6 +44,16 @@ function Event({
     }
   }
 
+  const convertToStandard = (militaryTime) => {
+    const [hoursS, minutes] = hour.split(':')
+    var hours = parseInt(hoursS)
+
+    var amOrPm = hours >= 12 ? 'pm' : 'am'
+    hours = hours % 12 || 12
+    const time = hours + ':' + minutes + ' ' + amOrPm
+    return time
+  }
+
   // const response = await handleRequest('GET', '/users/saveEvent', {user_id: asdasd, event_id: asdasda},
   const saveEvent = async () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
@@ -58,7 +68,7 @@ function Event({
         Authorization: 'Bearer ' + auth.authToken,
       },
       true,
-    )    
+    )
     console.log('SaveEvent FUNC', response)
     checkUserEventStatus()
     // setUsers(response.data)
@@ -76,48 +86,45 @@ function Event({
       className={styles.container}
       style={{ margin: !inProfile === true ? '0px' : '' }}
     >
-      <h1>{name}</h1>
-
-      <p className={styles.creator}>
-        Creator:{' '}
-        <span
-          style={{
-            cursor: 'pointer',
-            textDecoration: 'underline',
-            padding: '0',
-            margin: '0',
-          }}
-          onClick={() => navigate(`/home/users/${creator_id}`)}
-        >
-          {creator}
-        </span>
-      </p>
-      <p style={{ padding: '0px', margin: '0' }}>Hour: {hour}</p>
-      <p style={{ padding: '0px', margin: '0' }}>Date: {date}</p>
-      {/*
-      //people is still no added to the model
-      <div>People: {people.map((person) => person.username).join(', ')}</div> */}
-      <div
-        className="mt-3"
-        style={{
-          width: '100%',
-          textAlign: 'center',
-        }}
-      >
-        <a style={{ padding: '0', margin: '0', textAlign: 'left' }}>
-          {link}
-          <br />
-        </a>
-        {url && (
-          <>
-            <br />
-            {/* <a href={url} target="_blank">
-              Link: {url}
-            </a> */}
-          </>
-        )}
+      <div className={`${styles.header} `}>
+        <h1 className={`${styles.header} ${styles.title} font-space-grotesk `}>
+          {name}
+        </h1>
+        <p className={styles.creator}>
+          <span
+            style={{
+              cursor: 'pointer',
+              padding: '0',
+              margin: '0',
+            }}
+            onClick={() => navigate(`/home/users/${creator_id}`)}
+          >
+            👑{creator}
+          </span>
+        </p>
       </div>
-      <div className={styles.flex}>
+
+      <h2 className={`${styles.header} ${styles.hour}  font-space-grotesk `}>
+        {convertToStandard(hour)}
+      </h2>
+      <div className={styles.details}>
+        <p>
+          {
+            // ! next time send tags as TAGS and not link
+            link
+              .replace('Tags: ', '')
+              .split(',')
+              .map((tag, index) => (
+                <span key={index} className={styles.tag}>
+                  {tag.trim()}
+                </span>
+              ))
+          }
+        </p>
+        <p className={styles.date}>{date}</p>
+      </div>
+
+      <div className={`${styles.flex} ${styles.actions} `}>
         {userEventStatus !== null && (
           <>
             {!inProfile && !userEventStatus && (
@@ -134,14 +141,14 @@ function Event({
                 className={`${styles.saveButton} button asap`}
                 disabled
               >
-                Unsave ❌
+                💾
               </button>
             )}
             <button
               className={`button asap`}
               onClick={() => navigate(`/home/events/${_id}`)}
             >
-              Details 🧮
+              Join ➤
             </button>
           </>
         )}

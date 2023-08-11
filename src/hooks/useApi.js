@@ -13,7 +13,7 @@ const useApi = () => {
     headers = {},
     withCredentials,
   ) => {
-    console.log(path)
+    path
     const options = {
       method,
       headers: {
