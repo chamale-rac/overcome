@@ -72,6 +72,23 @@ const EventPage = () => {
     // setUsers(response.data)
   }
 
+  const removeEvent = async () => {
+    // const response = await handleRequest('GET', '/users/', {}, {}, true)
+    const response = await handleRequest(
+      'POST',
+      '/users/removeSavedEvent',
+      {
+        user_id: auth.user.id,
+        event_id: _id,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    checkUserEventStatus()
+  }
+
   useEffect(() => {
     getEventDetails(_id)
     checkUserEventStatus()
@@ -123,7 +140,7 @@ const EventPage = () => {
               <button
                 // className={`${styles.saveButton} ${styles.disabled}`}
                 className={`${styles.saveButton} button asap`}
-                disabled
+                onClick={() => removeEvent()}
               >
                 Unsave ❌
               </button>
