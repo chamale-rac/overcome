@@ -49,6 +49,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
     tags,
     creator,
     link,
+    limit,
   ) => {
     setLoading(true)
     const tagArray = tags
@@ -64,6 +65,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
       tags: tagArray,
       creator,
       link,
+      limit,
     })
 
     if (response) {
@@ -99,6 +101,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
         form.values.tags,
         auth.user.id,
         form.values.link,
+        // TODO Here goes the limit...
       )
     }
   }
