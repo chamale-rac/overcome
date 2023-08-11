@@ -121,10 +121,11 @@ const EventPage = () => {
             )}
             {userEventStatus && (
               <button
-                className={`${styles.saveButton} ${styles.disabled}`}
+                // className={`${styles.saveButton} ${styles.disabled}`}
+                className={`${styles.saveButton} button asap`}
                 disabled
               >
-                Saved
+                Unsave ❌
               </button>
             )}
             <h3 className={styles.content_title}>Description:</h3>

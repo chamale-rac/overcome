@@ -33,7 +33,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         `/relations/friendStatus`,
         {
           id: auth.user.id,
-          friend_id: user_id,
+          friend_id: user_id || creator_id,
         },
         {
           Authorization: 'Bearer ' + auth.authToken,
@@ -58,7 +58,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         `/relations/friendRequest`,
         {
           first_user_id: auth.user.id,
-          second_user_id: user_id,
+          second_user_id: user_id || creator_id,
         },
         {
           Authorization: 'Bearer ' + auth.authToken,
