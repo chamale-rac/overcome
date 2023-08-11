@@ -2,6 +2,10 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import SideBar from '@layouts/Home/SideBar'
 import * as styles from './Home.module.css'
+import { notifications } from '@context'
+import { useSnapshot } from 'valtio'
+
+import { ControlledPopup, Button } from '@components/global'
 
 // TODO basic layout, missing show and hide and mobile version
 
@@ -33,6 +37,11 @@ const Home = () => {
       icon: '🤖',
     },
     {
+      name: 'News',
+      path: '/',
+      icon: '🔔',
+    },
+    {
       name: 'Sign out',
       path: '/',
       icon: '📤',
@@ -43,10 +52,18 @@ const Home = () => {
     name: 'Home',
   }
 
+  const snap = useSnapshot(notifications)
+
   return (
     <div className={styles.container}>
       <SideBar links={links} />
       <div className={styles.outlet}>
+        <ControlledPopup
+          title={'News 🔔'}
+          isOpen={snap.isOpen}
+          closeFunction={notifications.closeFunction}
+          type="notification"
+        ></ControlledPopup>
         <Outlet />
       </div>
     </div>

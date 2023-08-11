@@ -21,3 +21,8 @@ export const image = proxy({
   result: '',
   saved: false,
 })
+
+export const notifications = proxy({
+  isOpen: false,
+  closeFunction: null,
+})
