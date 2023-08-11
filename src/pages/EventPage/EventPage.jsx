@@ -28,7 +28,7 @@ const EventPage = () => {
         },
         true,
       )
-      console.log('save', response.data.saved)
+      /* console.log('save', response.data.saved)*/
       setUserEventStatus(response.data.saved)
     } catch (error) {
       console.error(error)
@@ -67,7 +67,7 @@ const EventPage = () => {
       },
       true,
     )
-    console.log('SaveEvent FUNC', response)
+    /* console.log('SaveEvent FUNC', response)*/
     checkUserEventStatus()
     // setUsers(response.data)
   }

@@ -7,10 +7,12 @@ import { useSnapshot } from 'valtio'
 import { useApi } from '@hooks'
 
 import { ControlledPopup, UserNotification } from '@components/global'
+import { useNavigate } from 'react-router-dom'
 
 // TODO basic layout, missing show and hide and mobile version
 
 const Home = () => {
+  const navigate = useNavigate()
   const { handleRequest } = useApi()
   const { auth } = authStore
 
@@ -73,7 +75,34 @@ const Home = () => {
       notifications.unreadCount = response.data.unreadCount
       setUserNotifications(response.data.notifications)
     } catch (error) {
-      console.log(error)
+      /* console.log(error)*/
+    }
+  }
+
+  const [updating, setUpdating] = useState(false)
+
+  const updateNotifications = async () => {
+    userNotifications.forEach((notification) => {
+      notification.read = true
+    })
+    setUpdating(true)
+    try {
+      const response = await handleRequest(
+        'POST',
+        `/users/updateNotifications/${auth.user.id}`,
+        {
+          notifications: userNotifications,
+        },
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+      getNotifications()
+    } catch (error) {
+      /* console.log(error)*/
+    } finally {
+      setUpdating(false)
     }
   }
 
@@ -82,11 +111,33 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      getNotifications()
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
+    if (!snap.isOpen && !updating) {
+      const interval = setInterval(() => {
+        getNotifications()
+      }, 5000)
+      return () => clearInterval(interval)
+    }
+  }, [snap.isOpen, updating])
+
+  const handleShowOff = (_id) => {
+    setUserNotifications(
+      userNotifications.map((notification) =>
+        notification._id === _id
+          ? { ...notification, show: false }
+          : notification,
+      ),
+    )
+  }
+
+  const closeFunction = () => {
+    notifications.isOpen = false
+    updateNotifications()
+  }
+
+  const goTo = (path) => {
+    notifications.isOpen = false
+    navigate(path)
+  }
 
   return (
     <div className={styles.container}>
@@ -95,16 +146,28 @@ const Home = () => {
         <ControlledPopup
           title={'News 🔔'}
           isOpen={snap.isOpen}
-          closeFunction={notifications.closeFunction}
+          closeFunction={closeFunction}
           type="notification"
         >
           {userNotifications != null && userNotifications?.length != 0 ? (
             <div
-              style={{ height: '300px', width: '400px', overflowY: 'scroll' }}
+              style={{
+                minHeight: '150px',
+                maxHeight: '300px',
+                width: '400px',
+                overflowY: 'scroll',
+              }}
             >
-              {userNotifications.map((notification) => (
-                <UserNotification notification={notification} />
-              ))}
+              {userNotifications
+                .filter((notification) => notification.show)
+                .map((notification) => (
+                  <UserNotification
+                    key={notification._id}
+                    notification={notification}
+                    quit={() => handleShowOff(notification._id)}
+                    closeFunction={closeFunction}
+                  />
+                ))}
             </div>
           ) : (
             <div
@@ -117,7 +180,7 @@ const Home = () => {
                 fontSize: '20px',
               }}
             >
-              <h3>There are no new notifications! 🚫</h3>
+              <h3>Nothing to show here! 🚫</h3>
             </div>
           )}
         </ControlledPopup>

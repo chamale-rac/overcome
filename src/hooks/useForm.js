@@ -45,7 +45,7 @@ const useForm = (
       setErrorMessage(field, errorPrompts[field])
       setError(true)
     } else {
-      console.log(`Validation successful for field ${field}`)
+      /* console.log(`Validation successful for field ${field}`)*/
       setErrorMessage(field, false)
       setError(false)
     }

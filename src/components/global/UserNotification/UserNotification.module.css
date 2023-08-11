@@ -1,0 +1,55 @@
+.notification {
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  margin-right: 4px;
+
+  justify-content: space-between;
+  display: flex;
+}
+
+.notification:hover {
+  background-color: #f3f3f3;
+}
+
+.notification .message {
+  font-weight: bold;
+}
+
+.notification .date {
+  margin-top: 5px;
+  font-size: 0.8em;
+}
+
+.notification .buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.25rem;
+}
+
+.notification.unread {
+  background-color: #cdd57e;
+}
+
+.deleteButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.readButton {
+  margin-right: 0.75rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0rem;
+  padding-inline: 0.5rem;
+  font-size: 11px;
+}

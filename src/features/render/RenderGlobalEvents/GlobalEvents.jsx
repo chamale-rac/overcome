@@ -58,7 +58,7 @@ function GlobalEvents() {
         // Set the preLoadedEvent state with the response data
         setUserEvents(response.data)
       } catch (error) {
-        console.log(error)
+        /* console.log(error)*/
         // Handle error if necessary
       }
     } else {
@@ -79,7 +79,7 @@ function GlobalEvents() {
         // Set the preLoadedEvent state with the response data
         setUserEvents(response.data)
       } catch (error) {
-        console.log(error)
+        /* console.log(error)*/
         // Handle error if necessary
       }
     }
@@ -91,10 +91,10 @@ function GlobalEvents() {
       .map((tag) => tag.trim())
       .filter((tag) => tag !== '')
     setTags(tagArray)
-    console.log('tagArray', tagArray)
+    /* console.log('tagArray', tagArray)*/
   }, [search])
 
-  console.log('userEvents', userEvents)
+  /* console.log('userEvents', userEvents)*/
 
   return (
     <div className={styles.container}>

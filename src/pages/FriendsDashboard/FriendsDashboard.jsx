@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Collapse, Chat, NavButton } from '@components/global'
 import { useApi } from '@hooks'
+import { useParams } from 'react-router-dom'
+import { dashStore } from '@context'
+import { useSnapshot } from 'valtio'
 
 import { authStore } from '@context'
 import { UserPage } from '@pages'
 import * as styles from './FriendsDashboard.module.css'
 import { SearchInput, UserList } from '@components/global'
+import { data } from 'autoprefixer'
 
 const FriendsDashboard = () => {
   const { auth } = authStore
+  const { data } = dashStore
+  const snap = useSnapshot(dashStore)
 
   const { handleRequest } = useApi()
   const [allUsers, setAllUsers] = useState(null)
@@ -39,7 +45,7 @@ const FriendsDashboard = () => {
         {},
         true,
       )
-      console.log(response.data)
+      /* console.log(response.data)*/
       setFriendResponse(response.data)
     } catch (error) {
       console.error(error)
@@ -59,6 +65,31 @@ const FriendsDashboard = () => {
 
   const handleAcceptFriendRequest = (user_id) => {
     postAcceptFriendRequest(user_id)
+  }
+
+  useEffect(() => {
+    setViewGlobal()
+  }, [])
+
+  const setViewGlobal = () => {
+    if (snap.data.type !== '' && snap.data.id !== '') {
+      if (snap.data.type === 'profile') {
+        setActualView({
+          type: 'profile',
+          user_id: snap.data.id,
+        })
+      } else if (snap.data.type === 'chat') {
+        setActualView({
+          type: 'chat',
+          chat_id: snap.data.id,
+          name: 'Friend',
+        })
+      }
+      data.setValues({
+        type: '',
+        id: '',
+      })
+    }
   }
 
   const handleSetViewProfile = (user_id) => {
@@ -87,7 +118,7 @@ const FriendsDashboard = () => {
         },
         true,
       )
-      console.log('friendResponse LISt', friendsResponse.data)
+      /* console.log('friendResponse LISt', friendsResponse.data)*/
       setRelationsFriends(friendsResponse.data)
     } catch (error) {
       console.error(error)
@@ -102,7 +133,7 @@ const FriendsDashboard = () => {
   const getFriendRequests = async () => {
     try {
       setLoading(true)
-      console.log('getFriendRequests', auth.user.id)
+      /* console.log('getFriendRequests', auth.user.id)*/
       const requests = await handleRequest(
         'GET',
         `/relations/requests/${auth.user.id}`,
@@ -113,7 +144,7 @@ const FriendsDashboard = () => {
         true,
       )
 
-      console.log('friendsRequestRespose', requests.data)
+      /* console.log('friendsRequestRespose', requests.data)*/
       setRelationsRequests(requests.data)
     } catch (error) {
       console.error(error)
@@ -138,7 +169,7 @@ const FriendsDashboard = () => {
         },
         true,
       )
-      console.log(response.data)
+      /* console.log(response.data)*/
       setAllUsers(response.data)
       setAllPreLoadedUsers(response.data)
     } catch (error) {

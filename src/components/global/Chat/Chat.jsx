@@ -15,7 +15,7 @@ const Chat = ({ _id, name }) => {
   const [userColors, setUserColors] = useState({})
 
   const sendMessage = async (message) => {
-    console.log('Sending message', message)
+    /* console.log('Sending message', message)*/
     try {
       const response = await handleRequest('post', '/chats/message', {
         chat_id: _id,
@@ -23,7 +23,7 @@ const Chat = ({ _id, name }) => {
         user_id: auth.user.id,
       })
       if (response.status === 200) {
-        console.log('200')
+        /* console.log('200')*/
         getMessages()
       } else {
         setError('Error sending message')
@@ -43,9 +43,9 @@ const Chat = ({ _id, name }) => {
     try {
       setLoading(true)
       const response = await handleRequest('GET', `/chats/${_id}`, {}, {}, true)
-      console.log('Chat!', response)
+      /* console.log('Chat!', response)*/
       if (response.status === 200) {
-        console.log('200')
+        /* console.log('200')*/
         // get just new messages
         if (type === 'refresh') {
           if (messages.length < response.data.messages.length) {
