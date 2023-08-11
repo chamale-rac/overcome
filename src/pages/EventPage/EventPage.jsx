@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { NavButton, Chat } from '@components/global'
 import * as styles from './EventPage.module.css'
 import { authStore } from '@context'
+import ControlledPopup from '../../components/global/ControlledPopup/ControlledPopup'
 
 const EventPage = () => {
   const navigate = useNavigate()
@@ -14,6 +15,10 @@ const EventPage = () => {
   const [error, setError] = useState(null)
   const { auth } = authStore
   const [userEventStatus, setUserEventStatus] = useState(null)
+
+  useEffect(() => {
+    console.log('EVENTTTT', event)
+  }, [event])
 
   const checkUserEventStatus = async () => {
     try {
@@ -72,6 +77,25 @@ const EventPage = () => {
     // setUsers(response.data)
   }
 
+  const joinEvent = async () => {
+    // const response = await handleRequest('GET', '/users/', {}, {}, true)
+    const response = await handleRequest(
+      'POST',
+        // `/users/checkEvent/${auth.user.id}`,
+        `/events/joinEvent/${_id}`,
+      {
+        userId: `${auth.user.id}`,
+      },
+      {
+        // Authorization: 'Bearer ' + auth.authToken,
+      },
+      false,
+    )
+    console.log('SaveEvent FUNC', response)
+    // checkUserEventStatus()
+    // setUsers(response.data)
+  }
+
   const removeEvent = async () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
@@ -89,14 +113,41 @@ const EventPage = () => {
     checkUserEventStatus()
   }
 
+  const [openValue, setOpenValue] = useState(false)
+  const close = () => setOpenValue(false)
+  // const negate = sP(false)
+  // const afirm = sP(true)
+
+  // const verifyEventLimit = () => {
+  //   if((event?.participants.len)<=(event?.limit)){
+  //     joinEvent()
+  //   } else {
+  //     afirm()
+  //   }
+  // }
+
   useEffect(() => {
     getEventDetails(_id)
     checkUserEventStatus()
   }, [])
 
+  useEffect(() => {
+    // console.log(event)
+    if(!((event?.participants.lenght)<=(event?.limit))){
+      setOpenValue(true)
+    }
+  }, [event])
+
   return (
     <div className={`${styles.container} standard_border`}>
       <div className={styles.event_container}>
+        <ControlledPopup
+            title="Event full!"
+            isOpen = {openValue}
+            closeFunction = {close}
+        >
+        <p>We're sorry, the event is already full...</p>
+        </ControlledPopup>
         <NavButton
           type="normal"
           handleClick={() => navigate(-1)}
@@ -136,6 +187,20 @@ const EventPage = () => {
                 Save 💾
               </button>
             )}
+            {!userEventStatus && (
+              <button
+                className={`${styles.saveButton} button asap`}
+                onClick={() => {
+                  if((event?.participants.lenght)<=(event?.limit)){
+                    joinEvent()
+                  } else {
+                    openValue(true)
+                  }
+                }}
+              >
+                Join! 🫂
+              </button>
+            )}
             {userEventStatus && (
               <button
                 // className={`${styles.saveButton} ${styles.disabled}`}
@@ -147,6 +212,8 @@ const EventPage = () => {
             )}
             <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
+            <h3 className={styles.content_title}>Limit:</h3>
+            <p className={styles.event_description}>{event?.limit}</p>
             {/* TODO: add participants
             <ul className={styles.event_participants}>
               {event?.participants.map((participant) => (
