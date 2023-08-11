@@ -43,6 +43,10 @@ const SideBar = ({ links }) => {
                   className={styles.custom_button}
                   onClick={() => (notifications.isOpen = !snap.isOpen)}
                 >
+                  {snap.unreadCount > 0 && (
+                    <div className={styles.unread}>{snap.unreadCount}</div>
+                  )}
+
                   <span>{link.icon}</span>
                   <div
                     className={`${styles.text} ${
@@ -55,7 +59,10 @@ const SideBar = ({ links }) => {
               ) : (
                 <button
                   className={styles.custom_button}
-                  onClick={() => navigate(link.path) && setActive(link.path)}
+                  onClick={() => {
+                    navigate(link.path)
+                    setActive(link.path)
+                  }}
                 >
                   <span>{link.icon}</span>
                   <div

@@ -25,4 +25,5 @@ export const image = proxy({
 export const notifications = proxy({
   isOpen: false,
   closeFunction: null,
+  unreadCount: 0,
 })
