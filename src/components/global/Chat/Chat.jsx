@@ -86,7 +86,7 @@ const Chat = ({ _id, name }) => {
     if (messages && _id) {
       const interval = setInterval(() => {
         getMessages('refresh')
-      }, 500000)
+      }, 5000)
       return () => clearInterval(interval)
     }
   }, [messages, _id])
