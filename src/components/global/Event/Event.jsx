@@ -128,12 +128,13 @@ function Event({
                 Save 💾
               </button>
             )}
-            {!inProfile && userEventStatus && (
+            {/* {!inProfile && userEventStatus && ( */}
+            { userEventStatus && (
               <button
-                className={`${styles.saveButton} ${styles.disabled}`}
+                className={`${styles.saveButton} button asap`}
                 disabled
               >
-                Saved
+                Unsave ❌
               </button>
             )}
             <button
