@@ -74,6 +74,23 @@ function Event({
     // setUsers(response.data)
   }
 
+  const removeEvent = async () => {
+    // const response = await handleRequest('GET', '/users/', {}, {}, true)
+    const response = await handleRequest(
+      'POST',
+      '/users/removeSavedEvent',
+      {
+        user_id: auth.user.id,
+        event_id: _id,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    checkUserEventStatus()
+  }
+
   useEffect(() => {}, [auth])
 
   useEffect(() => {
@@ -139,9 +156,9 @@ function Event({
             { userEventStatus && (
               <button
                 className={`${styles.saveButton} button asap`}
-                disabled
+                onClick={() => removeEvent()}
               >
-                💾
+                Unsave ❌
               </button>
             )}
             <button
