@@ -3,9 +3,12 @@ import * as styles from './UserList.module.css'
 import { useNavigate } from 'react-router-dom'
 import { ControlledPopup, Button } from '@components/global'
 
+//! find a better way to pass multiple functions and separate into more components
+// ! not easy to read, separate into other components??? :|
 const UserList = ({
   users,
   onClickFunction,
+  secondOnClickFunction,
   type = 'users',
   actualUser = '',
 }) => {
@@ -106,6 +109,18 @@ const UserList = ({
           >
             {relation.user.username}
             {''}
+
+            <button
+              className="button asap"
+              onClick={() => secondOnClickFunction(relation.user._id)}
+              style={{
+                borderRadius: '10px',
+                padding: '0.1rem 0.4rem',
+                fontSize: '10px',
+              }}
+            >
+              🗑️ Remove from friends
+            </button>
             <button
               className="button asap"
               onClick={() =>

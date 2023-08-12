@@ -13,7 +13,6 @@ const useApi = () => {
     headers = {},
     withCredentials,
   ) => {
-    /* console.log(path)*/
     const options = {
       method,
       headers: {
@@ -32,11 +31,8 @@ const useApi = () => {
     let response
 
     try {
-      console.info('API CALL', method, path)
-      console.info('url', `${SERVER_BASE_URL}${path}`)
       const axiosResponse = await axios(`${SERVER_BASE_URL}${path}`, options)
 
-      console.info('API RESPONSE', axiosResponse)
 
       response = {
         status: axiosResponse.status,

@@ -45,16 +45,40 @@ const FriendsDashboard = () => {
         {},
         true,
       )
-      /* console.log(response.data)*/
       setFriendResponse(response.data)
     } catch (error) {
-      console.error(error)
       setError(
         'Error sending friend request, please try again later or contact support',
       )
     } finally {
       setLoading(false)
       handleGetUserRelations()
+    }
+  }
+  const removeFriend = (user_id) => {
+    handleRemoveFriend(user_id)
+  }
+
+  const handleRemoveFriend = async (user_id) => {
+    try {
+      setLoading(true)
+      const response = await handleRequest(
+        'POST',
+        `/relations/removeFriend`,
+        {
+          first_user_id: auth.user.id,
+          second_user_id: user_id,
+        },
+        {},
+        false,
+      )
+      setFriendResponse(response.data)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error sending friend request, please try again later or contact support',
+      )
+      setLoading(false)
     }
   }
 
@@ -118,7 +142,6 @@ const FriendsDashboard = () => {
         },
         true,
       )
-      /* console.log('friendResponse LISt', friendsResponse.data)*/
       setRelationsFriends(friendsResponse.data)
     } catch (error) {
       console.error(error)
@@ -133,7 +156,6 @@ const FriendsDashboard = () => {
   const getFriendRequests = async () => {
     try {
       setLoading(true)
-      /* console.log('getFriendRequests', auth.user.id)*/
       const requests = await handleRequest(
         'GET',
         `/relations/requests/${auth.user.id}`,
@@ -144,7 +166,6 @@ const FriendsDashboard = () => {
         true,
       )
 
-      /* console.log('friendsRequestRespose', requests.data)*/
       setRelationsRequests(requests.data)
     } catch (error) {
       console.error(error)
@@ -169,7 +190,6 @@ const FriendsDashboard = () => {
         },
         true,
       )
-      /* console.log(response.data)*/
       setAllUsers(response.data)
       setAllPreLoadedUsers(response.data)
     } catch (error) {
@@ -238,6 +258,7 @@ const FriendsDashboard = () => {
                 <UserList
                   users={relationsFriends}
                   onClickFunction={handleSetViewChat}
+                  secondOnClickFunction={removeFriend}
                   type="friends"
                   actualUser={auth.user.id}
                 />

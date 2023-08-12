@@ -22,43 +22,19 @@
   background: #555;
 }
 
-.container h1 {
-  font-family: 'Bebas Neue', cursive;
-  font-size: 70px;
-  height: fit-content;
-  width: fit-content;
-  margin: 0;
-  padding: 0;
-}
-
-.container h2 {
-  font-family: 'Overpass Mono', monospace;
-  font-size: x-large;
-  font-weight: bold;
-  height: fit-content;
-  width: fit-content;
-  margin: 0;
-  padding: 0;
-}
-
 .eventsContainer {
-  width: 90%;
-  place-items: center;
   margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
   margin-bottom: 50px;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /*
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-auto-rows: min-content;
-  grid-gap: 20px;
-}
-
-.eventsContainer h1 {
-  text-align: center;
-  font-size: xx-large;
-  margin: 0 auto 0 auto;
+  */
+  grid-gap: 40px;
 }
 
 .flexContainer {
@@ -120,4 +96,17 @@
   height: 75%;
   text-align: center;
   font-size: 3.8rem;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.currentPage {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-decoration: underline;
 }

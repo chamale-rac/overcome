@@ -42,6 +42,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
 
   const postEvent = async (
     title,
+    limit,
     description,
     date,
     duration,
@@ -57,6 +58,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
       .filter((tag) => tag !== '')
     const response = await handleRequest('post', '/events', {
       title,
+      limit,
       description,
       date,
       duration,
@@ -64,6 +66,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
       tags: tagArray,
       creator,
       link,
+      limit,
     })
 
     if (response) {
@@ -92,6 +95,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
     if (!form.error) {
       postEvent(
         form.values.title,
+        form.values.limit,
         form.values.description,
         form.values.date,
         form.values.duration,
@@ -99,6 +103,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
         form.values.tags,
         auth.user.id,
         form.values.link,
+        // TODO Here goes the limit...
       )
     }
   }
@@ -242,6 +247,14 @@ const Register = ({ customStyles, successAction, failAction }) => {
           type="text"
           error={form.errorMessages.title}
           required
+        />
+        <Input
+          value={form.values.limit}
+          onChange={form.onChange('limit')}
+          name="limit"
+          label="Limit"
+          type="text"
+          error={form.errorMessages.limit}
         />
         <Input
           value={form.values.date}
