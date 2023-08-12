@@ -40,6 +40,7 @@ const Chat = ({ _id, name }) => {
     try {
       setLoading(true)
       const response = await handleRequest('GET', `/chats/${_id}`, {}, {}, true)
+        
       if (response.status === 200) {
         // get just new messages
         if (type === 'refresh') {

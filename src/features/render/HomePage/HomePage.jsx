@@ -17,31 +17,31 @@ function HomePage() {
   }, [])
 
   useEffect(() => {
-    console.log('SAVED EVENTS!!')
-    console.log(savedEvents)
+    /* console.log('SAVED EVENTS!!')*/
+    /* console.log(savedEvents)*/
   }, [savedEvents])
 
   useEffect(() => {
-    console.log('Var Chats:',chats)
+    /* console.log('Var Chats:',chats)*/
   }, [chats])
 
   // useEffect(() => {
-  //   console.log(auth)
-  //   console.log(auth.user.username, auth.user.id)
+  //   /* console.log(auth)*/
+  //   /* console.log(auth.user.username, auth.user.id)*/
   // }, [auth])
 
   const getSavedEvents = async () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
       'GET',
-      '/users/saved-events/'+auth.user.id,
+      '/users/saved-events/' + auth.user.id,
       {},
       {
         Authorization: 'Bearer ' + auth.authToken,
       },
       true,
     )
-    console.log('RESPONSE saved events!!', response)
+    /* console.log('RESPONSE saved events!!', response)*/
     setSavedEvents(response.data.savedEvents)
   }
 
@@ -49,14 +49,14 @@ function HomePage() {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
       'GET',
-      '/chats/messages/'+auth.user.id,
+      '/chats/messages/' + auth.user.id,
       {},
       {
         Authorization: 'Bearer ' + auth.authToken,
       },
       true,
     )
-    console.log('RESPONSE CHATS!!', response.data)
+    /* console.log('RESPONSE CHATS!!', response.data)*/
     setChats(response.data)
   }
 
@@ -64,29 +64,27 @@ function HomePage() {
     <div className={styles.container}>
       <h1>Welcome back {auth.user.username}</h1>
       <h2>
-        What people are you meeting today? <br/>
+        What people are you meeting today? <br />
       </h2>
       <div className={styles.board}>
         <div className={styles.boardItem}>
           <h3>🎉 Recent events:</h3>
-          <EventPreview
-            events={savedEvents}
-          />
+          <EventPreview events={savedEvents} />
         </div>
         <div className={styles.boardItem}>
           <h3>📌 Pinned Games:</h3>
           {/* <EventPreview
             events={savedEvents}
             /> */}
-          We're sorry,<br/>
-          Saving games feature<br/>
+          We're sorry,
+          <br />
+          Saving games feature
+          <br />
           not available yet.
         </div>
         <div className={styles.boardItem}>
           <h3>🗨️ Recent Chats:</h3>
-          <ChatPreview 
-            chats={chats}
-          />
+          <ChatPreview chats={chats} />
         </div>
         <div className={styles.boardItem}>
           <h1>+</h1>

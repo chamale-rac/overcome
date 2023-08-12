@@ -23,7 +23,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   const [friendResponse, setFriendResponse] = useState(null)
 
   useEffect(() => {
-    console.log('theUSER', user)
+    /* console.log('theUSER', user)*/
   }, [user])
 
   const checkFriendStatus = async () => {
@@ -40,7 +40,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         },
         true,
       )
-      console.log('CHECK FRIEND', response.data)
+      /* console.log('CHECK FRIEND', response.data)*/
       setFriendStatus(response.data.isFriend)
     } catch (error) {
       console.error('CHECK ERROR', error)
@@ -65,7 +65,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         },
         true,
       )
-      console.log(response.data)
+      /* console.log(response.data)*/
       setFriendResponse(response.data)
       checkFriendStatus()
     } catch (error) {
@@ -94,7 +94,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         },
         true,
       )
-      console.log(response.data)
+      /* console.log(response.data)*/
       setUser(response.data)
       checkFriendStatus()
     } catch (error) {
@@ -108,9 +108,9 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   }
 
   useEffect(() => {
-    console.log('isCreator', isCreator)
+    /* console.log('isCreator', isCreator)*/
     if (!isCreator) {
-      console.log('user_id', user_id)
+      /* console.log('user_id', user_id)*/
       getUserDetails(user_id)
     } else {
       getUserDetails(creator_id)

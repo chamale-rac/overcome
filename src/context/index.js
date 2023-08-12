@@ -21,3 +21,25 @@ export const image = proxy({
   result: '',
   saved: false,
 })
+
+export const notifications = proxy({
+  isOpen: false,
+  closeFunction: null,
+  unreadCount: 0,
+})
+
+export const showOnDashboard = proxy({
+  type: '',
+  id: '',
+})
+
+export const dashStore = proxy({
+  data: {
+    type: '',
+    id: '',
+    setValues(value) {
+      this.type = value.type
+      this.id = value.id
+    },
+  },
+})

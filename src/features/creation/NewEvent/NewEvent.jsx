@@ -70,9 +70,9 @@ const Register = ({ customStyles, successAction, failAction }) => {
     })
 
     if (response) {
-      console.log(response.status)
+      /* console.log(response.status)*/
       if (response.status === 201) {
-        console.log('response', response)
+        /* console.log('response', response)*/
         setLoading(false)
         setHandleError(null)
         setHandleSuccess('Event created successfully')
@@ -81,7 +81,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
         setLoading(false)
         setHandleSuccess(null)
         setHandleError('Error creating event')
-        console.log('error response', response)
+        /* console.log('error response', response)*/
       }
     } else {
       setLoading(false)
@@ -91,7 +91,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
   }
 
   const handlePublish = () => {
-    console.log('handle publish')
+    /* console.log('handle publish')*/
     if (!form.error) {
       postEvent(
         form.values.title,
@@ -135,7 +135,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
   }
 
   const handleIA = () => {
-    console.log('handle AI')
+    /* console.log('handle AI')*/
     postAI(
       form.values.title,
       form.values.date,
@@ -158,8 +158,8 @@ const Register = ({ customStyles, successAction, failAction }) => {
     const dateUtc6 = new Date(
       Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
     )
-    console.log('today', todayUtc6.getTime())
-    console.log('date', dateUtc6.getTime())
+    /* console.log('today', todayUtc6.getTime()*/
+    /* console.log('date', dateUtc6.getTime()*/
 
     if (dateUtc6.getTime() < todayUtc6.getTime()) {
       return -1
@@ -199,15 +199,15 @@ const Register = ({ customStyles, successAction, failAction }) => {
       const now = new Date()
       const utcMinus6Hours = now.getUTCHours() - 6
       const minutes = now.getUTCMinutes()
-      console.log('utcMinus6Hours', utcMinus6Hours)
-      console.log('minutes', minutes)
+      /* console.log('utcMinus6Hours', utcMinus6Hours)*/
+      /* console.log('minutes', minutes)*/
       const timeString = utcMinus6Hours.toString() + minutes.toString()
       const timeIntNow = parseInt(timeString, 10)
 
       const timeIntHour = parseInt(form.values.hour.replace(':', ''), 10)
 
-      console.log('timeIntNow', timeIntNow)
-      console.log('timeIntHour', timeIntHour)
+      /* console.log('timeIntNow', timeIntNow)*/
+      /* console.log('timeIntHour', timeIntHour)*/
 
       if (dateError.code === 0) {
         if (timeIntHour < timeIntNow) {

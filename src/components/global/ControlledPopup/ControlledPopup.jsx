@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 import Popup from 'reactjs-popup'
 import * as styles from './ControlledPopup.module.css'
 
+import { notifications } from '@context'
+import { useSnapshot } from 'valtio'
+
 const ControlledPopup = ({ children, title, isOpen, closeFunction }) => {
+  const snap = useSnapshot(notifications)
   return (
     <div>
       <Popup

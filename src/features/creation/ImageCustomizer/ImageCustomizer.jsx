@@ -20,12 +20,12 @@ const ImageCustomizer = ({ actualImage = '', saveNewImage }) => {
 
   const handleSaveImage = () => {
     const newImage = snap.result
-    console.log('SAVING')
+    /* console.log('SAVING')*/
     saveNewImage(newImage)
   }
 
   const handleStoreImage = (result) => {
-    console.log(result)
+    /* console.log(result)*/
     image.result = result
   }
 

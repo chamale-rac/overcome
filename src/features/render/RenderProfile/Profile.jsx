@@ -36,7 +36,7 @@ function Profile() {
         },
         true,
       )
-      console.log(response.data)
+      /* console.log(response.data)*/
       // add just a new field or update the profilePicture field
       setUser({ ...user, profilePicture: newImage })
       image.result = ''
@@ -51,7 +51,7 @@ function Profile() {
   }
 
   const handleSaveImage = (newImage) => {
-    console.log('is saving')
+    /* console.log('is saving')*/
     editProfile(newImage)
   }
 
@@ -66,14 +66,14 @@ function Profile() {
       },
       true,
     )
-    console.log('USERS!', response)
+    /* console.log('USERS!', response)*/
     setUsers(response.data)
   }
 
   const getUser = async () => {
     setProfileLoading(true)
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
-    console.log('testttt', auth.user.id)
+    /* console.log('testttt', auth.user.id)*/
     const response = await handleRequest(
       'GET',
       `/users/${auth.user.id}`,
@@ -83,14 +83,14 @@ function Profile() {
       },
       true,
     )
-    console.log('USER!!!', response)
+    /* console.log('USER!!!', response)*/
     setUser(response.data)
     setProfileLoading(false)
   }
 
   useEffect(() => {
-    console.log(auth)
-    console.log(auth.user.username, auth.user.id)
+    /* console.log(auth)*/
+    /* console.log(auth.user.username, auth.user.id)*/
     getUser()
     setUserid({
       username: auth.user.username,
@@ -99,11 +99,11 @@ function Profile() {
   }, [auth])
 
   useEffect(() => {
-    console.log('Var userid', userid)
+    /* console.log('Var userid', userid)*/
   }, [userid])
 
   useEffect(() => {
-    console.log(users)
+    /* console.log(users)*/
   }, [users])
 
   useEffect(() => {

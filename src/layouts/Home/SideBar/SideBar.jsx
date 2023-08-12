@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
+
+import { notifications } from '@context'
 import * as styles from './SideBar.module.css'
 
+import { useSnapshot } from 'valtio'
 import { useNavigate } from 'react-router-dom'
 
 const SideBar = ({ links }) => {
@@ -8,6 +11,7 @@ const SideBar = ({ links }) => {
   const [active, setActive] = useState(links[0].path)
   const [isRetracted, setIsRetracted] = useState(false)
 
+  const snap = useSnapshot(notifications)
   return (
     <div
       className={`${styles.container} ${isRetracted ? styles.retracted : ''} `}
@@ -32,24 +36,44 @@ const SideBar = ({ links }) => {
               className={`${styles.link} ${
                 active === link.path ? styles.active : ''
               }`}
-              style={link.name==='Sign out'?{marginTop: 'auto'}:{}}
+              style={link.name == 'News' ? { marginTop: 'auto' } : {}}
             >
-              <button
-                className={styles.custom_button}
-                onClick={() => {
-                  navigate(link.path)
-                  setActive(link.path)
-                }}
-              >
-                <span>{link.icon}</span>
-                <div
-                  className={`${styles.text} ${
-                    isRetracted ? styles.retracted : ''
-                  } font-bebas-neue`}
+              {link.name == 'News' ? (
+                <button
+                  className={styles.custom_button}
+                  onClick={() => (notifications.isOpen = !snap.isOpen)}
                 >
-                  {link.name}
-                </div>
-              </button>
+                  {snap.unreadCount > 0 && (
+                    <div className={styles.unread}>{snap.unreadCount}</div>
+                  )}
+
+                  <span>{link.icon}</span>
+                  <div
+                    className={`${styles.text} ${
+                      isRetracted ? styles.retracted : ''
+                    } font-bebas-neue`}
+                  >
+                    {link.name}
+                  </div>
+                </button>
+              ) : (
+                <button
+                  className={styles.custom_button}
+                  onClick={() => {
+                    navigate(link.path)
+                    setActive(link.path)
+                  }}
+                >
+                  <span>{link.icon}</span>
+                  <div
+                    className={`${styles.text} ${
+                      isRetracted ? styles.retracted : ''
+                    } font-bebas-neue`}
+                  >
+                    {link.name}
+                  </div>
+                </button>
+              )}
             </div>
           )
         })}

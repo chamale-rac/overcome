@@ -107,7 +107,7 @@ function GlobalEvents() {
         // Set the preLoadedEvent state with the response data
         setUserEvents(response.data)
       } catch (error) {
-        console.log(error)
+        /* console.log(error)*/
         // Handle error if necessary
       }
     } else {
@@ -128,7 +128,7 @@ function GlobalEvents() {
         // Set the preLoadedEvent state with the response data
         setUserEvents(response.data)
       } catch (error) {
-        console.log(error)
+        /* console.log(error)*/
         // Handle error if necessary
       }
     }

@@ -16,6 +16,8 @@ import FilePicker from './FilePicker/FilePicker'
 import EventPreview from './EventPreview/'
 import ChatPreview from './ChatPreview'
 
+import UserNotification from './UserNotification/UserNotification'
+
 export {
   NavButton,
   Loading,
@@ -32,5 +34,6 @@ export {
   AIPicker,
   FilePicker,
   EventPreview,
-  ChatPreview
+  ChatPreview,
+  UserNotification,
 }

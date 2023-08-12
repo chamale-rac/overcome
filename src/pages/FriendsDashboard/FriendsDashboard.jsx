@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Collapse, Chat, NavButton } from '@components/global'
 import { useApi } from '@hooks'
+import { useParams } from 'react-router-dom'
+import { dashStore } from '@context'
+import { useSnapshot } from 'valtio'
 
 import { authStore } from '@context'
 import { UserPage } from '@pages'
 import * as styles from './FriendsDashboard.module.css'
 import { SearchInput, UserList } from '@components/global'
+import { data } from 'autoprefixer'
 
 const FriendsDashboard = () => {
   const { auth } = authStore
+  const { data } = dashStore
+  const snap = useSnapshot(dashStore)
 
   const { handleRequest } = useApi()
   const [allUsers, setAllUsers] = useState(null)
@@ -83,6 +89,31 @@ const FriendsDashboard = () => {
 
   const handleAcceptFriendRequest = (user_id) => {
     postAcceptFriendRequest(user_id)
+  }
+
+  useEffect(() => {
+    setViewGlobal()
+  }, [])
+
+  const setViewGlobal = () => {
+    if (snap.data.type !== '' && snap.data.id !== '') {
+      if (snap.data.type === 'profile') {
+        setActualView({
+          type: 'profile',
+          user_id: snap.data.id,
+        })
+      } else if (snap.data.type === 'chat') {
+        setActualView({
+          type: 'chat',
+          chat_id: snap.data.id,
+          name: 'Friend',
+        })
+      }
+      data.setValues({
+        type: '',
+        id: '',
+      })
+    }
   }
 
   const handleSetViewProfile = (user_id) => {
