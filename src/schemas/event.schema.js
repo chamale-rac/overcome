@@ -52,7 +52,7 @@ const eventSchema = {
     hour: 'Type a valid hour, e.g. 12:00.',
     tags: 'Tags for your event, separated by commas. e.g. Halo, CSGO, Valorant.',
     link: 'Type a valid link, e.g. https://www.google.com.',
-    limit: 'You should add an number event limit.',
+    limit: 'You should add an number event limit. (min 2, max 99)',
   },
 }
 

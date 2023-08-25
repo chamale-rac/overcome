@@ -48,6 +48,9 @@ const EventPage = () => {
       setLoading(true)
       const response = await handleRequest('GET', `/events/${_id}`)
       setEvent(response.data)
+      if (event.participants.length >= event.limit) {
+        setUserEventStatus(true)
+      }
     } catch (error) {
       console.error(error)
       setError(
@@ -81,8 +84,8 @@ const EventPage = () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
       'POST',
-        // `/users/checkEvent/${auth.user.id}`,
-        `/events/joinEvent/${_id}`,
+      // `/users/checkEvent/${auth.user.id}`,
+      `/events/joinEvent/${_id}`,
       {
         userId: `${auth.user.id}`,
       },
@@ -131,22 +134,15 @@ const EventPage = () => {
     checkUserEventStatus()
   }, [])
 
-  useEffect(() => {
-    // console.log(event)
-    if(!((event?.participants.lenght)<=(event?.limit))){
-      setOpenValue(true)
-    }
-  }, [event])
-
   return (
     <div className={`${styles.container} standard_border`}>
       <div className={styles.event_container}>
         <ControlledPopup
-            title="Event full!"
-            isOpen = {openValue}
-            closeFunction = {close}
+          title="Event full!"
+          isOpen={openValue}
+          closeFunction={close}
         >
-        <p>We're sorry, the event is already full...</p>
+          <p>We're sorry, the event is already full...</p>
         </ControlledPopup>
         <NavButton
           type="normal"
@@ -191,10 +187,10 @@ const EventPage = () => {
               <button
                 className={`${styles.saveButton} button asap`}
                 onClick={() => {
-                  if((event?.participants.lenght)<=(event?.limit)){
+                  if (event?.participants.length >= event?.limit) {
                     joinEvent()
                   } else {
-                    openValue(true)
+                    setOpenValue(true)
                   }
                 }}
               >

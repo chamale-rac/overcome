@@ -66,7 +66,6 @@ const Register = ({ customStyles, successAction, failAction }) => {
       tags: tagArray,
       creator,
       link,
-      limit,
     })
 
     if (response) {
