@@ -4,8 +4,6 @@ import * as introStyles from './Intro.module.css'
 
 // TODO add paper background
 
-import arcade from '@assets/svg/arcade_transparent_bg.svg'
-
 import {
   headContainerAnimation,
   headContentAnimation,
