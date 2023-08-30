@@ -1,8 +1,8 @@
 import { ErrorPage } from '@assets'
 
 import {
-  Landing,
   Login,
+  Landing,
   EventsDashboard,
   EventPage,
   UserPage,

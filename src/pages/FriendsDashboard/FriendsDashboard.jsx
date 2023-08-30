@@ -9,7 +9,6 @@ import { authStore } from '@context'
 import { UserPage } from '@pages'
 import * as styles from './FriendsDashboard.module.css'
 import { SearchInput, UserList } from '@components/global'
-import { data } from 'autoprefixer'
 
 const FriendsDashboard = () => {
   const { auth } = authStore
