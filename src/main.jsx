@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import App from '@routes/App.jsx'
+
 import '@assets/global.css'
 
 // TODO check for correct root (not anymore, I think)
