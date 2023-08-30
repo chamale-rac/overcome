@@ -101,7 +101,7 @@ export default defineConfig(({ command, mode }) => {
           { find: '@lib', replacement: path.resolve(__dirname, 'lib') },
           {
             find: '@routes',
-            replacement: path.resolve(__dirname, 'routes'),
+            replacement: path.resolve(__dirname, 'src/routes'),
           },
           {
             find: '@services',
