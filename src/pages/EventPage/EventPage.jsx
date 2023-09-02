@@ -129,12 +129,19 @@ const EventPage = () => {
   useEffect(() => {
     getEventDetails(_id)
     checkUserEventStatus()
+    // setOpenValue(false)
   }, [])
 
   useEffect(() => {
-    // console.log(event)
-    if(!((event?.participants.lenght)<=(event?.limit))){
-      setOpenValue(true)
+    // console.log("participants useEffect:",event?.participants.length)
+    // console.log("limit useEffect:",event?.limit)
+    // console.log("the event:", event)
+    if(!(event===undefined)){
+      if((event?.participants.length)>=(event?.limit)){
+        setOpenValue(true)
+      } else {
+        setOpenValue(false)
+      }
     }
   }, [event])
 
@@ -142,11 +149,11 @@ const EventPage = () => {
     <div className={`${styles.container} standard_border`}>
       <div className={styles.event_container}>
         <ControlledPopup
-            title="Event full!"
-            isOpen = {openValue}
-            closeFunction = {close}
+          title="Event full!"
+          isOpen = {openValue}
+          closeFunction = {close}
         >
-        <p>We're sorry, the event is already full...</p>
+          <p>We're sorry, the event is already full...</p>
         </ControlledPopup>
         <NavButton
           type="normal"
@@ -191,10 +198,11 @@ const EventPage = () => {
               <button
                 className={`${styles.saveButton} button asap`}
                 onClick={() => {
-                  if((event?.participants.lenght)<=(event?.limit)){
-                    joinEvent()
+                  console.log("participants:",event?.participants.length)
+                  if((event?.participants.length)>=(event?.limit)){
+                    setOpenValue(true)
                   } else {
-                    openValue(true)
+                    joinEvent()
                   }
                 }}
               >
