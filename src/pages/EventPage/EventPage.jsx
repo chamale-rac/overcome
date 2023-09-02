@@ -16,10 +16,6 @@ const EventPage = () => {
   const { auth } = authStore
   const [userEventStatus, setUserEventStatus] = useState(null)
 
-  useEffect(() => {
-    console.log('EVENTTTT', event)
-  }, [event])
-
   const checkUserEventStatus = async () => {
     try {
       const response = await handleRequest(
@@ -59,7 +55,6 @@ const EventPage = () => {
   }
 
   const saveEvent = async () => {
-    // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
       'POST',
       '/users/saveEvent',
@@ -74,11 +69,9 @@ const EventPage = () => {
     )
     console.log('SaveEvent FUNC', response)
     checkUserEventStatus()
-    // setUsers(response.data)
   }
 
   const joinEvent = async () => {
-    // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
       'POST',
         // `/users/checkEvent/${auth.user.id}`,
@@ -97,7 +90,6 @@ const EventPage = () => {
   }
 
   const removeEvent = async () => {
-    // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
       'POST',
       '/users/removeSavedEvent',
@@ -115,16 +107,6 @@ const EventPage = () => {
 
   const [openValue, setOpenValue] = useState(false)
   const close = () => setOpenValue(false)
-  // const negate = sP(false)
-  // const afirm = sP(true)
-
-  // const verifyEventLimit = () => {
-  //   if((event?.participants.len)<=(event?.limit)){
-  //     joinEvent()
-  //   } else {
-  //     afirm()
-  //   }
-  // }
 
   useEffect(() => {
     getEventDetails(_id)
@@ -132,10 +114,12 @@ const EventPage = () => {
     // setOpenValue(false)
   }, [])
 
+  /**
+   * @useEffect
+   * @description verify the availability of spaces to join an change the popup open status if its full
+   * @notes The event object has to be not undefined to read the properties and not have errors
+   */
   useEffect(() => {
-    // console.log("participants useEffect:",event?.participants.length)
-    // console.log("limit useEffect:",event?.limit)
-    // console.log("the event:", event)
     if(!(event===undefined)){
       if((event?.participants.length)>=(event?.limit)){
         setOpenValue(true)
