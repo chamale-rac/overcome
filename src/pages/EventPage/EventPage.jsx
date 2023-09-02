@@ -33,7 +33,7 @@ const EventPage = () => {
         },
         true,
       )
-      /* console.log('save', response.data.saved)*/
+      console.log('save', response.data.saved)
       setUserEventStatus(response.data.saved)
     } catch (error) {
       console.error(error)
@@ -48,9 +48,6 @@ const EventPage = () => {
       setLoading(true)
       const response = await handleRequest('GET', `/events/${_id}`)
       setEvent(response.data)
-      if (event.participants.length >= event.limit) {
-        setUserEventStatus(true)
-      }
     } catch (error) {
       console.error(error)
       setError(
@@ -75,7 +72,7 @@ const EventPage = () => {
       },
       true,
     )
-    /* console.log('SaveEvent FUNC', response)*/
+    console.log('SaveEvent FUNC', response)
     checkUserEventStatus()
     // setUsers(response.data)
   }
@@ -84,8 +81,8 @@ const EventPage = () => {
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
       'POST',
-      // `/users/checkEvent/${auth.user.id}`,
-      `/events/joinEvent/${_id}`,
+        // `/users/checkEvent/${auth.user.id}`,
+        `/events/joinEvent/${_id}`,
       {
         userId: `${auth.user.id}`,
       },
@@ -132,15 +129,29 @@ const EventPage = () => {
   useEffect(() => {
     getEventDetails(_id)
     checkUserEventStatus()
+    // setOpenValue(false)
   }, [])
+
+  useEffect(() => {
+    // console.log("participants useEffect:",event?.participants.length)
+    // console.log("limit useEffect:",event?.limit)
+    // console.log("the event:", event)
+    if(!(event===undefined)){
+      if((event?.participants.length)>=(event?.limit)){
+        setOpenValue(true)
+      } else {
+        setOpenValue(false)
+      }
+    }
+  }, [event])
 
   return (
     <div className={`${styles.container} standard_border`}>
       <div className={styles.event_container}>
         <ControlledPopup
           title="Event full!"
-          isOpen={openValue}
-          closeFunction={close}
+          isOpen = {openValue}
+          closeFunction = {close}
         >
           <p>We're sorry, the event is already full...</p>
         </ControlledPopup>
@@ -187,10 +198,11 @@ const EventPage = () => {
               <button
                 className={`${styles.saveButton} button asap`}
                 onClick={() => {
-                  if (event?.participants.length >= event?.limit) {
-                    joinEvent()
-                  } else {
+                  console.log("participants:",event?.participants.length)
+                  if((event?.participants.length)>=(event?.limit)){
                     setOpenValue(true)
+                  } else {
+                    joinEvent()
                   }
                 }}
               >
