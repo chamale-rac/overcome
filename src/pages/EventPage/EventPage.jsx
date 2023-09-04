@@ -5,6 +5,7 @@ import { NavButton, Chat } from '@components/global'
 import * as styles from './EventPage.module.css'
 import { authStore } from '@context'
 import ControlledPopup from '../../components/global/ControlledPopup/ControlledPopup'
+import ParticipantsView from '@components/pages/EventPage'
 
 const EventPage = () => {
   const navigate = useNavigate()
@@ -15,6 +16,8 @@ const EventPage = () => {
   const [error, setError] = useState(null)
   const { auth } = authStore
   const [userEventStatus, setUserEventStatus] = useState(null)
+  const [userJoinedStatus, setUserJoinedStatus] = useState(null)
+  const [participants, setParticipants] = useState([])
 
   const checkUserEventStatus = async () => {
     try {
@@ -29,7 +32,7 @@ const EventPage = () => {
         },
         true,
       )
-      console.log('save', response.data.saved)
+      // console.log('save', response.data.saved)
       setUserEventStatus(response.data.saved)
     } catch (error) {
       console.error(error)
@@ -39,11 +42,35 @@ const EventPage = () => {
     }
   }
 
+  const checkJoinedStatus = async () => {
+    try {
+      const response = await handleRequest(
+        'POST',
+        `/events/checkJoinedStatus/${_id}`,
+        {
+          userId: auth.user.id,
+        },
+        {
+          Authorization: 'Bearer' + auth.authToken,
+        },
+        true,
+      )
+      console.log('JoinedStatusData:',response.data)
+      setUserJoinedStatus(response.data.joined)
+    } catch (error) {
+      console.log(error)
+      setError(
+        'Error fetching joined status details, please try again later or contact support'
+      )
+    }
+  }
+
   const getEventDetails = async (_id) => {
     try {
       setLoading(true)
       const response = await handleRequest('GET', `/events/${_id}`)
       setEvent(response.data)
+      setParticipants(response.data.participants)
     } catch (error) {
       console.error(error)
       setError(
@@ -67,8 +94,10 @@ const EventPage = () => {
       },
       true,
     )
-    console.log('SaveEvent FUNC', response)
+    // console.log('SaveEvent FUNC', response)
     checkUserEventStatus()
+    checkJoinedStatus()
+    getEventDetails(_id)
   }
 
   const joinEvent = async () => {
@@ -84,8 +113,30 @@ const EventPage = () => {
       },
       false,
     )
-    console.log('SaveEvent FUNC', response)
-    // checkUserEventStatus()
+    // console.log('SaveEvent FUNC', response)
+    checkUserEventStatus()
+    checkJoinedStatus()
+    getEventDetails(_id)
+    // setUsers(response.data)
+  }
+
+  const removeJoinedEvent = async () => {
+    const response = await handleRequest(
+      'POST',
+        // `/users/checkEvent/${auth.user.id}`,
+        `/events/removeJoinedEvent/${_id}`,
+      {
+        userId: `${auth.user.id}`,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    // console.log('SaveEvent FUNC', response)
+    checkUserEventStatus()
+    checkJoinedStatus()
+    getEventDetails(_id)
     // setUsers(response.data)
   }
 
@@ -103,6 +154,8 @@ const EventPage = () => {
       true,
     )
     checkUserEventStatus()
+    checkJoinedStatus()
+    getEventDetails(_id)
   }
 
   const [openValue, setOpenValue] = useState(false)
@@ -111,6 +164,7 @@ const EventPage = () => {
   useEffect(() => {
     getEventDetails(_id)
     checkUserEventStatus()
+    checkJoinedStatus()
     // setOpenValue(false)
   }, [])
 
@@ -120,6 +174,7 @@ const EventPage = () => {
    * @notes The event object has to be not undefined to read the properties and not have errors
    */
   useEffect(() => {
+    console.log(event)
     if(!(event===undefined)){
       if((event?.participants.length)>=(event?.limit)){
         setOpenValue(true)
@@ -178,7 +233,16 @@ const EventPage = () => {
                 Save 💾
               </button>
             )}
-            {!userEventStatus && (
+            {userEventStatus && (
+              <button
+                // className={`${styles.saveButton} ${styles.disabled}`}
+                className={`${styles.saveButton} button asap`}
+                onClick={() => removeEvent()}
+              >
+                Unsave ❌
+              </button>
+            )}
+            {!userJoinedStatus && (
               <button
                 className={`${styles.saveButton} button asap`}
                 onClick={() => {
@@ -193,19 +257,27 @@ const EventPage = () => {
                 Join! 🫂
               </button>
             )}
-            {userEventStatus && (
+            {userJoinedStatus && (
               <button
-                // className={`${styles.saveButton} ${styles.disabled}`}
                 className={`${styles.saveButton} button asap`}
-                onClick={() => removeEvent()}
+                onClick={() => {
+                  removeJoinedEvent()
+                  // console.log("participants:",event?.participants.length)
+                  // if((event?.participants.length)>=(event?.limit)){
+                  //   setOpenValue(true)
+                  // } else {
+                  //   joinEvent()
+                  // }
+                }}
               >
-                Unsave ❌
+                Joined! 🙌🏼
               </button>
             )}
+            <h3 className={styles.content_title}>Participants:</h3>
+            <ParticipantsView participants={participants} />
             <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
-            <h3 className={styles.content_title}>Limit:</h3>
-            <p className={styles.event_description}>{event?.limit}</p>
+            <h3 className={styles.content_title}>Limit: {event?.limit}</h3>
             {/* TODO: add participants
             <ul className={styles.event_participants}>
               {event?.participants.map((participant) => (
