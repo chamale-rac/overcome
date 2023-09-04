@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { notifications } from '@context'
+import { notifications, modal } from '@context'
 import * as styles from './SideBar.module.css'
 
 import { useSnapshot } from 'valtio'
@@ -12,6 +12,7 @@ const SideBar = ({ links }) => {
   const [isRetracted, setIsRetracted] = useState(false)
 
   const snap = useSnapshot(notifications)
+  const theme = useSnapshot(modal)
   return (
     <div
       className={`${styles.container} ${isRetracted ? styles.retracted : ''} `}
@@ -31,49 +32,58 @@ const SideBar = ({ links }) => {
       />
       <div className={styles.links}>
         {links.map((link) => {
-          return (
-            <div
-              className={`${styles.link} ${
-                active === link.path ? styles.active : ''
-              }`}
-              style={link.name == 'News' ? { marginTop: 'auto' } : {}}
-            >
-              {link.name == 'News' ? (
-                <button
-                  className={styles.custom_button}
-                  onClick={() => (notifications.isOpen = !snap.isOpen)}
-                >
-                  {snap.unreadCount > 0 && (
-                    <div className={styles.unread}>{snap.unreadCount}</div>
-                  )}
+          // Determine whether the link is "News"
+          const isNewsLink = link.name === 'News'
 
-                  <span>{link.icon}</span>
-                  <div
-                    className={`${styles.text} ${
-                      isRetracted ? styles.retracted : ''
-                    } font-bebas-neue`}
-                  >
-                    {link.name}
-                  </div>
-                </button>
-              ) : (
-                <button
-                  className={styles.custom_button}
-                  onClick={() => {
-                    navigate(link.path)
-                    setActive(link.path)
-                  }}
+          const isThemeLink = link.name === 'Theme'
+
+          // Define the CSS classes for the link based on its status
+          const linkClasses = `${styles.link} ${
+            active === link.path ? styles.active : ''
+          }`
+
+          // Define inline styles for margin-top if it's a "News" link
+          const linkStyles = isNewsLink ? { marginTop: 'auto' } : {}
+
+          // Click handler for "News" link
+          const handleNewsLinkClick = () => {
+            notifications.isOpen = !snap.isOpen
+          }
+
+          const handleThemeClick = () => {
+            modal.isOpen = !theme.isOpen
+          }
+
+          // Click handler for other links
+          const handleOtherLinkClick = () => {
+            navigate(link.path)
+            setActive(link.path)
+          }
+
+          return (
+            <div className={linkClasses} style={linkStyles} key={link.path}>
+              <button
+                className={styles.custom_button}
+                onClick={
+                  isNewsLink
+                    ? handleNewsLinkClick
+                    : isThemeLink
+                    ? handleThemeClick
+                    : handleOtherLinkClick
+                }
+              >
+                {isNewsLink && snap.unreadCount > 0 && (
+                  <div className={styles.unread}>{snap.unreadCount}</div>
+                )}
+                <span>{link.icon}</span>
+                <div
+                  className={`${styles.text} ${
+                    isRetracted ? styles.retracted : ''
+                  } font-bebas-neue`}
                 >
-                  <span>{link.icon}</span>
-                  <div
-                    className={`${styles.text} ${
-                      isRetracted ? styles.retracted : ''
-                    } font-bebas-neue`}
-                  >
-                    {link.name}
-                  </div>
-                </button>
-              )}
+                  {link.name}
+                </div>
+              </button>
             </div>
           )
         })}

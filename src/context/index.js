@@ -28,6 +28,11 @@ export const notifications = proxy({
   unreadCount: 0,
 })
 
+export const modal = proxy({
+  isOpen: false,
+  closeFunction: null,
+})
+
 export const showOnDashboard = proxy({
   type: '',
   id: '',
