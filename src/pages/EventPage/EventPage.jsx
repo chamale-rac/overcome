@@ -55,7 +55,7 @@ const EventPage = () => {
         },
         true,
       )
-      console.log('JoinedStatusData:',response.data)
+      // console.log('JoinedStatusData:',response.data)
       setUserJoinedStatus(response.data.joined)
     } catch (error) {
       console.log(error)
@@ -173,7 +173,7 @@ const EventPage = () => {
    * @notes The event object has to be not undefined to read the properties and not have errors
    */
   useEffect(() => {
-    console.log(event)
+    console.log('EventInfo:',event)
     if(!(event===undefined)){
       if((event?.participants.length)>=(event?.limit)){
         setOpenValue(true)
