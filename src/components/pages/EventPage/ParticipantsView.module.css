@@ -1,0 +1,10 @@
+.participantsViewContainer {
+  height: fit-content;
+  width: fit-content;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  max-width: 100%;
+}
