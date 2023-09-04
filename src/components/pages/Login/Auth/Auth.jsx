@@ -40,9 +40,19 @@ const Auth = () => {
               navigate('/')
               landing.intro = false
             }}
-            customStyles="w-fit px-4 py-2.5 font-bold rounded-full text-base mb-20"
+            customStyles="w-fit px-4 py-2.5 font-bold rounded-full text-base mb-2"
           >
             You have no account?
+          </NavButton>
+          <NavButton
+            type="link"
+            handleClick={() => {
+              navigate('/reset')
+              landing.intro = false
+            }}
+            customStyles="w-fit px-4 py-0 font-bold rounded-full text-base mb-20"
+          >
+            Forgot your password?
           </NavButton>
         </motion.div>
       </motion.div>
