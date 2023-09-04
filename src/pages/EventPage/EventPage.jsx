@@ -97,7 +97,7 @@ const EventPage = () => {
     // console.log('SaveEvent FUNC', response)
     checkUserEventStatus()
     checkJoinedStatus()
-    getEventDetails(_id)
+    // getEventDetails(_id)
   }
 
   const joinEvent = async () => {
@@ -117,7 +117,6 @@ const EventPage = () => {
     checkUserEventStatus()
     checkJoinedStatus()
     getEventDetails(_id)
-    // setUsers(response.data)
   }
 
   const removeJoinedEvent = async () => {
@@ -155,7 +154,7 @@ const EventPage = () => {
     )
     checkUserEventStatus()
     checkJoinedStatus()
-    getEventDetails(_id)
+    // getEventDetails(_id)
   }
 
   const [openValue, setOpenValue] = useState(false)
@@ -235,7 +234,6 @@ const EventPage = () => {
             )}
             {userEventStatus && (
               <button
-                // className={`${styles.saveButton} ${styles.disabled}`}
                 className={`${styles.saveButton} button asap`}
                 onClick={() => removeEvent()}
               >
@@ -262,12 +260,7 @@ const EventPage = () => {
                 className={`${styles.saveButton} button asap`}
                 onClick={() => {
                   removeJoinedEvent()
-                  // console.log("participants:",event?.participants.length)
-                  // if((event?.participants.length)>=(event?.limit)){
-                  //   setOpenValue(true)
-                  // } else {
-                  //   joinEvent()
-                  // }
+                  
                 }}
               >
                 Joined! 🙌🏼
@@ -278,12 +271,6 @@ const EventPage = () => {
             <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
             <h3 className={styles.content_title}>Limit: {event?.limit}</h3>
-            {/* TODO: add participants
-            <ul className={styles.event_participants}>
-              {event?.participants.map((participant) => (
-                <li key={participant._id}>{participant.username}</li>
-              ))}
-            </ul> */}
             <div className={styles.content_wrapper}>
               <h3>Schedule:</h3>
               <p className={styles.event_hour}>{event?.hour}</p>
@@ -314,10 +301,6 @@ const EventPage = () => {
       <div className={styles.chat_container}>
         <Chat _id={event?.chat} name={event?.title} />
       </div>
-      {/**      
-      <div>{loading && <div>Loading...</div>}</div>
-      <div>{error && <div>{error}</div>}</div>
-       */}
     </div>
   )
 }
