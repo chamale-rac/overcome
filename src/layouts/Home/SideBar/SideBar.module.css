@@ -13,6 +13,75 @@
   align-items: center;
 }
 
+@media (max-width: 650px) {
+  .container {
+    margin-left: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 90%;
+    height: auto !important;
+    padding: 0.7em;
+  }
+
+  .links {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    align-items: center;
+    height: auto !important;
+  }
+  .link {
+    margin: 0.1em !important;
+  }
+
+  .link.active {
+    background-color: var(--ink-background-highlight);
+    border: 1.5px dashed rgb(112, 112, 112);
+  }
+
+  .retracted.links {
+  }
+
+  .container.retracted {
+    width: 90%;
+    margin-left: 0 !important;
+  }
+
+  .logoRetract {
+    display: flex !important;
+
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+  }
+
+  .retract {
+    margin: 0 !important;
+    width: auto !important;
+  }
+
+  .container.retracted .links {
+    display: none;
+  }
+
+  .custom_button {
+    width: 100% !important;
+  }
+
+  .container.retracted:hover {
+    height: auto !important;
+  }
+
+  .image.retracted {
+    margin-right: 0px !important;
+  }
+
+  .container.retracted:hover .image.retracted {
+    margin-right: 0px;
+  }
+}
+
 .links {
   display: flex;
   flex-direction: column;
@@ -21,7 +90,7 @@
 }
 
 .link {
-  border: 1px solid black;
+  border: 1px solid rgb(169, 169, 169);
   width: 100%;
   margin: 5px 0px;
   border-radius: 5px;
@@ -31,6 +100,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  transition: background-color 0.3s;
 }
 
 .link:hover {
@@ -40,17 +110,21 @@
 
 .link.active {
   background-color: var(--ink-background-highlight);
+  border: 1.5px dashed rgb(112, 112, 112);
 }
 
 .custom_button {
   position: relative;
   display: flex;
   width: max-content;
+  align-items: center;
 }
 
 .custom_button .text {
   margin-left: 10px;
-  font-size: 24px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: capitalize;
 }
 
 .custom_button div,
@@ -108,6 +182,8 @@
   width: 100px;
   white-space: nowrap;
   text-align: start;
+  color: rgb(29, 29, 29);
+  font-weight: 450;
 }
 .custom_button .text.retracted {
   width: 0px;
