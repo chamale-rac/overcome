@@ -1,7 +1,8 @@
 import React from 'react'
+import { Recover } from '@components/pages/Reset'
 
 const Reset = () => {
-  return <div>Reset Password</div>
+  return <Recover />
 }
 
 export default Reset

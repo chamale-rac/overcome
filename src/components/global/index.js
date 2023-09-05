@@ -17,6 +17,7 @@ import EventPreview from './EventPreview/'
 import ChatPreview from './ChatPreview'
 
 import UserNotification from './UserNotification/UserNotification'
+import Step from './Step/Step'
 
 export {
   NavButton,
@@ -36,4 +37,5 @@ export {
   EventPreview,
   ChatPreview,
   UserNotification,
+  Step,
 }

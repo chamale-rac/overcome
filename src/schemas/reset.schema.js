@@ -1,5 +1,5 @@
 import Joi from 'joi'
-import { EMAIL_REGEX } from '@utils/regex.patterns'
+import { EMAIL_REGEX, PWD_REGEX } from '@utils/regex.patterns'
 
 const recoverSchema = {
   joi: Joi.object({

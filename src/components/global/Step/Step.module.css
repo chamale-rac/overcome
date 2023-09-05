@@ -1,0 +1,36 @@
+.step {
+  display: flex;
+  padding: 0.2rem;
+  margin-bottom: 0.8rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+.step div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 1rem;
+  font-weight: 700;
+  border-color: black;
+  border-width: 1px;
+  margin-right: 0.6rem;
+}
+
+.step h2 {
+  font-size: 1rem;
+}
+
+.step.done div {
+  background-color: #cdd57e;
+  opacity: 1;
+}
+
+.step.done h2 {
+  font-weight: bold;
+}

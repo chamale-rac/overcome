@@ -1,0 +1,31 @@
+.container {
+  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  box-shadow: 5px 5px 0px 0px #000;
+  padding: 32px;
+}
+.title {
+  margin-bottom: 1rem;
+}
+aside {
+  position: relative;
+}
+
+aside > span {
+  position: absolute;
+  right: 10px;
+  top: 25px;
+  cursor: pointer;
+}
+
+.toast {
+  border: 2px solid black;
+  padding: 1rem;
+  background-color: #ffffff;
+  opacity: 1;
+  color: #000;
+  right: 0;
+  border-radius: 10px;
+}
