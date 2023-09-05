@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import SideBar from '@layouts/Home/SideBar'
 import * as styles from './Home.module.css'
-import { notifications, authStore } from '@context'
+import { notifications, authStore, OpenChat } from '@context'
 import { useSnapshot } from 'valtio'
 import { useApi } from '@hooks'
 
@@ -134,9 +134,18 @@ const Home = () => {
     updateNotifications()
   }
 
-  const goTo = (path) => {
+  const goTo = (notification) => {
     notifications.isOpen = false
-    navigate(path)
+    if (notification.type === 'chat_event') {
+      navigate(`/home/events/${notification.event_id}`)
+    } else {
+      // go to users
+      OpenChat.chat_id = notification.chat_id
+      OpenChat.name = notification.username
+      OpenChat.isOpen = true
+      console.log('OpenChat', OpenChat)
+      navigate(`/home/users`)
+    }
   }
 
   return (
@@ -144,7 +153,7 @@ const Home = () => {
       <SideBar links={links} />
       <div className={styles.outlet}>
         <ControlledPopup
-          title={'News 🔔'}
+          title={'Notifications 🔔'}
           isOpen={snap.isOpen}
           closeFunction={closeFunction}
           type="notification"
@@ -152,11 +161,12 @@ const Home = () => {
           {userNotifications != null && userNotifications?.length != 0 ? (
             <div
               style={{
-                minHeight: '150px',
-                maxHeight: '300px',
-                width: '400px',
+                minHeight: '350px',
+                maxHeight: '500px',
+                width: '500px',
                 overflowY: 'scroll',
               }}
+              className={styles.popupInsider}
             >
               {userNotifications
                 .filter((notification) => notification.show)
@@ -166,6 +176,8 @@ const Home = () => {
                     notification={notification}
                     quit={() => handleShowOff(notification._id)}
                     closeFunction={closeFunction}
+                    goto={() => goTo(notification)}
+                    type={notification.type}
                   />
                 ))}
             </div>

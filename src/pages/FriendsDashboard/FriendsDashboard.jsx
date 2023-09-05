@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Collapse, Chat, NavButton } from '@components/global'
 import { useApi } from '@hooks'
 import { useParams } from 'react-router-dom'
-import { dashStore } from '@context'
+import { dashStore, OpenChat } from '@context'
 import { useSnapshot } from 'valtio'
 
 import { authStore } from '@context'
@@ -14,6 +14,7 @@ const FriendsDashboard = () => {
   const { auth } = authStore
   const { data } = dashStore
   const snap = useSnapshot(dashStore)
+  const snapOpenChat = useSnapshot(OpenChat)
 
   const { handleRequest } = useApi()
   const [allUsers, setAllUsers] = useState(null)
@@ -219,6 +220,17 @@ const FriendsDashboard = () => {
       setAllUsers(usersFiltered)
     }
   }, [search])
+
+  useEffect(() => {
+    if (snapOpenChat.isOpen) {
+      setActualView({
+        type: 'chat',
+        chat_id: snapOpenChat.chat_id,
+        name: snapOpenChat.name,
+      })
+      OpenChat.isOpen = false
+    }
+  }, [])
 
   return (
     <div className={styles.container}>

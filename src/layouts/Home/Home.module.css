@@ -22,3 +22,7 @@
   /* Add overflow property */
   overflow: auto;
 }
+
+.popupInsider {
+  padding: 1rem;
+}

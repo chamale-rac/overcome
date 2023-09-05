@@ -303,7 +303,15 @@ const EventPage = () => {
         )}
       </div>
       <div className={styles.chat_container}>
-        <Chat _id={event?.chat} name={event?.title} />
+        {userJoinedStatus ? (
+          <Chat _id={event?.chat} name={event?.title} />
+        ) : (
+          <div className={styles.dummy_chat}>
+            Looks like you're missing out on all the fun!
+            <br />
+            Join the event to unlock the chat! 🎉
+          </div>
+        )}
       </div>
     </div>
   )

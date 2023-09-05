@@ -17,6 +17,12 @@ export const authStore = proxy({
   },
 })
 
+export const OpenChat = proxy({
+  isOpen: false,
+  chat_id: '',
+  name: '',
+})
+
 export const image = proxy({
   result: '',
   saved: false,

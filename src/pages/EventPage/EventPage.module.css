@@ -120,3 +120,25 @@
   cursor: not-allowed !important;
   text-decoration: line-through;
 }
+
+.dummy_chat {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: #c3a1ff3f;
+  border-radius: 10px;
+  overflow: hidden;
+
+  border-width: 2px;
+  border-color: black;
+  position: relative;
+
+  border: 2px dashed #251134;
+
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  font-size: 18px;
+  color: #251134d8;
+}
