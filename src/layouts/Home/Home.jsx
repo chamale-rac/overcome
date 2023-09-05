@@ -143,7 +143,6 @@ const Home = () => {
       OpenChat.chat_id = notification.chat_id
       OpenChat.name = notification.username
       OpenChat.isOpen = true
-      console.log('OpenChat', OpenChat)
       navigate(`/home/users`)
     }
   }
