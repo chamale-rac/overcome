@@ -12,9 +12,11 @@ import { authStore } from '@context'
 
 const EditProfile = ({ user, successAction }) => {
 
+    const { auth } = authStore;
+
     const [loading, setLoading] = useState(false)
     const [handleError, setHandleError] = useState()
-    const [handleSuccess, setHandleSuccess] = useState()
+    const [handleSuccess, setHandleSuccess] = useState(null);
     const { handleRequest } = useApi()
     const form = useForm(
         profileSchema.joi,
@@ -24,43 +26,34 @@ const EditProfile = ({ user, successAction }) => {
     )
 
   const postEditProfile = async (username, email, name, lastname) => {
-    setLoading(true)
+    try {
+        setLoading(true)
+    
+        const response = await handleRequest(
+          'post',
+          `/users/editInfo/${user._id}`,
+          {
+            username,
+            name,
+            lastname,
+            email,
+          },
+          {
+            Authorization: 'Bearer ' + auth.authToken,
+          },
+          true,
+        );
 
-    const response = await handleRequest(
-      'put',
-      `/users/${user._id}`,
-      {
-        username,
-        name,
-        lastname,
-        email,
-      },
-      {},
-      true,
-    )
-
-    if (response) {
-      /* console.log(response.status)*/
-      if (response.status === 201) {
-        /* console.log('response', response)*/
-        setLoading(false)
-        setHandleError(null)
-        setHandleSuccess('User created successfully!')
-      } else if (response.status === 409) {
-        setLoading(false)
-        setHandleSuccess(null)
-        setHandleError('This username is already in use')
-      } else if (response.status === 500) {
-        setLoading(false)
-        setHandleSuccess(null)
-        setHandleError('Server error, try later')
-      }
-    } else {
-      setLoading(false)
-      setHandleSuccess(null)
-      setHandleError('Something went wrong')
-    }
-  }
+        setHandleSuccess('Profile info saved successfully!');
+        
+    } catch (error) {
+        console.log('error :>> ', error.message);
+        setHandleError(error.message);
+        setHandleSuccess(null);
+    } finally {
+        setLoading( false );
+    };
+  };
 
   const handleEdit = () => {
     if (!form.error) {
@@ -85,8 +78,8 @@ const EditProfile = ({ user, successAction }) => {
           name="username"
           label="Username"
           type="text"
+          disabled={true}
           error={form.errorMessages.username}
-          required
         />
         <Input
           value={form.values.email}
@@ -129,7 +122,7 @@ const EditProfile = ({ user, successAction }) => {
               <Button
                 customStyles="mb-1"
                 type="primary"
-                onClick={successAction}
+                onClick={() => successAction(form.values)}
               >
                 Let's go! 🚀
               </Button>

@@ -139,7 +139,13 @@ function Profile() {
       >
         <EditProfile 
           user={user}
-          successAction={() => setOpenInfoPopup(false)}
+          successAction={(values) => {
+            setUser({
+              ...user,
+              ...values,
+            });
+            setOpenInfoPopup(false);
+          }}
         />
       </ControlledPopup>
       <h1>My profile</h1>
