@@ -10,6 +10,7 @@ const Chat = ({ _id, name }) => {
   const { handleRequest } = useApi()
 
   const [messages, setMessages] = useState([])
+  const [participants, setParticipants] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [userColors, setUserColors] = useState({})
@@ -40,7 +41,7 @@ const Chat = ({ _id, name }) => {
     try {
       setLoading(true)
       const response = await handleRequest('GET', `/chats/${_id}`, {}, {}, true)
-        
+
       if (response.status === 200) {
         // get just new messages
         if (type === 'refresh') {
@@ -51,6 +52,7 @@ const Chat = ({ _id, name }) => {
         } else {
           setMessages(response.data.messages)
         }
+        setParticipants(response.data.participants)
       } else {
         setError('Error getting messages')
       }
@@ -60,11 +62,6 @@ const Chat = ({ _id, name }) => {
       setLoading(false)
     }
   }
-
-  const numParticipants = useMemo(() => {
-    const participants = messages.map((message) => message.user._id)
-    return [...new Set(participants)].length
-  }, [messages])
 
   useEffect(() => {
     if (_id) {
@@ -99,7 +96,7 @@ const Chat = ({ _id, name }) => {
           Chat: <span style={{ marginLeft: '0.2rem' }}>{name}</span>
         </div>
         <div className={`${styles.participants} font-overpass-mono`}>
-          <span style={{ marginRight: '0.4rem' }}>{numParticipants}</span>
+          <span style={{ marginRight: '0.4rem' }}>{participants?.length}</span>
           users 👥
         </div>
       </div>

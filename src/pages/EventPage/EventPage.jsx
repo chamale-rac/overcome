@@ -60,7 +60,7 @@ const EventPage = () => {
     } catch (error) {
       console.log(error)
       setError(
-        'Error fetching joined status details, please try again later or contact support'
+        'Error fetching joined status details, please try again later or contact support',
       )
     }
   }
@@ -103,8 +103,8 @@ const EventPage = () => {
   const joinEvent = async () => {
     const response = await handleRequest(
       'POST',
-        // `/users/checkEvent/${auth.user.id}`,
-        `/events/joinEvent/${_id}`,
+      // `/users/checkEvent/${auth.user.id}`,
+      `/events/joinEvent/${_id}`,
       {
         userId: `${auth.user.id}`,
       },
@@ -122,8 +122,8 @@ const EventPage = () => {
   const removeJoinedEvent = async () => {
     const response = await handleRequest(
       'POST',
-        // `/users/checkEvent/${auth.user.id}`,
-        `/events/removeJoinedEvent/${_id}`,
+      // `/users/checkEvent/${auth.user.id}`,
+      `/events/removeJoinedEvent/${_id}`,
       {
         userId: `${auth.user.id}`,
       },
@@ -134,7 +134,7 @@ const EventPage = () => {
     )
     // console.log('SaveEvent FUNC', response)
     checkUserEventStatus()
-    checkJoinedStatus()
+    await checkJoinedStatus()
     getEventDetails(_id)
     // setUsers(response.data)
   }
@@ -173,10 +173,14 @@ const EventPage = () => {
    * @notes The event object has to be not undefined to read the properties and not have errors
    */
   useEffect(() => {
-    console.log('EventInfo:',event)
-    if(!(event===undefined)){
-      if((event?.participants.length)>=(event?.limit)){
-        setOpenValue(true)
+    console.log('EventInfo:', event)
+    if (!(event === undefined)) {
+      if (event?.participants.length >= event?.limit) {
+        if (userJoinedStatus === true) {
+          setOpenValue(false)
+        } else {
+          setOpenValue(true)
+        }
       } else {
         setOpenValue(false)
       }
@@ -188,8 +192,8 @@ const EventPage = () => {
       <div className={styles.event_container}>
         <ControlledPopup
           title="Event full!"
-          isOpen = {openValue}
-          closeFunction = {close}
+          isOpen={openValue}
+          closeFunction={close}
         >
           <p>We're sorry, the event is already full...</p>
         </ControlledPopup>
@@ -244,8 +248,8 @@ const EventPage = () => {
               <button
                 className={`${styles.saveButton} button asap`}
                 onClick={() => {
-                  console.log("participants:",event?.participants.length)
-                  if((event?.participants.length)>=(event?.limit)){
+                  console.log('participants:', event?.participants.length)
+                  if (event?.participants.length >= event?.limit) {
                     setOpenValue(true)
                   } else {
                     joinEvent()
@@ -260,17 +264,17 @@ const EventPage = () => {
                 className={`${styles.saveButton} button asap`}
                 onClick={() => {
                   removeJoinedEvent()
-                  
                 }}
               >
                 Joined! 🙌🏼
               </button>
             )}
-            <h3 className={styles.content_title}>Participants:</h3>
+            <h3 className={styles.content_title}>
+              Participants ({event?.participants.length}/{event?.limit}):
+            </h3>
             <ParticipantsView participants={participants} />
             <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
-            <h3 className={styles.content_title}>Limit: {event?.limit}</h3>
             <div className={styles.content_wrapper}>
               <h3>Schedule:</h3>
               <p className={styles.event_hour}>{event?.hour}</p>
@@ -299,7 +303,15 @@ const EventPage = () => {
         )}
       </div>
       <div className={styles.chat_container}>
-        <Chat _id={event?.chat} name={event?.title} />
+        {userJoinedStatus ? (
+          <Chat _id={event?.chat} name={event?.title} />
+        ) : (
+          <div className={styles.dummy_chat}>
+            Looks like you're missing out on all the fun!
+            <br />
+            Join the event to unlock the chat! 🎉
+          </div>
+        )}
       </div>
     </div>
   )

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Collapse, Chat, NavButton } from '@components/global'
 import { useApi } from '@hooks'
 import { useParams } from 'react-router-dom'
-import { dashStore } from '@context'
+import { dashStore, OpenChat } from '@context'
 import { useSnapshot } from 'valtio'
 
 import { authStore } from '@context'
@@ -14,6 +14,7 @@ const FriendsDashboard = () => {
   const { auth } = authStore
   const { data } = dashStore
   const snap = useSnapshot(dashStore)
+  const snapOpenChat = useSnapshot(OpenChat)
 
   const { handleRequest } = useApi()
   const [allUsers, setAllUsers] = useState(null)
@@ -54,6 +55,33 @@ const FriendsDashboard = () => {
     } finally {
       setLoading(false)
       handleGetUserRelations()
+    }
+  }
+
+  const removeFriend = (user_id) => {
+    handleRemoveFriend(user_id)
+  }
+
+  const handleRemoveFriend = async (user_id) => {
+    try {
+      setLoading(true)
+      const response = await handleRequest(
+        'POST',
+        `/relations/removeFriend`,
+        {
+          first_user_id: auth.user.id,
+          second_user_id: user_id,
+        },
+        {},
+        false,
+      )
+      setFriendResponse(response.data)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error sending friend request, please try again later or contact support',
+      )
+      setLoading(false)
     }
   }
 
@@ -193,6 +221,17 @@ const FriendsDashboard = () => {
     }
   }, [search])
 
+  useEffect(() => {
+    if (snapOpenChat.isOpen) {
+      setActualView({
+        type: 'chat',
+        chat_id: snapOpenChat.chat_id,
+        name: snapOpenChat.name,
+      })
+      OpenChat.isOpen = false
+    }
+  }, [])
+
   return (
     <div className={styles.container}>
       <h2 className={`${styles.title} font-bebas-neue`}>Friends Dashboard</h2>
@@ -233,6 +272,7 @@ const FriendsDashboard = () => {
                 <UserList
                   users={relationsFriends}
                   onClickFunction={handleSetViewChat}
+                  secondOnClickFunction={removeFriend}
                   type="friends"
                   actualUser={auth.user.id}
                 />

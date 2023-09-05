@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import SideBar from '@layouts/Home/SideBar'
 import * as styles from './Home.module.css'
-import { notifications, modal, authStore } from '@context'
+import { notifications, modal, authStore, OpenChat } from '@context'
 import { useSnapshot } from 'valtio'
 import { useApi } from '@hooks'
 
@@ -140,14 +140,21 @@ const Home = () => {
     notifications.isOpen = false
     updateNotifications()
   }
-
-  const closeThemeFunction = () => {
+ const closeThemeFunction = () => {
     modal.isOpen = false
   }
-
-  const goTo = (path) => {
+ 
+ const goTo = (notification) => {
     notifications.isOpen = false
-    navigate(path)
+    if (notification.type === 'chat_event') {
+      navigate(`/home/events/${notification.event_id}`)
+    } else {
+      // go to users
+      OpenChat.chat_id = notification.chat_id
+      OpenChat.name = notification.username
+      OpenChat.isOpen = true
+      navigate(`/home/users`)
+    }
   }
   useEffect(() => {
     // Retrieve the selected theme from local storage
@@ -225,7 +232,7 @@ const Home = () => {
         </ControlledPopup>
 
         <ControlledPopup
-          title={'News 🔔'}
+          title={'Notifications 🔔'}
           isOpen={snap.isOpen}
           closeFunction={closeFunction}
           type="notification"
@@ -233,11 +240,12 @@ const Home = () => {
           {userNotifications != null && userNotifications?.length != 0 ? (
             <div
               style={{
-                minHeight: '150px',
-                maxHeight: '300px',
-                width: '400px',
+                minHeight: '350px',
+                maxHeight: '500px',
+                width: '500px',
                 overflowY: 'scroll',
               }}
+              className={styles.popupInsider}
             >
               {userNotifications
                 .filter((notification) => notification.show)
@@ -247,6 +255,8 @@ const Home = () => {
                     notification={notification}
                     quit={() => handleShowOff(notification._id)}
                     closeFunction={closeFunction}
+                    goto={() => goTo(notification)}
+                    type={notification.type}
                   />
                 ))}
             </div>
@@ -258,7 +268,7 @@ const Home = () => {
                 alignItems: 'center',
                 height: '100%',
                 padding: '20px',
-                fontSize: '20px',
+                fontSize: '15px',
               }}
             >
               <h3>Nothing to show here! 🚫</h3>

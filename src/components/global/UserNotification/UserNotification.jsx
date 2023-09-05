@@ -3,7 +3,7 @@ import * as styles from './UserNotification.module.css'
 import { useNavigate } from 'react-router-dom'
 import { dashStore } from '@context'
 
-const UserNotification = ({ notification, quit, closeFunction }) => {
+const UserNotification = ({ notification, quit, closeFunction, goto }) => {
   const navigate = useNavigate()
 
   const { message, read, date, type, chat_id, user_id, event_id } = notification
@@ -13,6 +13,10 @@ const UserNotification = ({ notification, quit, closeFunction }) => {
     quit()
   }
 
+  const handleGoto = () => {
+    goto()
+  }
+
   return (
     <div className={`${styles.notification} ${read ? '' : styles.unread}`}>
       <div>
@@ -20,6 +24,9 @@ const UserNotification = ({ notification, quit, closeFunction }) => {
         <div className={styles.date}>{new Date(date).toLocaleString()}</div>
       </div>
       <div className={styles.buttonsContainer}>
+        <button className={styles.readButton} onClick={handleGoto}>
+          🚀
+        </button>
         <button className={styles.deleteButton} onClick={handleDelete}>
           ❌
         </button>
