@@ -84,14 +84,14 @@ const Reset = ({ customStyles, successAction, failAction }) => {
         } else {
           toast.custom((t) => (
             <div className={styles.toast}>
-              ❌ Código no valido, intenta de nuevo.
+              ❌ Código no valido, por favor intenta de nuevo.
             </div>
           ))
         }
       } else {
         toast.custom((t) => (
           <div className={styles.toast}>
-            ❌ Código no valido, intenta de nuevo.
+            ❌ Código no valido, por favor intenta de nuevo.
           </div>
         ))
       }

@@ -140,11 +140,11 @@ const Home = () => {
     notifications.isOpen = false
     updateNotifications()
   }
- const closeThemeFunction = () => {
+  const closeThemeFunction = () => {
     modal.isOpen = false
   }
- 
- const goTo = (notification) => {
+
+  const goTo = (notification) => {
     notifications.isOpen = false
     if (notification.type === 'chat_event') {
       navigate(`/home/events/${notification.event_id}`)
@@ -179,14 +179,16 @@ const Home = () => {
       case 'Hipster':
         root.style.setProperty('--ink-background-dark', '#bda1da')
         root.style.setProperty('--ink-background-highlight', '#c9ffc5')
-        root.style.setProperty('--ink-background-messages', '#daf5f0')
+        root.style.setProperty('--ink-background-messages', '#a8ffc5')
+        root.style.setProperty('--ink-background-chat', '#bda1da')
         break
       case 'Original':
       default:
         root.style.setProperty('--ink-background-dark', '#daf5f0')
         root.style.setProperty('--ink-background-highlight', '#cdd57e')
         root.style.setProperty('--ink-background-light', 'transparent')
-        root.style.setProperty('--ink-background-messages', '#a8ffc5')
+        root.style.setProperty('--ink-background-messages', '#daf5f0')
+        root.style.setProperty('--ink-background-chat', '#e7e4e4')
         break
     }
 
@@ -213,7 +215,7 @@ const Home = () => {
               fontSize: '20px',
             }}
           >
-            <div style={styles.themes}>
+            <div className={styles.themes}>
               <ul>
                 <li>
                   <button onClick={(e) => changeTheme('Original')}>

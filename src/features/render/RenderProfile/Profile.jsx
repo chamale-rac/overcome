@@ -19,9 +19,9 @@ function Profile() {
   const [users, setUsers] = useState([])
 
   const [openProfilePopup, setOpenProfilePopup] = useState(false)
-  const [openInfoPopup, setOpenInfoPopup] = useState(false);
+  const [openInfoPopup, setOpenInfoPopup] = useState(false)
   const closeProfilePopup = () => setOpenProfilePopup(false)
-  const closeInfoPopup = () => setOpenInfoPopup( false );
+  const closeInfoPopup = () => setOpenInfoPopup(false)
 
   const { auth } = authStore
 
@@ -86,7 +86,7 @@ function Profile() {
       },
       true,
     )
-/* console.log('USER!!!', response)*/
+    /* console.log('USER!!!', response)*/
     setUser(response.data)
     setProfileLoading(false)
   }
@@ -137,26 +137,28 @@ function Profile() {
         isOpen={openInfoPopup}
         closeFunction={closeInfoPopup}
       >
-        <EditProfile 
+        <EditProfile
           user={user}
           successAction={(values) => {
             setUser({
               ...user,
               ...values,
-            });
-            setOpenInfoPopup(false);
+            })
+            setOpenInfoPopup(false)
           }}
         />
       </ControlledPopup>
-      <h1>My profile</h1>
-      <button
-        type="button"
-        onClick={() => {
-          setOpenInfoPopup((o) => !o)
-        }}
-      >
-        ✏️
-      </button>
+      <div className={styles.titleWrapper}>
+        <h1>My profile</h1>
+        <button
+          type="button"
+          onClick={() => {
+            setOpenInfoPopup((o) => !o)
+          }}
+        >
+          ✏️
+        </button>
+      </div>
       {!profileLoading ? (
         <>
           <section className={styles.custom_section}>
@@ -174,7 +176,7 @@ function Profile() {
                 </button>
               </div>
               <h3>
-                {user.name} {user.lastname}
+                {user.name} {''} {user.lastname}
               </h3>
               <h4>@{user.username}</h4>
               <h5>Email: {user.email}</h5>

@@ -35,3 +35,19 @@
 .popupInsider {
   padding: 1rem;
 }
+
+.themes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.themes > ul {
+  margin-top: 20px;
+}
+
+.pickers {
+  display: flex;
+  flex-direction: row;
+}

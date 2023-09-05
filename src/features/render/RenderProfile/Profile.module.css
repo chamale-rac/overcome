@@ -207,7 +207,26 @@
   border: 1px solid black;
 }
 
-.imageWrapper button:hover {
+.titleWrapper button {
+  background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    border: 1px solid black;
+    margin-left: 0.5rem;
+}
+
+.imageWrapper button:hover, .titleWrapper button:hover {
   transform: scale(1.1);
   background-color: #cdd57e;
+}
+
+
+.titleWrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }

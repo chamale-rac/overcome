@@ -16,6 +16,7 @@ font-family: 'Space Grotesk', sans-serif;
   --ink-background-highlight: #cdd57e;
   --ink-background-light: transparent;
   --ink-background-messages: #fdfd96;
+  --ink-background-chat: #c4a1ff;
 }
 
 :root {
