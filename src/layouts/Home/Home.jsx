@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import SideBar from '@layouts/Home/SideBar'
 import * as styles from './Home.module.css'
-import { notifications, authStore, OpenChat } from '@context'
+import { notifications, modal, authStore, OpenChat } from '@context'
 import { useSnapshot } from 'valtio'
 import { useApi } from '@hooks'
 
@@ -44,13 +44,18 @@ const Home = () => {
     },
     {
       name: 'News',
-      path: '/',
+      path: '/.',
       icon: '🔔',
     },
     {
       name: 'Sign out',
       path: '/',
       icon: '📤',
+    },
+    {
+      name: 'Theme',
+      path: '/p',
+      icon: '🎨',
     },
   ]
 
@@ -60,6 +65,8 @@ const Home = () => {
 
   const snap = useSnapshot(notifications)
   const [userNotifications, setUserNotifications] = useState(null)
+
+  const themeSnap = useSnapshot(modal)
 
   const getNotifications = async () => {
     try {
@@ -133,8 +140,11 @@ const Home = () => {
     notifications.isOpen = false
     updateNotifications()
   }
-
-  const goTo = (notification) => {
+ const closeThemeFunction = () => {
+    modal.isOpen = false
+  }
+ 
+ const goTo = (notification) => {
     notifications.isOpen = false
     if (notification.type === 'chat_event') {
       navigate(`/home/events/${notification.event_id}`)
@@ -146,11 +156,81 @@ const Home = () => {
       navigate(`/home/users`)
     }
   }
+  useEffect(() => {
+    // Retrieve the selected theme from local storage
+    const savedTheme = localStorage.getItem('selectedTheme')
+
+    // If a theme was previously saved in local storage, apply it
+    if (savedTheme) {
+      changeTheme(savedTheme)
+    }
+
+    getNotifications()
+  }, [])
+
+  const changeTheme = (theme) => {
+    modal.isOpen = false
+    console.log(theme)
+
+    // Access the root element of the document
+    const root = document.documentElement
+
+    switch (theme) {
+      case 'Hipster':
+        root.style.setProperty('--ink-background-dark', '#bda1da')
+        root.style.setProperty('--ink-background-highlight', '#c9ffc5')
+        root.style.setProperty('--ink-background-messages', '#daf5f0')
+        break
+      case 'Original':
+      default:
+        root.style.setProperty('--ink-background-dark', '#daf5f0')
+        root.style.setProperty('--ink-background-highlight', '#cdd57e')
+        root.style.setProperty('--ink-background-light', 'transparent')
+        root.style.setProperty('--ink-background-messages', '#a8ffc5')
+        break
+    }
+
+    localStorage.setItem('selectedTheme', theme)
+  }
 
   return (
     <div className={styles.container}>
       <SideBar links={links} />
       <div className={styles.outlet}>
+        <ControlledPopup
+          title={'Theme 🎨'}
+          isOpen={themeSnap.isOpen}
+          closeFunction={closeThemeFunction}
+          type="notification"
+        >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%',
+              padding: '20px',
+              fontSize: '20px',
+            }}
+          >
+            <div style={styles.themes}>
+              <ul>
+                <li>
+                  <button onClick={(e) => changeTheme('Original')}>
+                    Original
+                  </button>
+                </li>
+
+                <li>
+                  <button onClick={(e) => changeTheme('Hipster')}>
+                    Hipster
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </ControlledPopup>
+
         <ControlledPopup
           title={'Notifications 🔔'}
           isOpen={snap.isOpen}
