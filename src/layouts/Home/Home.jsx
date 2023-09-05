@@ -44,7 +44,7 @@ const Home = () => {
     },
     {
       name: 'News',
-      path: '/',
+      path: '/.',
       icon: '🔔',
     },
     {
@@ -54,7 +54,7 @@ const Home = () => {
     },
     {
       name: 'Theme',
-      path: '/',
+      path: '/p',
       icon: '🎨',
     },
   ]
