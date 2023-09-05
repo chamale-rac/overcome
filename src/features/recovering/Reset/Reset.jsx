@@ -140,7 +140,7 @@ const Reset = ({ customStyles, successAction, failAction }) => {
       if (response.status === 200) {
         toast.custom((t) => (
           <div className={styles.toast}>
-            ✅ Contraseña cambiada correctamente.
+            ✅ La contraseña fúe cambiada correctamente.
           </div>
         ))
         setResetStep(true)
@@ -266,7 +266,8 @@ const Reset = ({ customStyles, successAction, failAction }) => {
       <Step
         stepNum={3}
         title={'Nueva contraseña:'}
-        isDone={false}
+        isDone={resetStep}
+        opacity={false}
         customStyles="mt-6"
       >
         <aside>

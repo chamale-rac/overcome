@@ -8,6 +8,7 @@ const Step = ({
   isDone,
   children,
   customStyles = '',
+  opacity = true,
 }) => {
   return (
     <>
@@ -28,7 +29,7 @@ const Step = ({
       <div
         className={styles.stepContent}
         style={{
-          opacity: isDone ? 0.8 : 1,
+          opacity: isDone && opacity ? 0.8 : 1,
         }}
       >
         {children}
