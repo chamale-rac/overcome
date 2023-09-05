@@ -6,6 +6,7 @@ import { ImageCustomizer } from '@features/creation'
 import { ControlledPopup, ClockLoader } from '@components/global'
 import * as styles from './Profile.module.css'
 import { image } from '@context'
+import EditProfile from '../../creation/EditProfile/EditProfile'
 
 function Profile() {
   const [error, setError] = useState(null)
@@ -18,7 +19,9 @@ function Profile() {
   const [users, setUsers] = useState([])
 
   const [openProfilePopup, setOpenProfilePopup] = useState(false)
+  const [openInfoPopup, setOpenInfoPopup] = useState(false);
   const closeProfilePopup = () => setOpenProfilePopup(false)
+  const closeInfoPopup = () => setOpenInfoPopup( false );
 
   const { auth } = authStore
 
@@ -83,7 +86,7 @@ function Profile() {
       },
       true,
     )
-    /* console.log('USER!!!', response)*/
+/* console.log('USER!!!', response)*/
     setUser(response.data)
     setProfileLoading(false)
   }
@@ -129,7 +132,25 @@ function Profile() {
           />
         )}
       </ControlledPopup>
+      <ControlledPopup
+        title={'Profile Info'}
+        isOpen={openInfoPopup}
+        closeFunction={closeInfoPopup}
+      >
+        <EditProfile 
+          user={user}
+          successAction={() => setOpenInfoPopup(false)}
+        />
+      </ControlledPopup>
       <h1>My profile</h1>
+      <button
+        type="button"
+        onClick={() => {
+          setOpenInfoPopup((o) => !o)
+        }}
+      >
+        ✏️
+      </button>
       {!profileLoading ? (
         <>
           <section className={styles.custom_section}>
@@ -152,14 +173,6 @@ function Profile() {
               <h4>@{user.username}</h4>
               <h5>Email: {user.email}</h5>
             </div>
-            {/* <p>
-          ¡Hola! Tengo 22 años y me encanta el deporte. Me dedico a la
-          enseñanza del yoga y me gusta mucho compartir mis conocimientos con
-          otras personas.
-        </p> */}
-            {/* <p>
-          {JSON.stringify( user.savedEvents)}
-        </p> */}
           </section>
           <section className={`${styles.custom_section} ${styles.sub_section}`}>
             <h2>Hooks guardados</h2>
@@ -168,11 +181,6 @@ function Profile() {
                 <Events events={user.savedEvents} inProfile={true} />
               )}
             </div>
-            {/* <ul>
-          <li>Grand Theft Auto 5</li>
-          <li>Minecraft</li>
-          <li>Valorant</li>
-        </ul> */}
           </section>
         </>
       ) : (
@@ -180,19 +188,6 @@ function Profile() {
           Loading... <ClockLoader fontSize={'3.8'} />
         </div>
       )}
-      {/**
-        
-      <section className={`${styles.custom_section} ${styles.sub_section}`}>
-        <h2>Mis amigos</h2>
-        <ul>
-          <li>Grand Theft Auto 5</li>
-          <li>Minecraft</li>
-          <li>Valorant</li>
-        </ul>
-      </section>
-        
-
-         */}
     </div>
   )
 }
