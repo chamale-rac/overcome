@@ -177,7 +177,7 @@ const Home = () => {
                 alignItems: 'center',
                 height: '100%',
                 padding: '20px',
-                fontSize: '20px',
+                fontSize: '15px',
               }}
             >
               <h3>Nothing to show here! 🚫</h3>

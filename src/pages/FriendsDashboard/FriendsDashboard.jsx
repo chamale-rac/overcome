@@ -57,6 +57,33 @@ const FriendsDashboard = () => {
     }
   }
 
+  const removeFriend = (user_id) => {
+    handleRemoveFriend(user_id)
+  }
+
+  const handleRemoveFriend = async (user_id) => {
+    try {
+      setLoading(true)
+      const response = await handleRequest(
+        'POST',
+        `/relations/removeFriend`,
+        {
+          first_user_id: auth.user.id,
+          second_user_id: user_id,
+        },
+        {},
+        false,
+      )
+      setFriendResponse(response.data)
+    } catch (error) {
+      console.error(error)
+      setError(
+        'Error sending friend request, please try again later or contact support',
+      )
+      setLoading(false)
+    }
+  }
+
   const handleGetUserRelations = () => {
     getFriends()
     getFriendRequests()
@@ -233,6 +260,7 @@ const FriendsDashboard = () => {
                 <UserList
                   users={relationsFriends}
                   onClickFunction={handleSetViewChat}
+                  secondOnClickFunction={removeFriend}
                   type="friends"
                   actualUser={auth.user.id}
                 />
