@@ -4,7 +4,7 @@ import { landing } from '@context'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { NavButton } from '@components/global'
 
@@ -14,6 +14,8 @@ import { Login } from '@features/authentication'
 
 const Auth = () => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/home'
   return (
     <AnimatePresence>
       <motion.div className="flex flex-col">
@@ -32,7 +34,7 @@ const Auth = () => {
         >
           <Login
             customStyles={'xl:mt-36'}
-            successAction={() => navigate('/home')}
+            successAction={() => navigate(from)}
           />
           <NavButton
             type="link"
