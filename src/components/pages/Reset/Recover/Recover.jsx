@@ -11,13 +11,14 @@ import { NavButton } from '@components/global'
 import { fadeAnimation, fastFadeAnimation } from '@config/motion'
 
 import { Login } from '@features/authentication'
+import { Reset } from '@features/recovering'
 
-const Auth = () => {
+const Recover = () => {
   const navigate = useNavigate()
   return (
     <AnimatePresence>
       <motion.div className="flex flex-col">
-        <motion.div className="self-end mr-10 mt-10 mb-10" {...fadeAnimation}>
+        <motion.div className="self-end mr-10 mt-10 mb-0" {...fadeAnimation}>
           <NavButton
             type="normal"
             handleClick={() => navigate(-1)}
@@ -30,34 +31,11 @@ const Auth = () => {
           className="flex flex-col items-center justify-center h-full"
           {...fastFadeAnimation}
         >
-          <Login
-            customStyles={'xl:mt-36'}
-            successAction={() => navigate('/home')}
-          />
-          <NavButton
-            type="link"
-            handleClick={() => {
-              navigate('/')
-              landing.intro = false
-            }}
-            customStyles="w-fit px-4 py-2.5 font-bold rounded-full text-base mb-2"
-          >
-            You have no account?
-          </NavButton>
-          <NavButton
-            type="link"
-            handleClick={() => {
-              navigate('/reset')
-              landing.intro = false
-            }}
-            customStyles="w-fit px-4 py-0 font-bold rounded-full text-base mb-20"
-          >
-            Forgot your password?
-          </NavButton>
+          <Reset successAction={() => navigate('/login')} />
         </motion.div>
       </motion.div>
     </AnimatePresence>
   )
 }
 
-export default Auth
+export default Recover
