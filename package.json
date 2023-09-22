@@ -16,6 +16,7 @@
     "node": ">=16"
   },
   "dependencies": {
+    "@hotjar/browser": "^1.0.9",
     "autoprefixer": "^10.4.14",
     "axios": "0.24.0",
     "eslint": "^7.32.0 || ^8.2.0",

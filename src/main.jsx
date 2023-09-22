@@ -10,6 +10,13 @@ import App from '@routes/App'
 
 import '@assets/global.css'
 
+import Hotjar from '@hotjar/browser';
+
+const siteId = 3665939;
+const hotjarVersion = 6;
+
+Hotjar.init(siteId, hotjarVersion);
+
 // TODO check for correct root (not anymore, I think)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
