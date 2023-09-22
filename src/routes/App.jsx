@@ -3,6 +3,7 @@ import { ErrorPage } from '@assets'
 import {
   Login,
   Landing,
+  Reset,
   EventsDashboard,
   EventPage,
   UserPage,
@@ -39,6 +40,7 @@ function App() {
       {/* public */}
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/reset" element={<Reset />} />
 
       {/* protected */}
       <Route element={<RequireAuth />}>

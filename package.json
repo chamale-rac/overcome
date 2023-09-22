@@ -16,6 +16,7 @@
     "node": ">=16"
   },
   "dependencies": {
+    "@hotjar/browser": "^1.0.9",
     "autoprefixer": "^10.4.14",
     "axios": "0.24.0",
     "eslint": "^7.32.0 || ^8.2.0",
@@ -24,10 +25,12 @@
     "joi": "^17.9.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "reactjs-popup": "^2.0.5",
     "socket.io-client": "^4.6.1",
+    "sonner": "^0.7.0",
     "storybook": "^7.0.7",
     "valtio": "^1.10.4",
     "vite-plugin-eslint": "^1.8.1",
@@ -58,6 +61,6 @@
     "install": "^0.13.0",
     "prettier": "^2.8.6",
     "tailwindcss": "^3.3.2",
-    "vite": "^4.2.0"
+    "vite": "^4.2.3"
   }
 }

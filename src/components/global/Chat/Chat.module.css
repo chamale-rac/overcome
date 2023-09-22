@@ -20,7 +20,7 @@
 .display_wrapper {
   flex: 10;
   max-height: 80%;
-  background-color: #c4a1ff;
+  background-color: var(--ink-background-chat);
 }
 
 .input_wrapper {
