@@ -5,6 +5,7 @@ import { NavButton, Chat, Button, ControlledPopup } from '@components/global'
 import * as styles from './UserPage.module.css'
 import { authStore } from '@context'
 import { Events } from '@features/render'
+import Report from '@features/creation/Report/Report'
 
 const UserPage = ({ isCreator = true, user_id = null }) => {
   const [openProfilePopup, setOpenProfilePopup] = useState(false)
@@ -19,6 +20,8 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [friendStatus, setFriendStatus] = useState(null)
+  const [reportOpenValue, setReportOpenValue] = useState(false)
+  const closeReport = () => setReportOpenValue(false)
 
   const [friendResponse, setFriendResponse] = useState(null)
 
@@ -120,6 +123,19 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   return (
     <div className={`${styles.container} standard_border`}>
       <ControlledPopup
+        title="Reporting"
+        isOpen={reportOpenValue}
+        closeFunction={closeReport}
+      >
+        <Report
+          type="User"
+          relatedId={user_id || creator_id}
+          reportToTitle={`@${user?.username}`}
+          closeAction={closeReport}
+        />
+      </ControlledPopup>
+
+      <ControlledPopup
         title={'Enviar solicitud'}
         isOpen={openProfilePopup}
         closeFunction={closeProfilePopup}
@@ -169,26 +185,34 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
                   @{user?.username} {user?._id === auth.user.id && '(You)'}
                 </h2>
                 <div className={styles.buttonWrapper}>
-                  {user?._id === auth.user.id ? (
-                    <Button type="primary" disabled customStyles="text-xs">
-                      Recursive Friend Request 😎
-                    </Button>
-                  ) : (
-                    <Button
-                      type="secondary"
-                      customStyles="text-xs"
-                      onClick={openProfilePopupFunction}
-                      disabled={friendStatus !== false}
-                    >
-                      {!friendStatus && 'Send Friend Request ✉️'}
-                      {friendStatus &&
-                        friendStatus != 'pending' &&
-                        friendStatus != 'requested' &&
-                        'Already your friend!'}
-                      {friendStatus == 'pending' && 'Pending response'}
-                      {friendStatus == 'requested' && 'Solitude received'}
-                    </Button>
-                  )}
+                  <div className={styles.buttonOutside}>
+                    {user?._id === auth.user.id ? (
+                      <Button type="primary" disabled customStyles="text-xs">
+                        Recursive Friend Request 😎
+                      </Button>
+                    ) : (
+                      <Button
+                        type="secondary"
+                        customStyles="text-xs"
+                        onClick={openProfilePopupFunction}
+                        disabled={friendStatus !== false}
+                      >
+                        {!friendStatus && 'Send Friend Request ✉️'}
+                        {friendStatus &&
+                          friendStatus != 'pending' &&
+                          friendStatus != 'requested' &&
+                          'Already your friend!'}
+                        {friendStatus == 'pending' && 'Pending response'}
+                        {friendStatus == 'requested' && 'Solitude received'}
+                      </Button>
+                    )}
+                  </div>
+                  <button
+                    className={`mt-0 ${styles.saveButton} button asap`}
+                    onClick={() => setReportOpenValue((o) => !o)}
+                  >
+                    <span>🚩</span>
+                  </button>
                 </div>
               </div>
             </div>

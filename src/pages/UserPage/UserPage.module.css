@@ -76,7 +76,9 @@
 }
 
 .buttonWrapper {
-  width: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .buttonsContainer {
@@ -85,4 +87,22 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.buttonOutside {
+  width: 100px;
+}
+
+.saveButton {
+  color: grey;
+  display: block;
+  margin: 15px 0 0 0;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background-color: white;
+  transform: scaleY(-2px) scaleX(-2px);
+  margin-left: 1rem;
+  margin-top: 0.6rem !important;
 }

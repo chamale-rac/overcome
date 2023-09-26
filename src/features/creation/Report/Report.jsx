@@ -137,7 +137,7 @@ const Report = ({
           isTextArea
           customStyles="h-25"
           maxLength={200}
-          placeholder={'Describe your claim...'}
+          placeholder={'Your claim...'}
         />
 
         {handleError ? (
