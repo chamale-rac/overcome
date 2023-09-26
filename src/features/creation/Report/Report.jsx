@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import * as styles from './Report.module.css'
-import { Input, Button, Notification } from '@components/global'
+import { Input, Button, Notification, Dropdown } from '@components/global'
 import { useApi, useForm } from '@hooks'
 import { authStore } from '@context'
 import { reportSchema } from '@schemas'
@@ -12,8 +12,8 @@ const Report = ({ type = '', relatedId = '', reportToTitle = '' }) => {
   const [handleError, setHandleError] = useState()
   const [handleSuccess, setHandleSuccess] = useState(null)
 
-  const [reportFor, setReportFor] = useState('')
-  const [whatIsGoingOn, setWhatIsGoingOn] = useState('')
+  const [reportFor, setReportFor] = useState('Select an option...')
+  const [whatIsGoingOn, setWhatIsGoingOn] = useState('Select an option...')
 
   const { handleRequest } = useApi()
 
@@ -71,7 +71,11 @@ const Report = ({ type = '', relatedId = '', reportToTitle = '' }) => {
   }
 
   const handlePost = () => {
-    if (!form.error && reportFor !== '' && whatIsGoingOn !== '') {
+    if (
+      !form.error &&
+      reportFor !== 'Select an option...' &&
+      whatIsGoingOn !== 'Select an option...'
+    ) {
       postReport(
         auth.user.id,
         type,
@@ -86,6 +90,32 @@ const Report = ({ type = '', relatedId = '', reportToTitle = '' }) => {
   return (
     <div className={`${styles.container} rounded-md m-6`}>
       <div>
+        <Dropdown
+          label="Who is being affected?"
+          customStyles="mb-5"
+          options={[
+            'Me',
+            'Another person or a specific group of people',
+            'This affects everyone',
+          ]}
+          selected={reportFor}
+          setSelected={setReportFor}
+        />
+        <Dropdown
+          label="What is going on?"
+          customStyles="mb-5"
+          options={[
+            'Identity attack',
+            'Harassment or intimidation with violence',
+            'Spam',
+            'Impersonation',
+            'Self-harm',
+            'Sensitive or disturbing content',
+            'Deceptive solicitation',
+          ]}
+          selected={whatIsGoingOn}
+          setSelected={setWhatIsGoingOn}
+        />
         <Input
           value={form.values.description}
           onChange={form.onChange('description')}
