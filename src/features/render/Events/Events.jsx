@@ -24,6 +24,7 @@ const Events = ({ events, inProfile = false }) => {
   useEffect(() => {
     /* console.log(auth)*/
     // /* console.log(auth.user.username, auth.user.id)*/
+    // console.log("In profile "+ inProfile)
   }, [auth])
 
   return (

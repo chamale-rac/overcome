@@ -100,6 +100,25 @@ const EventPage = () => {
     // getEventDetails(_id)
   }
 
+  const joinEventToUser = async () => {
+    const response = await handleRequest(
+      'POST',
+      '/users/joinEvent',
+      {
+        user_id: auth.user.id,
+        event_id: _id,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    // console.log('SaveEvent FUNC', response)
+    checkUserEventStatus()
+    checkJoinedStatus()
+    // getEventDetails(_id)
+  }
+
   const joinEvent = async () => {
     const response = await handleRequest(
       'POST',
@@ -143,6 +162,24 @@ const EventPage = () => {
     const response = await handleRequest(
       'POST',
       '/users/removeSavedEvent',
+      {
+        user_id: auth.user.id,
+        event_id: _id,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    checkUserEventStatus()
+    checkJoinedStatus()
+    // getEventDetails(_id)
+  }
+
+  const removeJoinedEventToUser = async () => {
+    const response = await handleRequest(
+      'POST',
+      '/users/removeJoinedEvent',
       {
         user_id: auth.user.id,
         event_id: _id,
@@ -231,7 +268,9 @@ const EventPage = () => {
             {!userEventStatus && (
               <button
                 className={`${styles.saveButton} button asap`}
-                onClick={() => saveEvent()}
+                onClick={() => {
+                  saveEvent()
+                  }}
               >
                 Save 💾
               </button>
@@ -239,7 +278,9 @@ const EventPage = () => {
             {userEventStatus && (
               <button
                 className={`${styles.saveButton} button asap`}
-                onClick={() => removeEvent()}
+                onClick={() => {
+                  removeEvent()
+                }}
               >
                 Unsave ❌
               </button>
@@ -253,6 +294,7 @@ const EventPage = () => {
                     setOpenValue(true)
                   } else {
                     joinEvent()
+                    joinEventToUser()
                   }
                 }}
               >
@@ -264,6 +306,7 @@ const EventPage = () => {
                 className={`${styles.saveButton} button asap`}
                 onClick={() => {
                   removeJoinedEvent()
+                  removeJoinedEventToUser()
                 }}
               >
                 Joined! 🙌🏼
