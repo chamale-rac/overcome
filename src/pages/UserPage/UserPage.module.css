@@ -86,3 +86,12 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.eventsContainerOtherProfile {
+  margin: 10px 0 25px 0;
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 100%;
+  row-gap: 25px;
+}

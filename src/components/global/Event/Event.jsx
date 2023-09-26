@@ -15,6 +15,7 @@ function Event({
   _id,
   creator_id,
   inProfile = false,
+  inOtherProfile = false,
 }) {
   const { handleRequest } = useApi()
   const { auth } = authStore
