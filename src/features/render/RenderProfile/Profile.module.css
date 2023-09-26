@@ -136,19 +136,14 @@
 }
 
 .eventsContainer {
-  width: 90%;
-  place-items: center;
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 50px;
-
+  margin: 10px 0 25px 0;
+  width: 100%;
+  height: fit-content;
   display: grid;
-  /* grid-template-columns: repeat(4, 1fr); */
-  /* grid-template-columns: 2fr 2fr 1fr 2fr; */
-  grid-template-columns: 300px 300px 300px 300px;
-  grid-auto-rows: min-content;
-  grid-gap: 20px;
+  grid-template-columns: 30% 30% 30%;
+  column-gap: 3%;
+  row-gap: 15px;
+
 }
 
 .eventsContainer h1 {

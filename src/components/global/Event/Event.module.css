@@ -156,3 +156,56 @@
   color: #3d1c56;
   font-weight: semi-bold;
 }
+
+.profileEventContainer {
+  margin: 0;
+  background-color: white;
+  /* overflow: auto; */
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  max-width: 100%;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
+  box-shadow: 2.5px 2.5px 0px 0px #000;
+}
+
+.headerInProfile {
+  font-size: 18px !important;
+  width: fit-content;
+  margin: 0 !important; 
+  padding: 0 !important;
+}
+
+.flexContainer {
+  display: flex;
+}
+
+.crownContainer {
+  margin: 0 0 0 2px !important;
+  padding: 0 !important;
+  font-size: 14px !important;
+}
+
+.hourInProfile {
+  font-size: 15px !important;
+  font-weight: normal !important;
+}
+
+.tagsInProfileContainer {
+  margin: 15px 0;
+}
+
+.buttonsContainerInProfile {
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  
+  justify-content: space-around !important;
+}
+
+.buttonsContainerInProfile button {
+  width: fit-content;
+  font-size: 14px !important;
+}

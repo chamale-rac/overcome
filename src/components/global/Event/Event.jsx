@@ -18,6 +18,7 @@ function Event({
 }) {
   const { handleRequest } = useApi()
   const { auth } = authStore
+  const [profileView, setProfileView] = useState(false)
 
   const [userEventStatus, setUserEventStatus] = useState(null)
 
@@ -90,7 +91,9 @@ function Event({
     checkUserEventStatus()
   }
 
-  useEffect(() => {}, [auth])
+  useEffect(() => {
+    setProfileView(inProfile)
+  }, [auth])
 
   useEffect(() => {
     checkUserEventStatus()
@@ -98,6 +101,75 @@ function Event({
 
   const navigate = useNavigate()
   return (
+    <>
+    {profileView ? (
+      <div className={`${styles.profileEventContainer}`}>
+        <div className={`${styles.flexContainer}`}>
+          <h1 className={`${styles.headerInProfile} font-space-grotesk `}>
+            {name}
+          </h1>
+          <span
+            className={styles.crownContainer}
+            style={{
+              cursor: 'pointer',
+              padding: '0',
+              margin: '0',
+            }}
+            onClick={() => navigate(`/home/users/${creator_id}`)}
+          >
+            👑{creator}
+          </span>
+        </div>
+        <h2 className={`${styles.hourInProfile}  font-space-grotesk `}>
+          {convertToStandard(hour)}
+        </h2>
+        <label className={styles.date}>{date}</label>
+        <div className={`${styles.details} ${styles.tagsInProfileContainer}`}>
+            {
+              // ! next time send tags as TAGS and not link
+              link
+                .replace('Tags: ', '')
+                .split(',')
+                .map((tag, index) => (
+                  <span key={index} className={styles.tag}>
+                    {tag.trim()}
+                  </span>
+                ))
+            }
+        </div>
+        <div className={`${styles.flex} ${styles.actions} ${styles.buttonsContainerInProfile} `}>
+          {userEventStatus !== null && (
+            <>
+              {/* {!inProfile && !userEventStatus && ( */}
+              {!userEventStatus && (
+                <button
+                  className={`${styles.saveButton} button asap`}
+                  onClick={() => saveEvent()}
+                >
+                  Save 💾
+                </button>
+              )}
+              { userEventStatus && (
+                <button
+                  className={`${styles.saveButton} button asap`}
+                  onClick={() => removeEvent()}
+                >
+                  Unsave ❌
+                </button>
+              )}
+              <button
+                className={`button asap`}
+                onClick={() => navigate(`/home/events/${_id}`)}
+              >
+                Details 📃
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+
+    ) : (
+
     <div
       className={styles.container}
       style={{ margin: !inProfile === true ? '0px' : '' }}
@@ -170,6 +242,8 @@ function Event({
         )}
       </div>
     </div>
+    )}
+    </>
   )
 }
 

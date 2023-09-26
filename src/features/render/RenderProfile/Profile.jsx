@@ -102,8 +102,8 @@ function Profile() {
   }, [auth])
 
   useEffect(() => {
-    /* console.log('Var userid', userid)*/
-  }, [userid])
+    console.log('Var user', user)
+  }, [user])
 
   useEffect(() => {
     /* console.log(users)*/
@@ -176,14 +176,20 @@ function Profile() {
                 </button>
               </div>
               <h3>
-                {user.name} {''} {user.lastname}
+                {`${user.name} ${user.lastname}`}
               </h3>
               <h4>@{user.username}</h4>
               <h5>Email: {user.email}</h5>
             </div>
           </section>
           <section className={`${styles.custom_section} ${styles.sub_section}`}>
-            <h2>Hooks guardados</h2>
+            <h2>Joined Hooks</h2>
+            <div className={styles.eventsContainer}>
+              {!(user.savedEvents === undefined) && (
+                <Events events={user.joinedEvents} inProfile={true} />
+              )}
+            </div>
+            <h2>Saved Hooks</h2>
             <div className={styles.eventsContainer}>
               {!(user.savedEvents === undefined) && (
                 <Events events={user.savedEvents} inProfile={true} />
