@@ -6,6 +6,7 @@ import * as styles from './EventPage.module.css'
 import { authStore } from '@context'
 import ControlledPopup from '../../components/global/ControlledPopup/ControlledPopup'
 import ParticipantsView from '@components/pages/EventPage'
+import Report from '@features/creation/Report/Report'
 
 const EventPage = () => {
   const navigate = useNavigate()
@@ -158,7 +159,9 @@ const EventPage = () => {
   }
 
   const [openValue, setOpenValue] = useState(false)
+  const [reportOpenValue, setReportOpenValue] = useState(false)
   const close = () => setOpenValue(false)
+  const closeReport = () => setReportOpenValue(false)
 
   useEffect(() => {
     getEventDetails(_id)
@@ -189,6 +192,13 @@ const EventPage = () => {
 
   return (
     <div className={`${styles.container} standard_border`}>
+      <ControlledPopup
+        title="Reporting"
+        isOpen={reportOpenValue}
+        closeFunction={closeReport}
+      >
+        <Report />
+      </ControlledPopup>
       <div className={styles.event_container}>
         <ControlledPopup
           title="Event full!"
@@ -207,17 +217,25 @@ const EventPage = () => {
         {event && (
           <>
             <div className={styles.title_wrapper}>
-              <h2 className={`${styles.event_title} font-bebas-neue`}>
-                {event?.title}
-              </h2>
-              <p
-                className={styles.event_creator}
-                style={{ cursor: 'pointer' }}
-                onClick={() => navigate(`/home/users/${event.creator._id}`)}
+              <div>
+                <h2 className={`${styles.event_title} font-bebas-neue`}>
+                  {event?.title}
+                </h2>
+                <p
+                  className={styles.event_creator}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => navigate(`/home/users/${event.creator._id}`)}
+                >
+                  Created by: {event?.creator?.username}
+                  {event?.creator?._id === auth.user.id && ' (You)'}
+                </p>
+              </div>
+              <button
+                className={`mt-0 ${styles.saveButton} button asap`}
+                onClick={() => setReportOpenValue((o) => !o)}
               >
-                Created by: {event?.creator?.username}
-                {event?.creator?._id === auth.user.id && ' (You)'}
-              </p>
+                <span>🚩</span>
+              </button>
             </div>
             <hr
               style={{
