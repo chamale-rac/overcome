@@ -11,49 +11,47 @@ import { profileSchema } from '@schemas'
 import { authStore } from '@context'
 
 const EditProfile = ({ user, successAction }) => {
+  const { auth } = authStore
 
-    const { auth } = authStore;
-
-    const [loading, setLoading] = useState(false)
-    const [handleError, setHandleError] = useState()
-    const [handleSuccess, setHandleSuccess] = useState(null);
-    const { handleRequest } = useApi()
-    const form = useForm(
-        profileSchema.joi,
-        user,
-        profileSchema.initialErrorMessages,
-        profileSchema.initialErrorPrompts,
-    )
+  const [loading, setLoading] = useState(false)
+  const [handleError, setHandleError] = useState()
+  const [handleSuccess, setHandleSuccess] = useState(null)
+  const { handleRequest } = useApi()
+  const form = useForm(
+    profileSchema.joi,
+    user,
+    profileSchema.initialErrorMessages,
+    profileSchema.initialErrorPrompts,
+  )
 
   const postEditProfile = async (username, email, name, lastname) => {
     try {
-        setLoading(true)
-    
-        const response = await handleRequest(
-          'post',
-          `/users/editInfo/${user._id}`,
-          {
-            username,
-            name,
-            lastname,
-            email,
-          },
-          {
-            Authorization: 'Bearer ' + auth.authToken,
-          },
-          true,
-        );
+      setLoading(true)
 
-        setHandleSuccess('Profile info saved successfully!');
-        
+      const response = await handleRequest(
+        'post',
+        `/users/editInfo/${user._id}`,
+        {
+          username,
+          name,
+          lastname,
+          email,
+        },
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+
+      setHandleSuccess('Profile info saved successfully!')
     } catch (error) {
-        console.log('error :>> ', error.message);
-        setHandleError(error.message);
-        setHandleSuccess(null);
+      console.log('error :>> ', error.message)
+      setHandleError(error.message)
+      setHandleSuccess(null)
     } finally {
-        setLoading( false );
-    };
-  };
+      setLoading(false)
+    }
+  }
 
   const handleEdit = () => {
     if (!form.error) {
@@ -68,9 +66,7 @@ const EditProfile = ({ user, successAction }) => {
 
   return (
     /*TODO check for correct xl:w */
-    <div
-      className={`${styles.container} rounded-md m-6`}
-    >
+    <div className={`${styles.container} rounded-md m-6`}>
       <div>
         <Input
           value={form.values.username}
@@ -115,20 +111,18 @@ const EditProfile = ({ user, successAction }) => {
           </Notification>
         ) : null}
 
-        {
-          handleSuccess ? (
-            <Notification type="" customStyles="mb-3">
-              <p className="mb-1 p-1">{handleSuccess}</p>
-              <Button
-                customStyles="mb-1"
-                type="primary"
-                onClick={() => successAction(form.values)}
-              >
-                Let's go! 🚀
-              </Button>
-            </Notification>
-          ) : null
-        }
+        {handleSuccess ? (
+          <Notification type="" customStyles="mb-3">
+            <p className="mb-1 p-1">{handleSuccess}</p>
+            <Button
+              customStyles="mb-1"
+              type="primary"
+              onClick={() => successAction(form.values)}
+            >
+              Let's go! 🚀
+            </Button>
+          </Notification>
+        ) : null}
         {!handleSuccess ? (
           <Button
             type="primary"
