@@ -20,6 +20,7 @@ import UserNotification from './UserNotification/UserNotification'
 import Step from './Step/Step'
 
 import ColorPicker from './ColorPicker/ColorPicker'
+import Dropdown from './Dropdown/Dropdown'
 
 export {
   NavButton,
@@ -41,4 +42,5 @@ export {
   UserNotification,
   Step,
   ColorPicker,
+  Dropdown,
 }
