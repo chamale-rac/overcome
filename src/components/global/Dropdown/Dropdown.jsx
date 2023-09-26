@@ -22,7 +22,9 @@ const Dropdown = ({
         className={styles.dropdown_btn}
       >
         {selected}
-        <div>{isActive ? '🔼' : '🔽'}</div>
+        <div>
+          <span>{isActive ? '🔼' : '🔽'}</span>
+        </div>
       </div>
       <div
         className={styles.dropdown_content}

@@ -6,7 +6,12 @@ import { useApi, useForm } from '@hooks'
 import { authStore } from '@context'
 import { reportSchema } from '@schemas'
 
-const Report = ({ type = '', relatedId = '', reportToTitle = '' }) => {
+const Report = ({
+  type = '',
+  relatedId = '',
+  reportToTitle = '',
+  closeAction,
+}) => {
   const { auth } = authStore
   const [loading, setLoading] = useState(false)
   const [handleError, setHandleError] = useState()
@@ -61,6 +66,7 @@ const Report = ({ type = '', relatedId = '', reportToTitle = '' }) => {
         },
         true,
       )
+      setHandleSuccess('Report sent successfully! 🚀')
     } catch (error) {
       console.log('error :>> ', error.message)
       setHandleError(error.message)
@@ -88,10 +94,14 @@ const Report = ({ type = '', relatedId = '', reportToTitle = '' }) => {
   }
 
   return (
-    <div className={`${styles.container} rounded-md m-6`}>
+    <div className={`${styles.container} rounded-md m-6 w-[400px]`}>
+      <h3 className="font-bebas-neue text-2xl mb-6 ">
+        You are reporting ({type}): {reportToTitle}
+      </h3>
+
       <div>
         <Dropdown
-          label="Who is being affected?"
+          label="Who is being affected?*"
           customStyles="mb-5"
           options={[
             'Me',
@@ -102,7 +112,7 @@ const Report = ({ type = '', relatedId = '', reportToTitle = '' }) => {
           setSelected={setReportFor}
         />
         <Dropdown
-          label="What is going on?"
+          label="What is going on?*"
           customStyles="mb-5"
           options={[
             'Identity attack',
@@ -129,6 +139,45 @@ const Report = ({ type = '', relatedId = '', reportToTitle = '' }) => {
           maxLength={200}
           placeholder={'Describe your claim...'}
         />
+
+        {handleError ? (
+          <Notification type="danger" customStyles="mb-3">
+            {handleError}
+          </Notification>
+        ) : null}
+
+        {handleSuccess ? (
+          <Notification type="" customStyles="mb-3">
+            <p className="mb-1 p-1">
+              {handleSuccess}
+              <br />
+              Check your email for updates.
+            </p>
+            <Button
+              customStyles="mb-1"
+              type="primary"
+              onClick={() => closeAction()}
+            >
+              Close
+            </Button>
+          </Notification>
+        ) : null}
+        {!handleSuccess ? (
+          <Button
+            type="primary"
+            onClick={handlePost}
+            disabled={
+              form.error ||
+              form.values.description === '' ||
+              reportFor === 'Select an option...' ||
+              whatIsGoingOn === 'Select an option...' ||
+              loading
+            }
+            loading={loading}
+          >
+            Send report
+          </Button>
+        ) : null}
       </div>
     </div>
   )

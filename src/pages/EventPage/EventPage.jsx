@@ -197,7 +197,12 @@ const EventPage = () => {
         isOpen={reportOpenValue}
         closeFunction={closeReport}
       >
-        <Report />
+        <Report
+          type="Event"
+          relatedId={_id}
+          reportToTitle={event?.title}
+          closeAction={closeReport}
+        />
       </ControlledPopup>
       <div className={styles.event_container}>
         <ControlledPopup
