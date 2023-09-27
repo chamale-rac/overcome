@@ -66,7 +66,14 @@ const Report = ({
         },
         true,
       )
-      setHandleSuccess('Report sent successfully! 🚀')
+      // Handle 500
+      if (response.status !== 200) {
+        setHandleError('Something went wrong. Please try again later.')
+        setHandleSuccess(null)
+      } else {
+        setHandleSuccess('Report sent successfully! 🚀')
+        setHandleError(null)
+      }
     } catch (error) {
       console.log('error :>> ', error.message)
       setHandleError(error.message)
