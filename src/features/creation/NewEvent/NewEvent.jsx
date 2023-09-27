@@ -5,6 +5,8 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { SERVICES_BASE_URL } from '@utils/constants'
 
+import { useNavigate } from 'react-router-dom'
+
 import { authStore } from '@context'
 
 import * as styles from './NewEvent.module.css'
@@ -39,6 +41,9 @@ const Register = ({ customStyles, successAction, failAction }) => {
     eventSchema.initialErrorMessages,
     eventSchema.initialErrorPrompts,
   )
+
+  const [eventId, setEventId] = useState()
+  const navigate = useNavigate()
 
   const postEvent = async (
     title,
@@ -75,6 +80,8 @@ const Register = ({ customStyles, successAction, failAction }) => {
         setLoading(false)
         setHandleError(null)
         setHandleSuccess('Event created successfully')
+        console.log('response.data', response.data)
+        setEventId(response.data.id)
         form.totalClean()
       } else if (response.status === 500) {
         setLoading(false)
@@ -357,6 +364,13 @@ const Register = ({ customStyles, successAction, failAction }) => {
           handleSuccess ? (
             <Notification type="" customStyles="mb-3">
               <p className="mb-1 p-1">{handleSuccess}</p>
+              <Button
+                customStyles="mb-1"
+                type="primary"
+                onClick={() => navigate(`/home/events/${eventId}`)}
+              >
+                Let's go! 🚀
+              </Button>
             </Notification>
           ) : null
         }
