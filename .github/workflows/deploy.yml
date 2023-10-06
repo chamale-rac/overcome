@@ -66,7 +66,7 @@ jobs:
           regexp_options: "us"
           release_name: "version $1"
           tag_name: "v$1"
-          body: "$3"
+          body: ""
           draft: false
           prerelease: false
         env:
