@@ -12,7 +12,7 @@ jobs:
       name: Production
       url: https://app-overcome.onrender.com
     steps:
-      - name: deploy
+      - name: Render deployment
         env:
           deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
