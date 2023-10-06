@@ -3,6 +3,8 @@ name: Deployment
 on:
   push:
     branches: [ "deploy" ]
+  pull_request:
+    branches: [ "deploy" ]
   workflow_dispatch:
 
 jobs:
