@@ -33,6 +33,11 @@ const Home = () => {
       icon: '📝',
     },
     {
+      name: 'Reports',
+      path: '/home/reports',
+      icon: '🗂️'
+    },
+    {
       name: 'Users',
       path: '/home/users',
       icon: '👥',

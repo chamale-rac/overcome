@@ -22,6 +22,8 @@ import HomePage from '@features/render/HomePage'
 
 import GlobalEvents from '@features/render/RenderGlobalEvents'
 
+import GlobalReports from '@features/render/RenderReports'
+
 import Profile from '@features/render/RenderProfile'
 
 /*
@@ -50,6 +52,7 @@ function App() {
           <Route path="/home/events" element={<GlobalEvents />} />
           <Route path="/home/myevents" element={<UserEvents />} />
           <Route path="/home/newevent" element={<EventsDashboard />} />
+          <Route path="/home/reports" element={<GlobalReports />} />
           <Route path="/home/events/:_id" element={<EventPage />} />
           <Route path="/home/users" element={<FriendsDashboard />} />
           <Route path="/home/users/:creator_id" element={<UserPage />} />
