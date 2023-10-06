@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Notification } from '@components/global'
+import { Button } from '@components/global'
 import * as styles from './AIPicker.module.css'
 
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
@@ -17,7 +17,7 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
           onClick={handleSubmit}
           disabled={prompt === '' || generatingImg}
         >
-          {generatingImg ? 'Generating... ‎‍💼' : 'Ask! ✨'}
+          {generatingImg ? 'Generating...' : 'Ask! ✨'}
         </Button>
       </div>
     </div>
