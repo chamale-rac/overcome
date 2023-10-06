@@ -18,9 +18,10 @@ const Input = ({
   hasTags = false,
   delimiter = ',',
   disabled = false,
+  containerCustomStyles = '',
 }) => {
   return (
-    <div className={styles.inputContainer}>
+    <div className={`${styles.inputContainer} ${containerCustomStyles}`}>
       <label htmlFor={name}>
         <span className="font-overpass-mono">
           {label || name}

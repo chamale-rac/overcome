@@ -5,6 +5,7 @@ import { NavButton, Chat, Button, ControlledPopup } from '@components/global'
 import * as styles from './UserPage.module.css'
 import { authStore } from '@context'
 import { Events } from '@features/render'
+import Report from '@features/creation/Report/Report'
 
 const UserPage = ({ isCreator = true, user_id = null }) => {
   const [openProfilePopup, setOpenProfilePopup] = useState(false)
@@ -19,11 +20,13 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [friendStatus, setFriendStatus] = useState(null)
+  const [reportOpenValue, setReportOpenValue] = useState(false)
+  const closeReport = () => setReportOpenValue(false)
 
   const [friendResponse, setFriendResponse] = useState(null)
 
   useEffect(() => {
-    console.log('theUSER', user)
+    /* console.log('theUSER', user)*/
   }, [user])
 
   const checkFriendStatus = async () => {
@@ -40,7 +43,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         },
         true,
       )
-      console.log('CHECK FRIEND', response.data)
+      /* console.log('CHECK FRIEND', response.data)*/
       setFriendStatus(response.data.isFriend)
     } catch (error) {
       console.error('CHECK ERROR', error)
@@ -65,7 +68,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         },
         true,
       )
-      console.log(response.data)
+      /* console.log(response.data)*/
       setFriendResponse(response.data)
       checkFriendStatus()
     } catch (error) {
@@ -94,7 +97,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
         },
         true,
       )
-      console.log(response.data)
+      /* console.log(response.data)*/
       setUser(response.data)
       checkFriendStatus()
     } catch (error) {
@@ -108,9 +111,9 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
   }
 
   useEffect(() => {
-    console.log('isCreator', isCreator)
+    /* console.log('isCreator', isCreator)*/
     if (!isCreator) {
-      console.log('user_id', user_id)
+      /* console.log('user_id', user_id)*/
       getUserDetails(user_id)
     } else {
       getUserDetails(creator_id)
@@ -119,6 +122,19 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
 
   return (
     <div className={`${styles.container} standard_border`}>
+      <ControlledPopup
+        title="Reporting"
+        isOpen={reportOpenValue}
+        closeFunction={closeReport}
+      >
+        <Report
+          type="User"
+          relatedId={user_id || creator_id}
+          reportToTitle={`@${user?.username}`}
+          closeAction={closeReport}
+        />
+      </ControlledPopup>
+
       <ControlledPopup
         title={'Enviar solicitud'}
         isOpen={openProfilePopup}
@@ -169,26 +185,34 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
                   @{user?.username} {user?._id === auth.user.id && '(You)'}
                 </h2>
                 <div className={styles.buttonWrapper}>
-                  {user?._id === auth.user.id ? (
-                    <Button type="primary" disabled customStyles="text-xs">
-                      Recursive Friend Request 😎
-                    </Button>
-                  ) : (
-                    <Button
-                      type="secondary"
-                      customStyles="text-xs"
-                      onClick={openProfilePopupFunction}
-                      disabled={friendStatus !== false}
-                    >
-                      {!friendStatus && 'Send Friend Request ✉️'}
-                      {friendStatus &&
-                        friendStatus != 'pending' &&
-                        friendStatus != 'requested' &&
-                        'Already your friend!'}
-                      {friendStatus == 'pending' && 'Pending response'}
-                      {friendStatus == 'requested' && 'Solitude received'}
-                    </Button>
-                  )}
+                  <div className={styles.buttonOutside}>
+                    {user?._id === auth.user.id ? (
+                      <Button type="primary" disabled customStyles="text-xs">
+                        Recursive Friend Request 😎
+                      </Button>
+                    ) : (
+                      <Button
+                        type="secondary"
+                        customStyles="text-xs"
+                        onClick={openProfilePopupFunction}
+                        disabled={friendStatus !== false}
+                      >
+                        {!friendStatus && 'Send Friend Request ✉️'}
+                        {friendStatus &&
+                          friendStatus != 'pending' &&
+                          friendStatus != 'requested' &&
+                          'Already your friend!'}
+                        {friendStatus == 'pending' && 'Pending response'}
+                        {friendStatus == 'requested' && 'Solitude received'}
+                      </Button>
+                    )}
+                  </div>
+                  <button
+                    className={`mt-0 ${styles.saveButton} button asap`}
+                    onClick={() => setReportOpenValue((o) => !o)}
+                  >
+                    <span>🚩</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -208,7 +232,7 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
                 Name: {user?.name} {user?.lastname}
               </h3>
               <h3>Email: {user?.email}</h3>
-              <div className={styles.eventsContainer}>
+              <div className={`${styles.eventsContainerOtherProfile}`}>
                 {!(user?.savedEvents === undefined) && (
                   <Events events={user?.savedEvents} inProfile={true} />
                 )}

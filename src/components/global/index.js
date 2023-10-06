@@ -16,6 +16,12 @@ import FilePicker from './FilePicker/FilePicker'
 import EventPreview from './EventPreview/'
 import ChatPreview from './ChatPreview'
 
+import UserNotification from './UserNotification/UserNotification'
+import Step from './Step/Step'
+
+import ColorPicker from './ColorPicker/ColorPicker'
+import Dropdown from './Dropdown/Dropdown'
+
 export {
   NavButton,
   Loading,
@@ -32,5 +38,9 @@ export {
   AIPicker,
   FilePicker,
   EventPreview,
-  ChatPreview
+  ChatPreview,
+  UserNotification,
+  Step,
+  ColorPicker,
+  Dropdown,
 }

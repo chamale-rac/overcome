@@ -4,6 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { NavButton, Chat } from '@components/global'
 import * as styles from './EventPage.module.css'
 import { authStore } from '@context'
+import ControlledPopup from '../../components/global/ControlledPopup/ControlledPopup'
+import ParticipantsView from '@components/pages/EventPage'
+import Report from '@features/creation/Report/Report'
 
 const EventPage = () => {
   const navigate = useNavigate()
@@ -14,6 +17,8 @@ const EventPage = () => {
   const [error, setError] = useState(null)
   const { auth } = authStore
   const [userEventStatus, setUserEventStatus] = useState(null)
+  const [userJoinedStatus, setUserJoinedStatus] = useState(null)
+  const [participants, setParticipants] = useState([])
 
   const checkUserEventStatus = async () => {
     try {
@@ -28,7 +33,7 @@ const EventPage = () => {
         },
         true,
       )
-      console.log('save', response.data.saved)
+      // console.log('save', response.data.saved)
       setUserEventStatus(response.data.saved)
     } catch (error) {
       console.error(error)
@@ -38,11 +43,35 @@ const EventPage = () => {
     }
   }
 
+  const checkJoinedStatus = async () => {
+    try {
+      const response = await handleRequest(
+        'POST',
+        `/events/checkJoinedStatus/${_id}`,
+        {
+          userId: auth.user.id,
+        },
+        {
+          Authorization: 'Bearer' + auth.authToken,
+        },
+        true,
+      )
+      // console.log('JoinedStatusData:',response.data)
+      setUserJoinedStatus(response.data.joined)
+    } catch (error) {
+      console.log(error)
+      setError(
+        'Error fetching joined status details, please try again later or contact support',
+      )
+    }
+  }
+
   const getEventDetails = async (_id) => {
     try {
       setLoading(true)
       const response = await handleRequest('GET', `/events/${_id}`)
       setEvent(response.data)
+      setParticipants(response.data.participants)
     } catch (error) {
       console.error(error)
       setError(
@@ -54,7 +83,6 @@ const EventPage = () => {
   }
 
   const saveEvent = async () => {
-    // const response = await handleRequest('GET', '/users/', {}, {}, true)
     const response = await handleRequest(
       'POST',
       '/users/saveEvent',
@@ -67,19 +95,160 @@ const EventPage = () => {
       },
       true,
     )
-    console.log('SaveEvent FUNC', response)
+    // console.log('SaveEvent FUNC', response)
     checkUserEventStatus()
+    checkJoinedStatus()
+    // getEventDetails(_id)
+  }
+
+  const joinEventToUser = async () => {
+    const response = await handleRequest(
+      'POST',
+      '/users/joinEvent',
+      {
+        user_id: auth.user.id,
+        event_id: _id,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    // console.log('SaveEvent FUNC', response)
+    checkUserEventStatus()
+    checkJoinedStatus()
+    // getEventDetails(_id)
+  }
+
+  const joinEvent = async () => {
+    const response = await handleRequest(
+      'POST',
+      // `/users/checkEvent/${auth.user.id}`,
+      `/events/joinEvent/${_id}`,
+      {
+        userId: `${auth.user.id}`,
+      },
+      {
+        // Authorization: 'Bearer ' + auth.authToken,
+      },
+      false,
+    )
+    // console.log('SaveEvent FUNC', response)
+    checkUserEventStatus()
+    checkJoinedStatus()
+    getEventDetails(_id)
+  }
+
+  const removeJoinedEvent = async () => {
+    const response = await handleRequest(
+      'POST',
+      // `/users/checkEvent/${auth.user.id}`,
+      `/events/removeJoinedEvent/${_id}`,
+      {
+        userId: `${auth.user.id}`,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    // console.log('SaveEvent FUNC', response)
+    checkUserEventStatus()
+    await checkJoinedStatus()
+    getEventDetails(_id)
     // setUsers(response.data)
   }
+
+  const removeEvent = async () => {
+    const response = await handleRequest(
+      'POST',
+      '/users/removeSavedEvent',
+      {
+        user_id: auth.user.id,
+        event_id: _id,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    checkUserEventStatus()
+    checkJoinedStatus()
+    // getEventDetails(_id)
+  }
+
+  const removeJoinedEventToUser = async () => {
+    const response = await handleRequest(
+      'POST',
+      '/users/removeJoinedEvent',
+      {
+        user_id: auth.user.id,
+        event_id: _id,
+      },
+      {
+        Authorization: 'Bearer ' + auth.authToken,
+      },
+      true,
+    )
+    checkUserEventStatus()
+    checkJoinedStatus()
+    // getEventDetails(_id)
+  }
+
+  const [openValue, setOpenValue] = useState(false)
+  const [reportOpenValue, setReportOpenValue] = useState(false)
+  const close = () => setOpenValue(false)
+  const closeReport = () => setReportOpenValue(false)
 
   useEffect(() => {
     getEventDetails(_id)
     checkUserEventStatus()
+    checkJoinedStatus()
+    // setOpenValue(false)
   }, [])
+
+  /**
+   * @useEffect
+   * @description verify the availability of spaces to join an change the popup open status if its full
+   * @notes The event object has to be not undefined to read the properties and not have errors
+   */
+  useEffect(() => {
+    console.log('EventInfo:', event)
+    if (!(event === undefined)) {
+      if (event?.participants.length >= event?.limit) {
+        if (userJoinedStatus === true) {
+          setOpenValue(false)
+        } else {
+          setOpenValue(true)
+        }
+      } else {
+        setOpenValue(false)
+      }
+    }
+  }, [event])
 
   return (
     <div className={`${styles.container} standard_border`}>
+      <ControlledPopup
+        title="Reporting"
+        isOpen={reportOpenValue}
+        closeFunction={closeReport}
+      >
+        <Report
+          type="Event"
+          relatedId={_id}
+          reportToTitle={event?.title}
+          closeAction={closeReport}
+        />
+      </ControlledPopup>
       <div className={styles.event_container}>
+        <ControlledPopup
+          title="Event full!"
+          isOpen={openValue}
+          closeFunction={close}
+        >
+          <p>We're sorry, the event is already full...</p>
+        </ControlledPopup>
         <NavButton
           type="normal"
           handleClick={() => navigate(-1)}
@@ -90,17 +259,25 @@ const EventPage = () => {
         {event && (
           <>
             <div className={styles.title_wrapper}>
-              <h2 className={`${styles.event_title} font-bebas-neue`}>
-                {event?.title}
-              </h2>
-              <p
-                className={styles.event_creator}
-                style={{ cursor: 'pointer' }}
-                onClick={() => navigate(`/home/users/${event.creator._id}`)}
+              <div>
+                <h2 className={`${styles.event_title} font-bebas-neue`}>
+                  {event?.title}
+                </h2>
+                <p
+                  className={styles.event_creator}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => navigate(`/home/users/${event.creator._id}`)}
+                >
+                  Created by: {event?.creator?.username}
+                  {event?.creator?._id === auth.user.id && ' (You)'}
+                </p>
+              </div>
+              <button
+                className={`mt-0 ${styles.saveButton} button asap`}
+                onClick={() => setReportOpenValue((o) => !o)}
               >
-                Created by: {event?.creator?.username}
-                {event?.creator?._id === auth.user.id && ' (You)'}
-              </p>
+                <span>🚩</span>
+              </button>
             </div>
             <hr
               style={{
@@ -114,27 +291,56 @@ const EventPage = () => {
             {!userEventStatus && (
               <button
                 className={`${styles.saveButton} button asap`}
-                onClick={() => saveEvent()}
+                onClick={() => {
+                  saveEvent()
+                  }}
               >
                 Save 💾
               </button>
             )}
             {userEventStatus && (
               <button
-                className={`${styles.saveButton} ${styles.disabled}`}
-                disabled
+                className={`${styles.saveButton} button asap`}
+                onClick={() => {
+                  removeEvent()
+                }}
               >
-                Saved
+                Unsave ❌
               </button>
             )}
+            {!userJoinedStatus && (
+              <button
+                className={`${styles.saveButton} button asap`}
+                onClick={() => {
+                  console.log('participants:', event?.participants.length)
+                  if (event?.participants.length >= event?.limit) {
+                    setOpenValue(true)
+                  } else {
+                    joinEvent()
+                    joinEventToUser()
+                  }
+                }}
+              >
+                Join! 🫂
+              </button>
+            )}
+            {userJoinedStatus && (
+              <button
+                className={`${styles.saveButton} button asap`}
+                onClick={() => {
+                  removeJoinedEvent()
+                  removeJoinedEventToUser()
+                }}
+              >
+                Joined! 🙌🏼
+              </button>
+            )}
+            <h3 className={styles.content_title}>
+              Participants ({event?.participants.length}/{event?.limit}):
+            </h3>
+            <ParticipantsView participants={participants} />
             <h3 className={styles.content_title}>Description:</h3>
             <p className={styles.event_description}>{event?.description}</p>
-            {/* TODO: add participants
-            <ul className={styles.event_participants}>
-              {event?.participants.map((participant) => (
-                <li key={participant._id}>{participant.username}</li>
-              ))}
-            </ul> */}
             <div className={styles.content_wrapper}>
               <h3>Schedule:</h3>
               <p className={styles.event_hour}>{event?.hour}</p>
@@ -163,12 +369,16 @@ const EventPage = () => {
         )}
       </div>
       <div className={styles.chat_container}>
-        <Chat _id={event?.chat} name={event?.title} />
+        {userJoinedStatus ? (
+          <Chat _id={event?.chat} name={event?.title} />
+        ) : (
+          <div className={styles.dummy_chat}>
+            Looks like you're missing out on all the fun!
+            <br />
+            Join the event to unlock the chat! 🎉
+          </div>
+        )}
       </div>
-      {/**      
-      <div>{loading && <div>Loading...</div>}</div>
-      <div>{error && <div>{error}</div>}</div>
-       */}
     </div>
   )
 }

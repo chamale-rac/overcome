@@ -1,0 +1,71 @@
+.notification {
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  margin-right: 4px;
+
+  justify-content: space-between;
+  display: flex;
+}
+
+.notification:hover {
+  background-color: #f3f3f3;
+}
+
+.notification .message {
+  font-weight: semi-bold;
+  font-size: 1rem;
+}
+
+.notification .date {
+  margin-top: 5px;
+  font-size: 0.8em;
+}
+
+.notification .buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-left: 2px dashed black;
+}
+
+.notification.unread {
+  background-color: #cada3798;
+}
+
+.deleteButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  height: fit-content;
+  border-radius: 50%;
+  padding: 0.5rem 0.55rem;
+  border: 1px solid black;
+}
+
+.deleteButton:hover {
+  background-color: #ef635d;
+}
+
+.readButton {
+  margin-right: 0.75rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  border-radius: 50%;
+  padding: 0.4rem 0.48rem;
+  border: 1px solid black;
+  height: fit-content;
+  margin-left: 0.7rem;
+}
+
+.readButton:hover {
+  background-color: #cdd57e;
+}

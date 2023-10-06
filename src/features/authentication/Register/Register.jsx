@@ -44,9 +44,9 @@ const Register = ({ customStyles, successAction, failAction }) => {
     )
 
     if (response) {
-      console.log(response.status)
+      /* console.log(response.status)*/
       if (response.status === 201) {
-        console.log('response', response)
+        /* console.log('response', response)*/
         setLoading(false)
         setHandleError(null)
         setHandleSuccess('User created successfully!')
@@ -71,7 +71,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
   }
 
   const handleRegister = () => {
-    console.log('handle register')
+    /* console.log('handle register')*/
     if (!form.error) {
       postRegister(
         form.values.username,

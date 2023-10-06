@@ -66,7 +66,7 @@ const Login = ({ customStyles, successAction, failAction }) => {
   }
 
   const handleLogin = () => {
-    console.log('handle register')
+    /* console.log('handle register')*/
     if (!form.error) {
       postLogin(form.values.username, form.values.password)
     }

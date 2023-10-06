@@ -7,6 +7,7 @@ import {
   DURATION_REGEX,
   TAG_REGEX,
   LINK_REGEX,
+  NUMBER_REGEX,
 } from '@utils/regex.patterns'
 
 const eventSchema = {
@@ -18,6 +19,7 @@ const eventSchema = {
     hour: Joi.string().pattern(HOUR_REGEX),
     tags: Joi.string().pattern(TAG_REGEX),
     link: Joi.string().pattern(LINK_REGEX),
+    limit: Joi.string().pattern(NUMBER_REGEX),
   }),
 
   initialValues: {
@@ -28,6 +30,7 @@ const eventSchema = {
     hour: '',
     tags: '',
     link: '',
+    limit: '',
   },
 
   initialErrorMessages: {
@@ -38,6 +41,7 @@ const eventSchema = {
     hour: false,
     tags: false,
     link: false,
+    limit: false,
   },
 
   initialErrorPrompts: {
@@ -48,6 +52,7 @@ const eventSchema = {
     hour: 'Type a valid hour, e.g. 12:00.',
     tags: 'Tags for your event, separated by commas. e.g. Halo, CSGO, Valorant.',
     link: 'Type a valid link, e.g. https://www.google.com.',
+    limit: 'You should add an number event limit. (min 2, max 99)',
   },
 }
 

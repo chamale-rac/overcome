@@ -21,5 +21,7 @@ export const DURATION_REGEX = /^(?:[0-9]|[1-9][0-9]{1,2}|720)$/
 
 export const TAG_REGEX = /^[\w\s,-]+$/
 
+export const NUMBER_REGEX = /^[2-9][0-9]?$/
+
 export const LINK_REGEX =
   /^(https?:\/\/)?([\w\.]+)\.([a-z]{2,6}\.?)(\/[\w\.]*)*\/?$/

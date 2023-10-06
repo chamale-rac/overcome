@@ -6,6 +6,7 @@ import { ImageCustomizer } from '@features/creation'
 import { ControlledPopup, ClockLoader } from '@components/global'
 import * as styles from './Profile.module.css'
 import { image } from '@context'
+import EditProfile from '../../creation/EditProfile/EditProfile'
 
 function Profile() {
   const [error, setError] = useState(null)
@@ -18,7 +19,9 @@ function Profile() {
   const [users, setUsers] = useState([])
 
   const [openProfilePopup, setOpenProfilePopup] = useState(false)
+  const [openInfoPopup, setOpenInfoPopup] = useState(false)
   const closeProfilePopup = () => setOpenProfilePopup(false)
+  const closeInfoPopup = () => setOpenInfoPopup(false)
 
   const { auth } = authStore
 
@@ -36,7 +39,7 @@ function Profile() {
         },
         true,
       )
-      console.log(response.data)
+      /* console.log(response.data)*/
       // add just a new field or update the profilePicture field
       setUser({ ...user, profilePicture: newImage })
       image.result = ''
@@ -51,7 +54,7 @@ function Profile() {
   }
 
   const handleSaveImage = (newImage) => {
-    console.log('is saving')
+    /* console.log('is saving')*/
     editProfile(newImage)
   }
 
@@ -66,14 +69,14 @@ function Profile() {
       },
       true,
     )
-    console.log('USERS!', response)
+    /* console.log('USERS!', response)*/
     setUsers(response.data)
   }
 
   const getUser = async () => {
     setProfileLoading(true)
     // const response = await handleRequest('GET', '/users/', {}, {}, true)
-    console.log('testttt', auth.user.id)
+    /* console.log('testttt', auth.user.id)*/
     const response = await handleRequest(
       'GET',
       `/users/${auth.user.id}`,
@@ -83,14 +86,14 @@ function Profile() {
       },
       true,
     )
-    console.log('USER!!!', response)
+    /* console.log('USER!!!', response)*/
     setUser(response.data)
     setProfileLoading(false)
   }
 
   useEffect(() => {
-    console.log(auth)
-    console.log(auth.user.username, auth.user.id)
+    /* console.log(auth)*/
+    /* console.log(auth.user.username, auth.user.id)*/
     getUser()
     setUserid({
       username: auth.user.username,
@@ -99,11 +102,11 @@ function Profile() {
   }, [auth])
 
   useEffect(() => {
-    console.log('Var userid', userid)
-  }, [userid])
+    console.log('Var user', user)
+  }, [user])
 
   useEffect(() => {
-    console.log(users)
+    /* console.log(users)*/
   }, [users])
 
   useEffect(() => {
@@ -129,7 +132,33 @@ function Profile() {
           />
         )}
       </ControlledPopup>
-      <h1>My profile</h1>
+      <ControlledPopup
+        title={'Profile Info'}
+        isOpen={openInfoPopup}
+        closeFunction={closeInfoPopup}
+      >
+        <EditProfile
+          user={user}
+          successAction={(values) => {
+            setUser({
+              ...user,
+              ...values,
+            })
+            setOpenInfoPopup(false)
+          }}
+        />
+      </ControlledPopup>
+      <div className={styles.titleWrapper}>
+        <h1>My profile</h1>
+        <button
+          type="button"
+          onClick={() => {
+            setOpenInfoPopup((o) => !o)
+          }}
+        >
+          ✏️
+        </button>
+      </div>
       {!profileLoading ? (
         <>
           <section className={styles.custom_section}>
@@ -147,32 +176,25 @@ function Profile() {
                 </button>
               </div>
               <h3>
-                {user.name} {user.lastname}
+                {`${user.name} ${user.lastname}`}
               </h3>
               <h4>@{user.username}</h4>
               <h5>Email: {user.email}</h5>
             </div>
-            {/* <p>
-          ¡Hola! Tengo 22 años y me encanta el deporte. Me dedico a la
-          enseñanza del yoga y me gusta mucho compartir mis conocimientos con
-          otras personas.
-        </p> */}
-            {/* <p>
-          {JSON.stringify( user.savedEvents)}
-        </p> */}
           </section>
           <section className={`${styles.custom_section} ${styles.sub_section}`}>
-            <h2>Hooks guardados</h2>
+            <h2>Joined Hooks</h2>
+            <div className={styles.eventsContainer}>
+              {!(user.savedEvents === undefined) && (
+                <Events events={user.joinedEvents} inProfile={true} />
+              )}
+            </div>
+            <h2>Saved Hooks</h2>
             <div className={styles.eventsContainer}>
               {!(user.savedEvents === undefined) && (
                 <Events events={user.savedEvents} inProfile={true} />
               )}
             </div>
-            {/* <ul>
-          <li>Grand Theft Auto 5</li>
-          <li>Minecraft</li>
-          <li>Valorant</li>
-        </ul> */}
           </section>
         </>
       ) : (
@@ -180,19 +202,6 @@ function Profile() {
           Loading... <ClockLoader fontSize={'3.8'} />
         </div>
       )}
-      {/**
-        
-      <section className={`${styles.custom_section} ${styles.sub_section}`}>
-        <h2>Mis amigos</h2>
-        <ul>
-          <li>Grand Theft Auto 5</li>
-          <li>Minecraft</li>
-          <li>Valorant</li>
-        </ul>
-      </section>
-        
-
-         */}
     </div>
   )
 }

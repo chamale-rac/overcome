@@ -9,11 +9,11 @@ const useRefreshToken = () => {
         withCredentials: true,
       })
       auth.setAuth((prev) => {
-        console.log('prev', prev)
-        console.log('response', response.data.accessToken)
+        /* console.log('prev', prev)*/
+        /* console.log('response', response.data.accessToken)*/
         return { ...prev, authToken: response.data.accessToken }
       })
-      console.log('response', response.data.accessToken)
+      /* console.log('response', response.data.accessToken)*/
       return response.data.accessToken
     } catch (error) {
       // Handle errors here

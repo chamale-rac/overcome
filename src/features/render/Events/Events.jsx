@@ -18,12 +18,13 @@ const Events = ({ events, inProfile = false }) => {
       },
       true,
     )
-    console.log('USER!', response)
+    /* console.log('USER!', response)*/
   }
 
   useEffect(() => {
-    console.log(auth)
-    // console.log(auth.user.username, auth.user.id)
+    /* console.log(auth)*/
+    // /* console.log(auth.user.username, auth.user.id)*/
+    // console.log("In profile "+ inProfile)
   }, [auth])
 
   return (

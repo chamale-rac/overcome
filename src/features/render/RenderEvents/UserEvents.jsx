@@ -9,7 +9,7 @@ function UserEvents({ event }) {
 
   useEffect(() => {
     setUserEvents(events)
-    console.log('events in UserEvents', events)
+    /* console.log('events in UserEvents', events)*/
   }, [])
 
   return (

@@ -5,6 +5,8 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { SERVICES_BASE_URL } from '@utils/constants'
 
+import { useNavigate } from 'react-router-dom'
+
 import { authStore } from '@context'
 
 import * as styles from './NewEvent.module.css'
@@ -40,8 +42,12 @@ const Register = ({ customStyles, successAction, failAction }) => {
     eventSchema.initialErrorPrompts,
   )
 
+  const [eventId, setEventId] = useState()
+  const navigate = useNavigate()
+
   const postEvent = async (
     title,
+    limit,
     description,
     date,
     duration,
@@ -57,6 +63,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
       .filter((tag) => tag !== '')
     const response = await handleRequest('post', '/events', {
       title,
+      limit,
       description,
       date,
       duration,
@@ -67,18 +74,20 @@ const Register = ({ customStyles, successAction, failAction }) => {
     })
 
     if (response) {
-      console.log(response.status)
+      /* console.log(response.status)*/
       if (response.status === 201) {
-        console.log('response', response)
+        /* console.log('response', response)*/
         setLoading(false)
         setHandleError(null)
         setHandleSuccess('Event created successfully')
+        console.log('response.data', response.data)
+        setEventId(response.data.id)
         form.totalClean()
       } else if (response.status === 500) {
         setLoading(false)
         setHandleSuccess(null)
         setHandleError('Error creating event')
-        console.log('error response', response)
+        /* console.log('error response', response)*/
       }
     } else {
       setLoading(false)
@@ -88,10 +97,11 @@ const Register = ({ customStyles, successAction, failAction }) => {
   }
 
   const handlePublish = () => {
-    console.log('handle publish')
+    /* console.log('handle publish')*/
     if (!form.error) {
       postEvent(
         form.values.title,
+        form.values.limit,
         form.values.description,
         form.values.date,
         form.values.duration,
@@ -99,6 +109,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
         form.values.tags,
         auth.user.id,
         form.values.link,
+        // TODO Here goes the limit...
       )
     }
   }
@@ -130,7 +141,7 @@ const Register = ({ customStyles, successAction, failAction }) => {
   }
 
   const handleIA = () => {
-    console.log('handle AI')
+    /* console.log('handle AI')*/
     postAI(
       form.values.title,
       form.values.date,
@@ -153,8 +164,8 @@ const Register = ({ customStyles, successAction, failAction }) => {
     const dateUtc6 = new Date(
       Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
     )
-    console.log('today', todayUtc6.getTime())
-    console.log('date', dateUtc6.getTime())
+    /* console.log('today', todayUtc6.getTime()*/
+    /* console.log('date', dateUtc6.getTime()*/
 
     if (dateUtc6.getTime() < todayUtc6.getTime()) {
       return -1
@@ -194,15 +205,15 @@ const Register = ({ customStyles, successAction, failAction }) => {
       const now = new Date()
       const utcMinus6Hours = now.getUTCHours() - 6
       const minutes = now.getUTCMinutes()
-      console.log('utcMinus6Hours', utcMinus6Hours)
-      console.log('minutes', minutes)
+      /* console.log('utcMinus6Hours', utcMinus6Hours)*/
+      /* console.log('minutes', minutes)*/
       const timeString = utcMinus6Hours.toString() + minutes.toString()
       const timeIntNow = parseInt(timeString, 10)
 
       const timeIntHour = parseInt(form.values.hour.replace(':', ''), 10)
 
-      console.log('timeIntNow', timeIntNow)
-      console.log('timeIntHour', timeIntHour)
+      /* console.log('timeIntNow', timeIntNow)*/
+      /* console.log('timeIntHour', timeIntHour)*/
 
       if (dateError.code === 0) {
         if (timeIntHour < timeIntNow) {
@@ -242,6 +253,14 @@ const Register = ({ customStyles, successAction, failAction }) => {
           type="text"
           error={form.errorMessages.title}
           required
+        />
+        <Input
+          value={form.values.limit}
+          onChange={form.onChange('limit')}
+          name="limit"
+          label="Limit"
+          type="text"
+          error={form.errorMessages.limit}
         />
         <Input
           value={form.values.date}
@@ -345,6 +364,13 @@ const Register = ({ customStyles, successAction, failAction }) => {
           handleSuccess ? (
             <Notification type="" customStyles="mb-3">
               <p className="mb-1 p-1">{handleSuccess}</p>
+              <Button
+                customStyles="mb-1"
+                type="primary"
+                onClick={() => navigate(`/home/events/${eventId}`)}
+              >
+                Let's go! 🚀
+              </Button>
             </Notification>
           ) : null
         }
