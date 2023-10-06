@@ -1,4 +1,4 @@
-name: Production
+name: Deployment
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     environment: 
-      name: Deployment
+      name: Production
       url: https://app-overcome.onrender.com
     steps:
       - name: deploy
