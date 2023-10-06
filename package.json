@@ -11,7 +11,7 @@
     "fix": "eslint src/**/*.{js,jsx} --fix",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "engines": {
     "node": ">=16"
@@ -70,7 +70,7 @@
     "tailwindcss": "^3.3.2",
     "ts-jest": "^29.1.1",
     "user-event": "^4.0.0",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.1",
     "vite": "^4.2.3"
   }
 }
