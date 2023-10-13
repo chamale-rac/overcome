@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import * as styles from './Report.module.css'
 import { authStore } from '@context'
 import { useApi } from '@hooks'
+import { Toaster, toast } from 'sonner'
+import { ControlledPopup, Button } from '@components/global'
 
 function Report({
   whatIsGoingOn,
@@ -12,9 +14,14 @@ function Report({
   name,
   eventId,
   creator_id,
-//   hour,
-//   date,
+  handleSuccess,
+  //   hour,
+  //   date,
 }) {
+  const [openDeletePopup, setOpenDeletePopup] = useState(false)
+  const closeDeletePopup = () => setOpenDeletePopup(false)
+  const openDeletePopupFunction = () => setOpenDeletePopup(true)
+
   const { handleRequest } = useApi()
   const { auth } = authStore
 
@@ -30,7 +37,7 @@ function Report({
 
   const deleteEvent = async () => {
     try {
-      console.log('eventId :>> ', eventId);
+      console.log('eventId :>> ', eventId)
       const response = await handleRequest(
         'DELETE',
         `/events/${eventId}`,
@@ -40,48 +47,60 @@ function Report({
         },
         true,
       )
+
+      toast.custom((t) => (
+        <div className={styles.toast}>✅ Event deleted successfully!</div>
+      ))
+      // if status 200
+      handleSuccess()
     } catch (error) {
-      console.log('error :>> ', error);
-    };
-  };
+      console.log('error :>> ', error)
+      toast.custom((t) => (
+        <div className={styles.toast}>❌ Error deleting event</div>
+      ))
+    }
+  }
 
   const closeReport = async () => {
     try {
-      
     } catch (error) {
-      console.log('error :>> ', error);
-    };
-  };
-
+      console.log('error :>> ', error)
+    }
+  }
 
   const navigate = useNavigate()
   return (
     <>
-      <div
-        className={styles.container}
-        style={{ margin: '' }}
-      >
+      <div className={styles.container} style={{ margin: '' }}>
         <div className={`${styles.header} `}>
-          <h1 className={`${styles.header} ${styles.title} font-space-grotesk `}>
+          <h1
+            className={`${styles.header} ${styles.title} font-space-grotesk `}
+            onClick={() => navigate(`/home/events/${eventId}`)}
+            style={{ cursor: 'pointer' }}
+          >
             {name}
           </h1>
           <p className={styles.creator}>
+            <strong>Reporter:</strong>{' '}
             <span
               style={{
                 cursor: 'pointer',
                 padding: '0',
                 margin: '0',
+                // underline
+                textDecoration: 'underline',
               }}
               onClick={() => navigate(`/home/users/${creator_id}`)}
             >
-              👑{creator}
+              {creator}
             </span>
           </p>
           <p className={styles.creator}>
-              {whatIsGoingOn}
+            <strong>What is going on:</strong> {whatIsGoingOn}
           </p>
           <p className={styles.creator}>
-              {comment}
+            <strong>Comment:</strong>
+            {comment}
           </p>
         </div>
 
@@ -94,18 +113,45 @@ function Report({
 
         <div className={`${styles.flex} ${styles.actions} `}>
           <button
-              className={`${styles.saveButton} button asap`}
-              onClick={() => deleteEvent()}
+            className={`${styles.saveButton} button asap`}
+            onClick={() => openDeletePopupFunction()}
           >
-              Delete Event 💾
+            Delete Event 💾
           </button>
           <button
-              className={`${styles.saveButton} button asap`}
-              onClick={() => closeReport()}
+            className={`${styles.saveButton} button asap`}
+            onClick={() => closeReport()}
           >
-              Close ❌
+            Close ❌
           </button>
         </div>
+        <ControlledPopup
+          title={'Eliminar evento'}
+          isOpen={openDeletePopup}
+          closeFunction={closeDeletePopup}
+        >
+          ¿Estas seguro de eliminar el evento{' '}
+          <span style={{ fontWeight: 'bold' }}>{name}</span>?
+          <div className={styles.buttonsContainer}>
+            <Button
+              customStyles="mb-1 mt-3 mr-2"
+              type="secondary"
+              onClick={() => setOpenDeletePopup((o) => !o)}
+            >
+              Cancelar ❌
+            </Button>
+            <Button
+              customStyles="mb-1 mt-3 ml-2"
+              type="tertiary"
+              onClick={() => {
+                setOpenDeletePopup((o) => !o)
+                deleteEvent()
+              }}
+            >
+              Aceptar 🗝️
+            </Button>
+          </div>
+        </ControlledPopup>
       </div>
     </>
   )
