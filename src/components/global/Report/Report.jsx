@@ -22,6 +22,10 @@ function Report({
   const closeDeletePopup = () => setOpenDeletePopup(false)
   const openDeletePopupFunction = () => setOpenDeletePopup(true)
 
+  const [openRemovePopup, setOpenRemovePopup] = useState(false)
+  const closeRemovePopup = () => setOpenRemovePopup(false)
+  const openRemovePopupFunction = () => setOpenRemovePopup(true)
+
   const { handleRequest } = useApi()
   const { auth } = authStore
 
@@ -63,8 +67,25 @@ function Report({
 
   const closeReport = async () => {
     try {
+      const response = await handleRequest(
+        'DELETE',
+        `/reports/event/${_id}`,
+        {},
+        {
+          Authorization: 'Bearer ' + auth.authToken,
+        },
+        true,
+      )
+      toast.custom((t) => (
+        <div className={styles.toast}>✅ Report closed successfully!</div>
+      ))
+      // if status 200
+      handleSuccess()
     } catch (error) {
       console.log('error :>> ', error)
+      toast.custom((t) => (
+        <div className={styles.toast}>❌ Error closing report</div>
+      ))
     }
   }
 
@@ -120,7 +141,7 @@ function Report({
           </button>
           <button
             className={`${styles.saveButton} button asap`}
-            onClick={() => closeReport()}
+            onClick={() => openRemovePopupFunction()}
           >
             Close ❌
           </button>
@@ -146,6 +167,34 @@ function Report({
               onClick={() => {
                 setOpenDeletePopup((o) => !o)
                 deleteEvent()
+              }}
+            >
+              Aceptar 🗝️
+            </Button>
+          </div>
+        </ControlledPopup>
+
+        <ControlledPopup
+          title={'Cerrar reporte'}
+          isOpen={openRemovePopup}
+          closeFunction={closeRemovePopup}
+        >
+          ¿Estas seguro de cerrar el reporte de{' '}
+          <span style={{ fontWeight: 'bold' }}>{name}</span>?
+          <div className={styles.buttonsContainer}>
+            <Button
+              customStyles="mb-1 mt-3 mr-2"
+              type="secondary"
+              onClick={() => setOpenRemovePopup((o) => !o)}
+            >
+              Cancelar ❌
+            </Button>
+            <Button
+              customStyles="mb-1 mt-3 ml-2"
+              type="tertiary"
+              onClick={() => {
+                setOpenRemovePopup((o) => !o)
+                closeReport()
               }}
             >
               Aceptar 🗝️
