@@ -15,6 +15,7 @@ const Home = () => {
   const navigate = useNavigate()
   const { handleRequest } = useApi()
   const { auth } = authStore
+  const isAdmin = (auth.user.roles?.Admin ?? 0) === 1
 
   const links = [
     {
@@ -35,7 +36,8 @@ const Home = () => {
     {
       name: 'Reports',
       path: '/home/reports',
-      icon: '🗂️'
+      icon: '🗂️',
+      hidden: !isAdmin,
     },
     {
       name: 'Users',
