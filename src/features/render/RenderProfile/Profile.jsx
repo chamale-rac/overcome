@@ -180,6 +180,26 @@ function Profile() {
               </h3>
               <h4>@{user.username}</h4>
               <h5>Email: {user.email}</h5>
+              <div className={styles.content_wrapper}>
+                <h3>Interests:</h3>
+                {/* { user?.interests.length > 0 ? */}
+                { Array.isArray(user?.interests) && user?.interests.length > 0 ?
+                user?.interests.map((tag) => (
+                  <p key={tag}>{tag}</p>
+                )) :
+                <aside>No interests found</aside>
+                }
+              </div>
+              <div className={styles.content_wrapper}>
+                <h3>Favorite Games:</h3>
+                {/* { user?.favorites.length > 0 ? */}
+                { Array.isArray(user?.favorites) && user?.favorites.length > 0 ?
+                user?.favorites.map((tag) => (
+                  <p key={tag}>{tag}</p>
+                )) :
+                <aside>No favorite games found</aside>
+                }
+              </div>
             </div>
           </section>
           <section className={`${styles.custom_section} ${styles.sub_section}`}>

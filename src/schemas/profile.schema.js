@@ -4,6 +4,7 @@ import {
   NAME_REGEX,
   LNAME_REGEX,
   EMAIL_REGEX,
+  TAG_REGEX,
 } from '@utils/regex.patterns'
 
 const profileSchema = {
@@ -12,6 +13,8 @@ const profileSchema = {
     name: Joi.string().pattern(NAME_REGEX),
     lastname: Joi.string().pattern(LNAME_REGEX),
     email: Joi.string().pattern(EMAIL_REGEX),
+    interests: Joi.string().pattern(TAG_REGEX),
+    favorites: Joi.string().pattern(TAG_REGEX),
   }),
 
   initialValues: {
@@ -19,6 +22,8 @@ const profileSchema = {
     email: '',
     name: '',
     lastname: '',
+    interests: '',
+    favorites: '',
   },
 
   initialErrorMessages: {
@@ -26,6 +31,8 @@ const profileSchema = {
     email: false,
     name: false,
     lastname: false,
+    interests: false,
+    favorites: false,
   },
 
   initialErrorPrompts: {
@@ -35,6 +42,10 @@ const profileSchema = {
     name: 'Only letters and spaces are allowed.\nMaximum length is 50 characters.',
     lastname:
       'Only letters and spaces are allowed.\nMaximum length is 50 characters.',
+    interests:
+    'Just valid interests.',
+    favorites:
+    'Enter a valid game.',
   },
 }
 
