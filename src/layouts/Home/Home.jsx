@@ -5,6 +5,7 @@ import * as styles from './Home.module.css'
 import { notifications, modal, authStore, OpenChat } from '@context'
 import { useSnapshot } from 'valtio'
 import { useApi } from '@hooks'
+import { Toaster } from 'sonner'
 
 import { ControlledPopup, UserNotification } from '@components/global'
 import { useNavigate } from 'react-router-dom'
@@ -285,6 +286,7 @@ const Home = () => {
           )}
         </ControlledPopup>
         <Outlet />
+        <Toaster position="bottom-right" />
       </div>
     </div>
   )
