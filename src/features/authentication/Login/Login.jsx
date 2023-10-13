@@ -41,12 +41,12 @@ const Login = ({ customStyles, successAction, failAction }) => {
     )
     if (response) {
       if (response.status === 200) {
-        const { id, username, auth_token } = response.data
-
+        const { id, username, auth_token, roles } = response.data
+        console.log(response.data)
         authStore.auth.setAuth({
           isAuthenticated: true,
           authToken: auth_token,
-          user: { id, username },
+          user: { id, username, roles },
         })
 
         setLoading(false)

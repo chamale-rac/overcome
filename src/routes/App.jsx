@@ -52,10 +52,13 @@ function App() {
           <Route path="/home/events" element={<GlobalEvents />} />
           <Route path="/home/myevents" element={<UserEvents />} />
           <Route path="/home/newevent" element={<EventsDashboard />} />
-          <Route path="/home/reports" element={<GlobalReports />} />
           <Route path="/home/events/:_id" element={<EventPage />} />
           <Route path="/home/users" element={<FriendsDashboard />} />
           <Route path="/home/users/:creator_id" element={<UserPage />} />
+
+          <Route element={<RequireAuth type="Admin" />}>
+            <Route path="/home/reports" element={<GlobalReports />} />
+          </Route>
         </Route>
       </Route>
 

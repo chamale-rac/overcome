@@ -9,7 +9,6 @@ const Button = ({
   loading = false,
   customStyles = '',
 }) => {
-  console.log('disabled:', disabled)
   return (
     <button
       className={`${styles.button} ${

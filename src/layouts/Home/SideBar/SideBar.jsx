@@ -65,6 +65,10 @@ const SideBar = ({ links }) => {
           // Define inline styles for margin-top if it's a "News" link
           const linkStyles = isNewsLink ? { marginTop: 'auto' } : {}
 
+          // Check if the link is hidden
+          if (link?.hidden) {
+            return null
+          }
           return (
             <div className={linkClasses} style={linkStyles} key={link.path}>
               <button
