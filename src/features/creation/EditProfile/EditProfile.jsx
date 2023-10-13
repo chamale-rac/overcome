@@ -24,9 +24,19 @@ const EditProfile = ({ user, successAction }) => {
     profileSchema.initialErrorPrompts,
   )
 
-  const postEditProfile = async (username, email, name, lastname) => {
+  const postEditProfile = async (username, email, name, lastname, interests, favorites) => {
     try {
       setLoading(true)
+
+      const interestsArray = interests.toString()
+        .split(',')
+        .map((interest) => interest.trim())
+        .filter((interest) => interest !== '')
+
+      const favoritesArray = favorites.toString()
+      .split(',')
+      .map((favorite) => favorite.trim())
+      .filter((favorite) => favorite !== '')
 
       const response = await handleRequest(
         'post',
@@ -36,6 +46,8 @@ const EditProfile = ({ user, successAction }) => {
           name,
           lastname,
           email,
+          interestsArray,
+          favoritesArray,
         },
         {
           Authorization: 'Bearer ' + auth.authToken,
@@ -60,6 +72,8 @@ const EditProfile = ({ user, successAction }) => {
         form.values.email,
         form.values.name,
         form.values.lastname,
+        form.values.interests,
+        form.values.favorites,
       )
     }
   }
@@ -105,6 +119,30 @@ const EditProfile = ({ user, successAction }) => {
           required
         />
 
+        <Input
+          value={form.values.interests}
+          onChange={form.onChange('interests')}
+          name="interests"
+          label="Interests"
+          type="text"
+          error={form.errorMessages.interests}
+          required
+          hasTags
+          delimiter=","
+        />
+
+        <Input
+          value={form.values.favorites}
+          onChange={form.onChange('favorites')}
+          name="favorites"
+          label="Favorite games"
+          type="text"
+          error={form.errorMessages.favorites}
+          required
+          hasTags
+          delimiter=","
+        />
+
         {handleError ? (
           <Notification type="danger" customStyles="mb-3">
             {handleError}
@@ -133,6 +171,8 @@ const EditProfile = ({ user, successAction }) => {
               form.values.email === '' ||
               form.values.name === '' ||
               form.values.lastname === '' ||
+              form.values.interests === '' ||
+              form.values.favorites === '' ||
               loading
             }
             loading={loading}

@@ -232,6 +232,24 @@ const UserPage = ({ isCreator = true, user_id = null }) => {
                 Name: {user?.name} {user?.lastname}
               </h3>
               <h3>Email: {user?.email}</h3>
+              <div className={styles.content_wrapper}>
+                <h3>Interests:</h3>
+                { user?.interests.length > 0 ?
+                user?.interests.map((tag) => (
+                  <p key={tag}>{tag}</p>
+                )) :
+                <aside>No interests found</aside>
+                }
+              </div>
+              <div className={styles.content_wrapper}>
+                <h3>Favorite Games:</h3>
+                { user?.favorites.length > 0 ?
+                user?.favorites.map((tag) => (
+                  <p key={tag}>{tag}</p>
+                )) :
+                <aside>No favorite games found</aside>
+                }
+              </div>
               <div className={`${styles.eventsContainerOtherProfile}`}>
                 {!(user?.savedEvents === undefined) && (
                   <Events events={user?.savedEvents} inProfile={true} />

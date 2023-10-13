@@ -76,7 +76,7 @@ const Input = ({
           ))}
         </div>
       )}
-      {!error && hasTags && value && (
+      {!error && hasTags && typeof value === 'string' && value.length > 0 &&(
         <div className={styles.inputTags}>
           {value
             .split(delimiter)
