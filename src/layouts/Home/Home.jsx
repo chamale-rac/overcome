@@ -40,7 +40,7 @@ const Home = () => {
     {
       name: 'Profile',
       path: '/home/profile',
-      icon: '🤖',
+      icon: '🎫',
     },
     {
       name: 'News',

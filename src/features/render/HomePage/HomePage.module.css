@@ -1,8 +1,8 @@
 .container {
-  background-color: #ddfdfe;
-  background-image: url('https://github.com/JDgomez2002/ing_soft_production/blob/main/ing-soft-production/src/img/background%20transparent.png?raw=true');
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #f0ffff;
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, grey 1px, transparent 1px),
+    linear-gradient(to bottom, grey 1px, #f0ffff 1px);
   height: 100%;
   width: 100%;
   padding: 25px;
@@ -16,9 +16,10 @@
 }
 
 .container h1 {
-  font-family: 'Bebas Neue', cursive;
+  font-family: 'Space Grotesk', cursive;
   font-size: 70px;
   font-weight: bold;
+  line-height: 0.8;
   height: fit-content;
   width: fit-content;
   margin: 0;
@@ -45,6 +46,17 @@
   flex-wrap: wrap;
   height: 100%;
   width: 100%;
+  overflow: auto;
+  /* Remove scrollbar*/
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+
+  /* Firefox */
+}
+.board::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
 }
 .board div {
   /* height: 200px; */
@@ -81,4 +93,14 @@
 
 .boardItem:last-child h1 {
   align-self: center;
+}
+
+/*  less than 600 px */
+@media (max-width: 600px) {
+  .container h1:first-of-type {
+    display: none;
+  }
+  .container h2:first-of-type {
+    display: none;
+  }
 }

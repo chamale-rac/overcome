@@ -32,14 +32,57 @@
 }
 
 /*media query for container, practicaly just convert to flex when the screen is small */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     min-height: 300px;
+    margin: 0 !important;
+  }
+
+  .actions {
+    flex-direction: row !important;
+    align-items: flex-end !important;
+    justify-content: end !important;
+    width: 100% !important;
+  }
+
+  .actions > button {
+    width: fit-content !important;
+    font-size: 14px !important;
+  }
+
+  .details {
+    align-self: center !important;
+  }
+
+  .title {
+    display: block;
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  .header {
+    width: 100%;
+  }
+}
+
+@media (max-width: 450px) {
+  .container {
+    width: 100%;
+    min-height: 300px;
+    grid-template-columns: 2fr 1fr;
+
+    margin: 0 !important;
+  }
+  .details {
+    display: none;
+  }
+
+  .actions {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
   }
 }
 
@@ -175,7 +218,7 @@
 .headerInProfile {
   font-size: 18px !important;
   width: fit-content;
-  margin: 0 !important; 
+  margin: 0 !important;
   padding: 0 !important;
 }
 
@@ -201,11 +244,15 @@
 .buttonsContainerInProfile {
   flex-direction: row !important;
   align-items: flex-start !important;
-  
+
   justify-content: space-around !important;
 }
 
 .buttonsContainerInProfile button {
   width: fit-content;
   font-size: 14px !important;
+}
+
+.main {
+  background-color: red;
 }

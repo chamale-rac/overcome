@@ -242,9 +242,7 @@ function GlobalEvents() {
           No events found! 😔
         </div>
       )}
-      <div className={styles.pagination}>
-        {pageNum > 0 ? pagination : 'Tough luck'}
-      </div>
+      <div className={styles.pagination}>{pageNum > 0 ? pagination : ''}</div>
     </div>
   )
 }

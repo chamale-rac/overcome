@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { notifications, modal } from '@context'
 import * as styles from './SideBar.module.css'
@@ -23,11 +23,33 @@ const SideBar = ({ links }) => {
     modal.isOpen = !theme.isOpen
   }
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 650)
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 650)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) {
+      setIsRetracted(true)
+    } else {
+      setIsRetracted(false)
+    }
+  }, [isMobile])
+
   // Click handler for other links
 
   return (
     <div
-      className={`${styles.container} ${isRetracted ? styles.retracted : ''} `}
+      className={`${styles.container} ${isRetracted ? styles.retracted : ''}  `}
     >
       <div className={styles.logoRetract}>
         <div className={styles.retract}>
@@ -35,7 +57,7 @@ const SideBar = ({ links }) => {
             className={styles.retract_button}
             onClick={() => setIsRetracted((prev) => !prev)}
           >
-            📌
+            {isMobile ? '☰' : '📌'}
           </div>
         </div>
         <img
@@ -82,7 +104,7 @@ const SideBar = ({ links }) => {
                 )}
                 <span>{link.icon}</span>
                 <div
-                  className={`${styles.text} ${
+                  className={`${styles.text}  ${
                     isRetracted ? styles.retracted : ''
                   } font-roboto-mono`}
                 >
