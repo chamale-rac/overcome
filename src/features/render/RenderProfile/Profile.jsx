@@ -175,9 +175,7 @@ function Profile() {
                   ✏️
                 </button>
               </div>
-              <h3>
-                {`${user.name} ${user.lastname}`}
-              </h3>
+              <h3>{`${user.name} ${user.lastname}`}</h3>
               <h4>@{user.username}</h4>
               <h5>Email: {user.email}</h5>
               <div className={styles.content_wrapper}>
