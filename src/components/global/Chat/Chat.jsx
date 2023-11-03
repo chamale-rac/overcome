@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import * as styles from './Chat.module.css'
 import ChatInput from './ChatInput/ChatInput'
 import { authStore } from '@context'
 import { useApi } from '@hooks'
 import ChatMessage from './ChatMessage/ChatMessage'
+import socketIO, { io } from 'socket.io-client'
 
 const Chat = ({ _id, name }) => {
   const { auth } = authStore
@@ -15,22 +16,68 @@ const Chat = ({ _id, name }) => {
   const [error, setError] = useState(null)
   const [userColors, setUserColors] = useState({})
 
-  const sendMessage = async (message) => {
-    try {
-      const response = await handleRequest('post', '/chats/message', {
-        chat_id: _id,
-        message,
-        user_id: auth.user.id,
-      })
-      if (response.status === 200) {
-        getMessages()
-      } else {
-        setError('Error sending message')
-      }
-    } catch (error) {
-      setError('Error sending message')
+  const chatSocket = io('http://127.0.0.1:3000/chat', {
+    withCredentials: true,
+    secure: true,
+  })
+
+  useEffect(() => {
+    getMessages()
+    chatSocket.connect()
+
+    chatSocket.on('connect', () => {
+      console.log('Successfully connected!')
+    })
+
+    return () => {
+      chatSocket.disconnect()
     }
+  }, [])
+
+  const sendMessage = (message) => {
+    chatSocket.emit('message', {
+      message,
+      chat_id: _id,
+      user_id: auth.user.id,
+      _id: _id,
+    })
+    setMessages([
+      ...messages,
+      {
+        message: message,
+        chat_id: _id,
+        user: {
+          _id: auth.user.id,
+          username: auth.user.username,
+        },
+        actual_user_id: auth.user.id,
+        sent_at: new Date(),
+      },
+    ])
   }
+
+  chatSocket.on('receive-message', (message) => {
+    if (message.user._id !== auth.user.id) {
+      setMessages([...messages, message])
+    }
+  })
+
+  // const sendMessage = async (message) => {
+  //   try {
+  //     const response = await handleRequest('post', '/chats/message', {
+  //       chat_id: _id,
+  //       message,
+  //       user_id: auth.user.id,
+  //     })
+  //     if (response.status === 200) {
+  //       getMessages()
+  //     } else {
+  //       setError('Error sending message')
+  //     }
+  //   } catch (error) {
+  //     setError('Error sending message')
+  //   }
+  // }
 
   const sendHandler = (message) => {
     sendMessage(message)
@@ -41,7 +88,6 @@ const Chat = ({ _id, name }) => {
     try {
       setLoading(true)
       const response = await handleRequest('GET', `/chats/${_id}`, {}, {}, true)
-
       if (response.status === 200) {
         // get just new messages
         if (type === 'refresh') {
@@ -78,17 +124,6 @@ const Chat = ({ _id, name }) => {
     scrollToBottom()
   }, [messages])
 
-  // Check for new messages every 5 seconds
-
-  useEffect(() => {
-    if (messages && _id) {
-      const interval = setInterval(() => {
-        getMessages('refresh')
-      }, 5000)
-      return () => clearInterval(interval)
-    }
-  }, [messages, _id])
-
   return (
     <div id={_id} className={`${styles.container} standard_border`}>
       <div className={`${styles.title_wrapper} font-bebas-neue`}>
@@ -106,7 +141,6 @@ const Chat = ({ _id, name }) => {
             messages?.map((message, index) => {
               return (
                 <ChatMessage
-                  key={message._id}
                   user={message.user}
                   text={message.message}
                   sent_at={message.sent_at}
