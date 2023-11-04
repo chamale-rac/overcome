@@ -252,7 +252,7 @@ const EventPage = () => {
         <NavButton
           type="normal"
           handleClick={() => navigate(-1)}
-          customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base mb-20"
+          customStyles="w-fit px-4 py-2.5 font-bold  rounded-full text-base mb-4"
         >
           ⇐ Back
         </NavButton>
@@ -288,67 +288,80 @@ const EventPage = () => {
                 margin: '0px 0',
               }}
             />
-            {!userEventStatus && (
-              <button
-                className={`${styles.saveButton} button asap`}
-                onClick={() => {
-                  saveEvent()
+            <div className={`${styles.actions} `}>
+              {!userEventStatus && (
+                <button
+                  className={`${styles.saveButton} button asap`}
+                  onClick={() => {
+                    saveEvent()
                   }}
-              >
-                Save 💾
-              </button>
-            )}
-            {userEventStatus && (
-              <button
-                className={`${styles.saveButton} button asap`}
-                onClick={() => {
-                  removeEvent()
-                }}
-              >
-                Unsave ❌
-              </button>
-            )}
-            {!userJoinedStatus && (
-              <button
-                className={`${styles.saveButton} button asap`}
-                onClick={() => {
-                  console.log('participants:', event?.participants.length)
-                  if (event?.participants.length >= event?.limit) {
-                    setOpenValue(true)
-                  } else {
-                    joinEvent()
-                    joinEventToUser()
-                  }
-                }}
-              >
-                Join! 🫂
-              </button>
-            )}
-            {userJoinedStatus && (
-              <button
-                className={`${styles.saveButton} button asap`}
-                onClick={() => {
-                  removeJoinedEvent()
-                  removeJoinedEventToUser()
-                }}
-              >
-                Joined! 🙌🏼
-              </button>
-            )}
-            <h3 className={styles.content_title}>
-              Participants ({event?.participants.length}/{event?.limit}):
-            </h3>
-            <ParticipantsView participants={participants} />
-            <h3 className={styles.content_title}>Description:</h3>
-            <p className={styles.event_description}>{event?.description}</p>
-            <div className={styles.content_wrapper}>
-              <h3>Schedule:</h3>
-              <p className={styles.event_hour}>{event?.hour}</p>
-              <p className={styles.event_date}>
-                {event && new Date(event.date).toLocaleDateString()}
-              </p>
-              <p className={styles.event_duration}>{event?.duration} minutes</p>
+                >
+                  Save 💾
+                </button>
+              )}
+              {userEventStatus && (
+                <button
+                  className={`${styles.saveButton} button asap`}
+                  onClick={() => {
+                    removeEvent()
+                  }}
+                >
+                  Unsave ❌
+                </button>
+              )}
+              {!userJoinedStatus && (
+                <button
+                  className={`${styles.saveButton} button asap`}
+                  onClick={() => {
+                    console.log('participants:', event?.participants.length)
+                    if (event?.participants.length >= event?.limit) {
+                      setOpenValue(true)
+                    } else {
+                      joinEvent()
+                      joinEventToUser()
+                    }
+                  }}
+                >
+                  Join! 🫂
+                </button>
+              )}
+              {userJoinedStatus && (
+                <button
+                  className={`${styles.saveButton} button asap`}
+                  onClick={() => {
+                    removeJoinedEvent()
+                    removeJoinedEventToUser()
+                  }}
+                >
+                  Joined! 🙌🏼
+                </button>
+              )}
             </div>
+            <div className={`${styles.details}`}>
+              <h3 className={styles.content_title}>
+                Participants ({event?.participants.length}/{event?.limit}):
+                {participants.map((participant) => (
+                  <p key={participant._id}>
+                    <b>{participant.username}</b>
+                  </p>
+                ))}
+              </h3>
+              {/* <ParticipantsView participants={participants} /> */}
+              <h3 className={styles.content_title}>
+                Description: {event?.description}
+              </h3>
+              <div className={`${styles.content_wrapper}`}>
+                <h3>Schedule:</h3>
+                <p className={styles.event_hour}>{event?.hour}</p>
+                <p className={styles.event_date}>
+                  {event && new Date(event.date).toLocaleDateString()}
+                </p>
+                <p className={styles.event_duration}>
+                  {event?.duration} minutes
+                </p>
+              </div>
+            </div>
+
             <div className={styles.content_wrapper}>
               <h3>Tags:</h3>
               {event?.tags.map((tag) => (

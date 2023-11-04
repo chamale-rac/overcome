@@ -17,8 +17,8 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@testing-library/react": "^14.0.0",
     "@hotjar/browser": "^1.0.9",
+    "@testing-library/react": "^14.0.0",
     "autoprefixer": "^10.4.14",
     "axios": "0.24.0",
     "eslint": "^7.32.0 || ^8.2.0",
@@ -31,7 +31,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "reactjs-popup": "^2.0.5",
-    "socket.io-client": "^4.6.1",
+    "socket.io-client": "^4.7.2",
     "sonner": "^0.7.0",
     "storybook": "^7.0.7",
     "valtio": "^1.10.4",
@@ -70,7 +70,7 @@
     "tailwindcss": "^3.3.2",
     "ts-jest": "^29.1.1",
     "user-event": "^4.0.0",
-    "vitest": "^0.34.1",
-    "vite": "^4.2.3"
+    "vite": "^4.2.3",
+    "vitest": "^0.34.1"
   }
 }
