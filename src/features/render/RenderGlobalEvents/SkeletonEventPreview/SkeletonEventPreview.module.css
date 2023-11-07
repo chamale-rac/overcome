@@ -1,0 +1,10 @@
+.skeleton_event_preview_container {
+  background-color: #dddddd57;
+  border-radius: 20px;
+  padding: 10px 20px 20px 20px;
+  position: relative;
+  overflow: hidden;
+  width: 561px;
+  height: 300px;
+  margin-bottom: 40px;
+}

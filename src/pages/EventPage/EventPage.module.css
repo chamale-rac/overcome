@@ -118,7 +118,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
 }
 
 .title_wrapper h2 {
@@ -191,3 +191,39 @@
     padding-left: 0;
   }
 }
+
+.skeleton_event_header {
+  background-color: #dddddd57;
+  border-radius: 5px 5px 0 0;
+  padding: 0.5rem 0.5rem;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton_buttons_container {
+  display: flex;
+  flex: 0 0 100%;
+  gap: 10px;
+  background-color: #dddddd57;
+  border-radius: 5px 5px 0 0;
+  padding: 0.5rem 0.5rem;
+}
+
+.skeleton_event_details_container {
+  background-color: #dddddd57;
+  padding: 0.5rem 0.5rem;
+  border-radius: 5px;
+}
+
+.skeleton_event_details_container li {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.skeleton_event_body {
+  position: relative;
+  overflow: hidden;
+}
+
+

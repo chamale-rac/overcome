@@ -4,6 +4,9 @@ import * as styles from './GlobalEvents.module.css'
 import { Events } from '@features/render'
 import { Input, SearchInput, ClockLoader } from '@components/global'
 import { Collapse } from '@components/global'
+import SkeletonElement from '@components/skeletons/SkeletonElement'
+import Shimmer from '@components/skeletons/Shimmer'
+import SkeletonEventPreview from './SkeletonEventPreview/SkeletonEventPreview'
 
 function GlobalEvents() {
   // TODO: Add error handling, and write neater code. This whole file is cursed.
@@ -234,9 +237,16 @@ function GlobalEvents() {
           <Events events={userEvents} />
         </div>
       ) : loading ? (
-        <div className={`${styles.noEvents} font-bebas-neue`}>
-          Loading... <ClockLoader fontSize={'3.8'} />
-        </div>
+        // <div className={`${styles.noEvents} font-bebas-neue`}>
+        //   Loading... <ClockLoader fontSize={'3.8'} />
+        // </div>
+        <ul className={styles.skeletons_events_container}>
+          <SkeletonEventPreview/>
+          <SkeletonEventPreview/>
+          <SkeletonEventPreview/>
+          <SkeletonEventPreview/>
+          <SkeletonEventPreview/>
+        </ul>
       ) : (
         <div className={`${styles.noEvents} font-bebas-neue`}>
           No events found! 😔
