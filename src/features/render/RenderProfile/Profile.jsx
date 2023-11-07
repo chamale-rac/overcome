@@ -7,6 +7,7 @@ import { ControlledPopup, ClockLoader } from '@components/global'
 import * as styles from './Profile.module.css'
 import { image } from '@context'
 import EditProfile from '../../creation/EditProfile/EditProfile'
+import { FriendRequests } from '@features/render'
 
 function Profile() {
   const [error, setError] = useState(null)
@@ -20,8 +21,11 @@ function Profile() {
 
   const [openProfilePopup, setOpenProfilePopup] = useState(false)
   const [openInfoPopup, setOpenInfoPopup] = useState(false)
+  const [openRequestPopup, setOpenRequestPopup] = useState(false)
+
   const closeProfilePopup = () => setOpenProfilePopup(false)
   const closeInfoPopup = () => setOpenInfoPopup(false)
+  const closeRequestPopup = () => setOpenRequestPopup(false)
 
   const { auth } = authStore
 
@@ -116,6 +120,13 @@ function Profile() {
   return (
     <div className={styles.container}>
       <ControlledPopup
+        title={'👥 Friend Requests'}
+        isOpen={openRequestPopup}
+        closeFunction={closeRequestPopup}
+      >
+        <FriendRequests />
+      </ControlledPopup>
+      <ControlledPopup
         title={'🖼️ Profile Picture'}
         isOpen={openProfilePopup}
         closeFunction={closeProfilePopup}
@@ -151,12 +162,22 @@ function Profile() {
       <div className={styles.titleWrapper}>
         <h1>My profile</h1>
         <button
+          className={styles.editButton}
           type="button"
           onClick={() => {
             setOpenInfoPopup((o) => !o)
           }}
         >
           ✏️
+        </button>
+        <button
+          className={styles.requestButton}
+          type="button"
+          onClick={() => {
+            setOpenRequestPopup((o) => !o)
+          }}
+        >
+          Friend Requests
         </button>
       </div>
       {!profileLoading ? (
@@ -181,22 +202,22 @@ function Profile() {
               <div className={styles.content_wrapper}>
                 <h3>Interests:</h3>
                 {/* { user?.interests.length > 0 ? */}
-                { Array.isArray(user?.interests) && user?.interests.length > 0 ?
-                user?.interests.map((tag) => (
-                  <p key={tag}>{tag}</p>
-                )) :
-                <aside>No interests found</aside>
-                }
+                {Array.isArray(user?.interests) &&
+                user?.interests.length > 0 ? (
+                  user?.interests.map((tag) => <p key={tag}>{tag}</p>)
+                ) : (
+                  <aside>No interests found</aside>
+                )}
               </div>
               <div className={styles.content_wrapper}>
                 <h3>Favorite Games:</h3>
                 {/* { user?.favorites.length > 0 ? */}
-                { Array.isArray(user?.favorites) && user?.favorites.length > 0 ?
-                user?.favorites.map((tag) => (
-                  <p key={tag}>{tag}</p>
-                )) :
-                <aside>No favorite games found</aside>
-                }
+                {Array.isArray(user?.favorites) &&
+                user?.favorites.length > 0 ? (
+                  user?.favorites.map((tag) => <p key={tag}>{tag}</p>)
+                ) : (
+                  <aside>No favorite games found</aside>
+                )}
               </div>
             </div>
           </section>

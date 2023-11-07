@@ -5,6 +5,7 @@ import { authStore } from '@context'
 import { useApi } from '@hooks'
 import ChatMessage from './ChatMessage/ChatMessage'
 import socketIO, { io } from 'socket.io-client'
+import { SERVER_BASE_URL } from '@utils/constants'
 
 const Chat = ({ _id, name }) => {
   const { auth } = authStore
@@ -16,7 +17,7 @@ const Chat = ({ _id, name }) => {
   const [error, setError] = useState(null)
   const [userColors, setUserColors] = useState({})
 
-  const chatSocket = io('http://127.0.0.1:3000/chat', {
+  const chatSocket = io(`${SERVER_BASE_URL}/chat`, {
     withCredentials: true,
     secure: true,
   })

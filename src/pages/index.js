@@ -5,6 +5,7 @@ import EventsDashboard from './EventsDashboard/EventsDashboard'
 import EventPage from './EventPage/EventPage'
 import UserPage from './UserPage/UserPage'
 import FriendsDashboard from './FriendsDashboard/FriendsDashboard'
+import UsersPage from './UsersPage/UsersPage'
 
 export {
   Landing,
@@ -14,4 +15,5 @@ export {
   EventPage,
   UserPage,
   FriendsDashboard,
+  UsersPage,
 }
