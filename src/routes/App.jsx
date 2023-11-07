@@ -8,6 +8,7 @@ import {
   EventPage,
   UserPage,
   FriendsDashboard,
+  UsersPage,
 } from '@pages'
 
 import { Home } from '@layouts'
@@ -53,7 +54,8 @@ function App() {
           <Route path="/home/myevents" element={<UserEvents />} />
           <Route path="/home/newevent" element={<EventsDashboard />} />
           <Route path="/home/events/:_id" element={<EventPage />} />
-          <Route path="/home/users" element={<FriendsDashboard />} />
+          <Route path="/home/friends" element={<FriendsDashboard />} />
+          <Route path="/home/users" element={<UsersPage />} />
           <Route path="/home/users/:creator_id" element={<UserPage />} />
 
           <Route element={<RequireAuth type="Admin" />}>

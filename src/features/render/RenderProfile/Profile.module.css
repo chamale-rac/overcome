@@ -210,12 +210,24 @@
   border: 1px solid black;
 }
 
-.titleWrapper button {
+.titleWrapper .editButton {
   background-color: #ffffff;
   border: none;
   border-radius: 50%;
   width: 45px;
   height: 45px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  border: 1px solid black;
+  margin-left: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.titleWrapper .requestButton {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 10px;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
   border: 1px solid black;
@@ -282,4 +294,3 @@
   border: none;
   padding-left: 0rem;
 }
-

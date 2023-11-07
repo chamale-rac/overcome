@@ -93,47 +93,9 @@ const FriendsDashboard = () => {
     }
   }
 
-  // TODO get all users, and quit actual user
-  const getAllUsers = async () => {
-    try {
-      setLoading(true)
-      const response = await handleRequest(
-        'GET',
-        `/users`,
-        {},
-        {
-          Authorization: 'Bearer ' + auth.authToken,
-        },
-        true,
-      )
-      /* console.log(response.data)*/
-      setAllUsers(response.data)
-      setAllPreLoadedUsers(response.data)
-    } catch (error) {
-      console.error(error)
-      setError(
-        'Error fetching event details, please try again later or contact support',
-      )
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    getAllUsers()
     handleGetUserRelations()
   }, [])
-
-  useEffect(() => {
-    if (search === '') {
-      setAllUsers(allPreLoadedUsers)
-    } else {
-      const usersFiltered = allUsers.filter((user) => {
-        return user.username.toLowerCase().includes(search.toLowerCase())
-      })
-      setAllUsers(usersFiltered)
-    }
-  }, [search])
 
   useEffect(() => {
     if (snapOpenChat.isOpen) {
@@ -151,7 +113,7 @@ const FriendsDashboard = () => {
       <h2 className={`${styles.title} font-bebas-neue`}>Friends Dashboard</h2>
       <div className={styles.content_container}>
         <div className={styles.wrapper_list}>
-          <Collapse title="Friend List" closed={false}>
+          <Collapse title="Friend List" closed>
             {relationsFriends && (
               <UserList
                 users={relationsFriends}
@@ -164,14 +126,13 @@ const FriendsDashboard = () => {
           </Collapse>
         </div>
         <div className={styles.chat_container}>
-          {actualView && actualView.type === 'profile' && (
-            <UserPage user_id={actualView.user_id} isCreator={false} />
-          )}
           {actualView && actualView.type === 'chat' && (
             <Chat _id={actualView.chat_id} name={actualView.name} />
           )}
           {!actualView && (
-            <div className={styles.dummy_chat}>Select a user to chat with</div>
+            <div className={styles.dummy_chat}>
+              🤖 Select a user to chat with!
+            </div>
           )}
         </div>
       </div>

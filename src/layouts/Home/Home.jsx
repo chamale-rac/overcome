@@ -42,6 +42,11 @@ const Home = () => {
     },
     {
       name: 'Friends',
+      path: '/home/friends',
+      icon: '🍟',
+    },
+    {
+      name: 'Users',
       path: '/home/users',
       icon: '👥',
     },
@@ -156,12 +161,17 @@ const Home = () => {
     notifications.isOpen = false
     if (notification.type === 'chat_event') {
       navigate(`/home/events/${notification.event_id}`)
-    } else {
+    } else if (
+      notification.type == 'chat_private' ||
+      notification.type == 'friend_request_accepted'
+    ) {
       // go to users
       OpenChat.chat_id = notification.chat_id
       OpenChat.name = notification.username
       OpenChat.isOpen = true
-      navigate(`/home/users`)
+      navigate(`/home/friends`)
+    } else {
+      navigate(`/home/profile`)
     }
   }
   useEffect(() => {

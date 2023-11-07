@@ -87,7 +87,7 @@ const UserList = ({
             </ControlledPopup>
             <button
               className="button asap"
-              onClick={() => setOpenProfilePopup((o) => !o)}
+              onClick={() => onClickFunction(relation.user._id)}
               style={{
                 borderRadius: '10px',
                 padding: '0.1rem 0.4rem',
@@ -138,7 +138,7 @@ const UserList = ({
       {!users ||
         (users.length === 0 && (
           <div className={styles.user_container}>
-            You don't have any {type} yet!
+            No {type === 'users' ? 'users' : 'friends'} to show 😔
           </div>
         ))}
     </div>

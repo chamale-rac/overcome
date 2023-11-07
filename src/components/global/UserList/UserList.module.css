@@ -1,7 +1,6 @@
 .messages_container {
   position: relative;
   margin-top: 1rem;
-  max-height: 230px;
   min-height: fit-content;
   overflow-y: scroll;
 }
