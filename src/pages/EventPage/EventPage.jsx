@@ -7,6 +7,9 @@ import { authStore } from '@context'
 import ControlledPopup from '../../components/global/ControlledPopup/ControlledPopup'
 import ParticipantsView from '@components/pages/EventPage'
 import Report from '@features/creation/Report/Report'
+import SkeletonElement from '@components/skeletons/SkeletonElement'
+import Shimmer from '@components/skeletons/Shimmer'
+
 
 const EventPage = () => {
   const navigate = useNavigate()
@@ -369,7 +372,7 @@ const EventPage = () => {
               ))}
             </div>
             <div className={styles.content_wrapper}>
-              <h3>Link:</h3>
+              <h3>Links:</h3>
               <a
                 href={event?.link}
                 target="_blank"
@@ -378,6 +381,39 @@ const EventPage = () => {
                 {event?.link}
               </a>
             </div>
+          </>
+        )}
+        {!event && (
+          <>
+            <header className={styles.skeleton_event_header}>
+              <SkeletonElement type="title"/>
+              <SkeletonElement type="text"/>
+              <Shimmer/>
+            </header>
+            <hr
+              style={{
+                width: '100%',
+                height: '2px',
+                backgroundColor: '#333',
+                border: 'none',
+                margin: '1.5rem 0px 1rem 0px',
+              }}
+            />
+            <article class={styles.skeleton_event_body}>
+              <aside className={styles.skeleton_buttons_container}>
+                <SkeletonElement type="button"/>
+                <SkeletonElement type="button"/>
+              </aside>
+              <ul className={styles.skeleton_event_details_container}>
+                <li><SkeletonElement type="text"/></li>
+                <li><SkeletonElement type="text"/></li>
+                <li><SkeletonElement type="text"/></li>
+                <li><SkeletonElement type="text"/></li>
+                <li><SkeletonElement type="text"/></li>
+                <li><SkeletonElement type="text"/></li>
+              </ul>
+              <Shimmer/>
+            </article>
           </>
         )}
       </div>

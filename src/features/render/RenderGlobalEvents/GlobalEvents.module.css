@@ -113,3 +113,15 @@
   font-weight: bold;
   text-decoration: underline;
 }
+
+.skeletons_events_container {
+  width: fit-content;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeletons_events_container li {
+  margin: 1rem 0;
+}
