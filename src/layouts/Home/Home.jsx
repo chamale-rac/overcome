@@ -41,7 +41,7 @@ const Home = () => {
       hidden: !isAdmin,
     },
     {
-      name: 'Users',
+      name: 'Friends',
       path: '/home/users',
       icon: '👥',
     },

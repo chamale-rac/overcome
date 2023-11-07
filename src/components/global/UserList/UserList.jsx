@@ -17,7 +17,7 @@ const UserList = ({
 
   const navigate = useNavigate()
   return (
-    <div className={`${styles.messages_container} standard_border`}>
+    <div className={`${styles.messages_container}`}>
       {type === 'users' &&
         users?.map((user) => (
           <div className={styles.user_container}>
@@ -108,8 +108,6 @@ const UserList = ({
             }
           >
             {relation.user.username}
-            {''}
-
             <button
               className="button asap"
               onClick={() => secondOnClickFunction(relation.user._id)}
@@ -119,7 +117,7 @@ const UserList = ({
                 fontSize: '10px',
               }}
             >
-              🗑️ Remove from friends
+              🗑️
             </button>
             <button
               className="button asap"
@@ -132,7 +130,7 @@ const UserList = ({
                 fontSize: '10px',
               }}
             >
-              💬 Chat
+              💬
             </button>
           </div>
         ))}
@@ -140,7 +138,7 @@ const UserList = ({
       {!users ||
         (users.length === 0 && (
           <div className={styles.user_container}>
-            You don't have any {type} yet
+            You don't have any {type} yet!
           </div>
         ))}
     </div>
