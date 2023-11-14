@@ -15,14 +15,6 @@
   font-size: 1em;
 }
 
-.container::-webkit-scrollbar {
-  width: 10px;
-}
-
-.container::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 .eventsContainer {
   margin-top: 20px;
   margin-bottom: 50px;

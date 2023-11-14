@@ -14,12 +14,8 @@
   box-shadow: 5px 5px 0px 0px #000;
 }
 
-.container::-webkit-scrollbar {
-  width: 10px;
-}
-
-.container::-webkit-scrollbar-thumb:hover {
-  background: #555;
+.container h2 {
+  font-family: 'Bebas Neue', cursive;
 }
 
 .container h1 {

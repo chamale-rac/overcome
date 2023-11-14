@@ -159,79 +159,86 @@ function Profile() {
           }}
         />
       </ControlledPopup>
-      <div className={styles.titleWrapper}>
-        <h1>My profile</h1>
+      <div className="w-full flex flex-row justify-end gap-2 text-xs md:text-sm">
         <button
-          className={styles.editButton}
-          type="button"
-          onClick={() => {
-            setOpenInfoPopup((o) => !o)
-          }}
-        >
-          ✏️
-        </button>
-        <button
-          className={styles.requestButton}
           type="button"
           onClick={() => {
             setOpenRequestPopup((o) => !o)
           }}
+          className="border py-1  md:p-2 rounded-xl border-black bg-black text-white hover:bg-[#cdd57e] hover:text-black transition-all"
         >
           Friend Requests
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setOpenInfoPopup((o) => !o)
+          }}
+          className="border py-1 md:p-2  border-dashed rounded-xl  border-black hover:bg-[#cdd57e] transition-all"
+        >
+          Edit Info
+        </button>
+        <button
+          type="button"
+          onClick={() => setOpenProfilePopup((o) => !o)}
+          className="border py-1  md:p-2  border-dashed  rounded-xl border-black hover:bg-[#cdd57e] transition-all"
+        >
+          Edit Picture
         </button>
       </div>
       {!profileLoading ? (
         <>
-          <section className={styles.custom_section}>
-            <div className={styles.main_info}>
-              <div className={styles.imageWrapper}>
-                <img
-                  src={user.profilePicture ?? '/profile-400.png'}
-                  alt="Foto de perfil de Juan"
-                />
-                <button
-                  type="button"
-                  onClick={() => setOpenProfilePopup((o) => !o)}
-                >
-                  ✏️
-                </button>
-              </div>
-              <h3>{`${user.name} ${user.lastname}`}</h3>
-              <h4>@{user.username}</h4>
-              <h5>Email: {user.email}</h5>
-              <div className={styles.content_wrapper}>
-                <h3>Interests:</h3>
-                {/* { user?.interests.length > 0 ? */}
-                {Array.isArray(user?.interests) &&
-                user?.interests.length > 0 ? (
-                  user?.interests.map((tag) => <p key={tag}>{tag}</p>)
-                ) : (
-                  <aside>No interests found</aside>
-                )}
-              </div>
-              <div className={styles.content_wrapper}>
-                <h3>Favorite Games:</h3>
-                {/* { user?.favorites.length > 0 ? */}
-                {Array.isArray(user?.favorites) &&
-                user?.favorites.length > 0 ? (
-                  user?.favorites.map((tag) => <p key={tag}>{tag}</p>)
-                ) : (
-                  <aside>No favorite games found</aside>
-                )}
+          <div className="flex w-full flex-col justify-start mt-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 md:gap-4 ">
+                <div className="relative h-20 w-20 md:h-24 md:w-24 object-cover">
+                  <img
+                    src={user.profilePicture ?? '/profile-400.png'}
+                    alt="Profile Image"
+                    className="rounded-full object-fill shadow-2xl h-20 w-20 md:h-24 md:w-24"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-left  font-bold text-light-1 text-3xl md:text-5xl">
+                    {`${user.name} ${user.lastname}`}
+                  </h2>
+                  <p className="font-medium text-gray-500 text-base md:text-xl  ">
+                    @{user.username}
+                  </p>
+                </div>
               </div>
             </div>
-          </section>
-          <section className={`${styles.custom_section} ${styles.sub_section}`}>
-            <h2>Joined Hooks</h2>
-            <div className={styles.eventsContainer}>
-              {!(user.savedEvents === undefined) && (
+            <div className="mt-6 max-w-lg text-light-2 ml-2 xs:ml-0 text-xs md:text-base">
+              <p className="text-left">
+                <span className="font-bold">Interests:</span>{' '}
+                {user?.interests && user?.interests.length > 0
+                  ? user?.interests?.join(', ')
+                  : 'No interests found'}
+              </p>
+              <p className="text-left">
+                <span className="font-bold">Favorite Games:</span>{' '}
+                {user?.favorites && user?.favorites.length > 0
+                  ? user?.favorites?.join(', ')
+                  : 'No favorite games found'}
+              </p>
+            </div>
+            <div className="mt-6 h-0.5 w-full bg-black" />
+          </div>
+          <section>
+            <h2 className="text-4xl mt-6 mb-1">Joined Hooks</h2>
+            <div className="grid grid-cols-1 gap-3 md:gap-6 divide-y divide-zinc-200 md:grid-cols-4">
+              {user?.joinedEvents && user?.joinedEvents.length > 0 ? (
                 <Events events={user.joinedEvents} inProfile={true} />
+              ) : (
+                <div>No joined events found! 😔</div>
               )}
             </div>
-            <h2>Saved Hooks</h2>
-            <div className={styles.eventsContainer}>
-              {!(user.savedEvents === undefined) && (
+            <h2 className="text-4xl mt-6 mb-1">Saved Hooks</h2>
+            <div className="grid grid-cols-1 gap-3 md:gap-6 divide-y divide-zinc-200 md:grid-cols-4">
+              {user?.savedEvents && user?.savedEvents.length > 0 ? (
                 <Events events={user.savedEvents} inProfile={true} />
+              ) : (
+                <div>No saved events found! 😔</div>
               )}
             </div>
           </section>
