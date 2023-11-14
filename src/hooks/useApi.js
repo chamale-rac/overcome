@@ -33,7 +33,6 @@ const useApi = () => {
     try {
       const axiosResponse = await axios(`${SERVER_BASE_URL}${path}`, options)
 
-
       response = {
         status: axiosResponse.status,
         data: axiosResponse.data,
