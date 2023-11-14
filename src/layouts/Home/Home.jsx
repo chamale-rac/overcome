@@ -78,7 +78,7 @@ const Home = () => {
 
   const snap = useSnapshot(notifications)
   const [userNotifications, setUserNotifications] = useState(null)
-
+  const [clearAll, setClearAll] = useState(false)
   const themeSnap = useSnapshot(modal)
 
   const getNotifications = async () => {
@@ -149,9 +149,20 @@ const Home = () => {
     )
   }
 
+  const handleShowOffAll = () => {
+    setUserNotifications(
+      userNotifications.map((notification) => ({
+        ...notification,
+        show: false,
+      })),
+    )
+    setClearAll(true)
+  }
+
   const closeFunction = () => {
     notifications.isOpen = false
     updateNotifications()
+    setClearAll(false)
   }
   const closeThemeFunction = () => {
     modal.isOpen = false
@@ -257,7 +268,9 @@ const Home = () => {
           closeFunction={closeFunction}
           type="notification"
         >
-          {userNotifications != null && userNotifications?.length != 0 ? (
+          {!clearAll &&
+          userNotifications != null &&
+          userNotifications?.length != 0 ? (
             <div
               style={{
                 minHeight: '350px',
@@ -267,6 +280,14 @@ const Home = () => {
               }}
               className={styles.popupInsider}
             >
+              <div className="mb-2 w-100% flex justify-end">
+                <button
+                  onClick={() => handleShowOffAll()}
+                  className="mr-1 mb-1 hover:underline cursor-pointer"
+                >
+                  Clear all
+                </button>
+              </div>
               {userNotifications
                 .filter((notification) => notification.show)
                 .map((notification) => (

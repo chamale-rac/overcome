@@ -4,7 +4,6 @@ import useRefreshToken from '@hooks/useRefreshToken'
 import { useState, useEffect } from 'react'
 
 function UserEvents({ event }) {
-  const refresh = useRefreshToken()
   const [userEvents, setUserEvents] = useState([])
 
   useEffect(() => {
