@@ -62,6 +62,7 @@ function GlobalEvents() {
   const createPagination = () => {}
 
   const getInitialEvents = async () => {
+    setUserEvents([])
     setLoading(true)
     const response = await handleRequest(
       'GET',
@@ -237,15 +238,12 @@ function GlobalEvents() {
           <Events events={userEvents} />
         </div>
       ) : loading ? (
-        // <div className={`${styles.noEvents} font-bebas-neue`}>
-        //   Loading... <ClockLoader fontSize={'3.8'} />
-        // </div>
         <ul className={styles.skeletons_events_container}>
-          <SkeletonEventPreview/>
-          <SkeletonEventPreview/>
-          <SkeletonEventPreview/>
-          <SkeletonEventPreview/>
-          <SkeletonEventPreview/>
+          <SkeletonEventPreview />
+          <SkeletonEventPreview />
+          <SkeletonEventPreview />
+          <SkeletonEventPreview />
+          <SkeletonEventPreview />
         </ul>
       ) : (
         <div className={`${styles.noEvents} font-bebas-neue`}>
