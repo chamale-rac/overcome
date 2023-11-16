@@ -8,6 +8,9 @@ import * as styles from './Profile.module.css'
 import { image } from '@context'
 import EditProfile from '../../creation/EditProfile/EditProfile'
 import { FriendRequests } from '@features/render'
+import SkeletonElement from '@components/skeletons/SkeletonElement'
+import Shimmer from '@components/skeletons/Shimmer'
+import ProfileLoader from './ProfileLoader/ProfileLoader'
 
 function Profile() {
   const [error, setError] = useState(null)
@@ -186,7 +189,7 @@ function Profile() {
           Edit Picture
         </button>
       </div>
-      {!profileLoading ? (
+      { !profileLoading ? (
         <>
           <div className="flex w-full flex-col justify-start mt-4">
             <div className="flex items-center justify-between">
@@ -244,9 +247,7 @@ function Profile() {
           </section>
         </>
       ) : (
-        <div className={`${styles.noEvents} font-bebas-neue`}>
-          Loading... <ClockLoader fontSize={'3.8'} />
-        </div>
+          <ProfileLoader />
       )}
     </div>
   )
