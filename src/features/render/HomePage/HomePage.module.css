@@ -71,9 +71,12 @@
   box-shadow: 5px 5px 0px 0px #000;
 }
 .boardItem {
+  display: block;
   background-color: rgb(255, 245, 245);
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  height: fit-content;
+  height: 32rem;
+  width: 18rem;
+  margin: auto 0;
 }
 
 .boardItem:last-child {
@@ -103,4 +106,13 @@
   .container h2:first-of-type {
     display: none;
   }
+}
+
+.previewEventsContainer {
+  margin: auto 0 !important;
+  height: fit-content !important;
+  width: fit-content !important;
+  padding: 0 !important;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
 }
