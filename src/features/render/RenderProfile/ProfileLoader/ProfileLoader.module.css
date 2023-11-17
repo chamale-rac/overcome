@@ -1,0 +1,22 @@
+.loading_profile {
+  /* background-color: rgb(253, 162, 253); */
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.interests_and_favorite_games {
+  margin: 1rem 0;
+}
+
+.profile_info_container {
+  display: flex;
+}
+
+.profile_name {
+  margin-left: 1rem;
+}
+
+.profile_name_container {
+  width: 40%;
+}

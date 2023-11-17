@@ -3,6 +3,8 @@ import { Collapse, Chat, SearchInput, UserList } from '@components/global'
 import { authStore } from '@context'
 import { useNavigate } from 'react-router-dom'
 import { useApi } from '@hooks'
+import SkeletonElement from '@components/skeletons/SkeletonElement'
+import Shimmer from '@components/skeletons/Shimmer'
 
 import * as styles from './UsersPage.module.css'
 
@@ -74,8 +76,19 @@ const UsersPage = () => {
             searchIcon={'🔍'}
           />
         </div>
-        {allUsers && (
+        { allUsers ? (
           <UserList users={allUsers} onClickFunction={handleSetViewProfile} />
+        ) : (
+          <aside className={styles.skeleton_event_body}>
+            <ul className={`${styles.skeleton_users_container}`}>
+              {
+                Array(10).fill().map((_, index) => (
+                  <SkeletonElement key={index} type="friendPreview"/>
+                ))
+              }
+            </ul>
+            <Shimmer/>
+          </aside>
         )}
       </div>
     </div>
