@@ -54,15 +54,15 @@ html {
 }
 
 .home {
-  @apply w-full xl:h-full flex xl:justify-between justify-start items-start flex-col  max-xl:gap-7 absolute z-10;
+  @apply w-full  flex xl:justify-between justify-start items-start flex-col  max-xl:gap-7 z-10;
 }
 
 .home-content {
-  @apply flex-1 xl:justify-center justify-start flex flex-col gap-2 xl:mx-32 mx-6;
+  @apply flex-1 xl:justify-center justify-center flex flex-col gap-2 xl:mx-32 mx-6;
 }
 
 .head-text {
-  @apply xl:text-[12rem] text-[7rem] xl:leading-[11rem] leading-[7rem] font-black text-black;
+  @apply xl:text-[10rem] text-[7rem] xl:leading-[11rem] leading-[7rem] font-black text-black;
 }
 
 /*TODO change to tailwind*/
@@ -94,6 +94,13 @@ html {
   border-width: 2px;
   border-color: black;
   box-shadow: 5px 5px 0px 0px #000;
+}
+
+.grid_bg {
+  background-color: #ece2aa;
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, grey 1px, transparent 1px),
+    linear-gradient(to bottom, grey 1px, #f0ffff 1px);
 }
 
 /*THIS ARE GLOBAL CONFIGURATIONS FOR POPUPS*/
